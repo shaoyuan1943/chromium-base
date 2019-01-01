@@ -1,4 +1,4 @@
-// Copyright (c) 2012 The Chromium Authors. All rights reserved.
+﻿// Copyright (c) 2012 The Chromium Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
@@ -8,16 +8,25 @@
 #include <vector>
 
 #include "base/basictypes.h"
-#include "base/move.h"
 #include "base/stl_util.h"
 
 // ScopedVector wraps a vector deleting the elements from its
 // destructor.
 template <class T>
 class ScopedVector {
-  MOVE_ONLY_TYPE_FOR_CPP_03(ScopedVector, RValue)
-
  public:
+   template <typename U>
+   ScopedVector(ScopedVector<U>&& sv) {
+     this->v_ = std::move(sv.v_);
+     sv.v_.clear();
+   }
+
+   ScopedVector& operator=(ScopedVector<U>&& sv) {
+     clear();
+     this->v_ = std::move(sv.v_);
+     sv.v_.clear();
+     return *this;
+   }
   typedef typename std::vector<T*>::allocator_type allocator_type;
   typedef typename std::vector<T*>::size_type size_type;
   typedef typename std::vector<T*>::difference_type difference_type;
@@ -29,8 +38,7 @@ class ScopedVector {
   typedef typename std::vector<T*>::iterator iterator;
   typedef typename std::vector<T*>::const_iterator const_iterator;
   typedef typename std::vector<T*>::reverse_iterator reverse_iterator;
-  typedef typename std::vector<T*>::const_reverse_iterator
-      const_reverse_iterator;
+  typedef typename std::vector<T*>::const_reverse_iterator const_reverse_iterator;
 
   ScopedVector() {}
   ~ScopedVector() { clear(); }

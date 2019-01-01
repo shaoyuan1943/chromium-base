@@ -566,7 +566,7 @@ class BASE_EXPORT MessageLoopForUI : public MessageLoop {
 #if defined(OS_WIN)
   // Plese see MessagePumpForUI for definitions of this method.
   void SetMessageFilter(scoped_ptr<MessageFilter> message_filter) {
-    pump_ui()->SetMessageFilter(message_filter.Pass());
+    pump_ui()->SetMessageFilter(std::move(message_filter));
   }
 #endif
 

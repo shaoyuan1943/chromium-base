@@ -1,4 +1,4 @@
-// Copyright (c) 2012 The Chromium Authors. All rights reserved.
+﻿// Copyright (c) 2012 The Chromium Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
@@ -97,7 +97,6 @@
 
 #include "base/basictypes.h"
 #include "base/compiler_specific.h"
-#include "base/move.h"
 #include "base/template_util.h"
 
 namespace base {
@@ -131,12 +130,22 @@ template <typename T> struct IsNotRefCounted {
 // sizeof(scoped_ptr<C>) == sizeof(C*)
 template <class C>
 class scoped_ptr {
-  MOVE_ONLY_TYPE_FOR_CPP_03(scoped_ptr, RValue)
-
   COMPILE_ASSERT(base::internal::IsNotRefCounted<C>::value,
                  C_is_refcounted_type_and_needs_scoped_refptr);
 
  public:
+   // move constructor.
+   template <typename U>
+   scoped_ptr(scoped_ptr<U>&& sp) {
+     this->ptr_ = sp.release();
+   }
+
+   // move operator=
+   template <typename U>
+   scoped_ptr& operator=(scoped_ptr<U>&& sp) {
+     this->reset(sp.release());
+     return *this;
+   }
 
   // The element type
   typedef C element_type;
@@ -151,14 +160,6 @@ class scoped_ptr {
   template <typename U>
   scoped_ptr(scoped_ptr<U> other) : ptr_(other.release()) { }
 
-  // Constructor.  Move constructor for C++03 move emulation of this type.
-  scoped_ptr(RValue& other)
-      // The type of the underlying object is scoped_ptr; we have to
-      // reinterpret_cast back to the original type for the call to release to
-      // be valid. (See C++11 5.2.10.7)
-      : ptr_(reinterpret_cast<scoped_ptr&>(other).release()) {
-  }
-
   // Destructor.  If there is a C object, delete it.
   // We don't need to test ptr_ == NULL because C++ does that for us.
   ~scoped_ptr() {
@@ -171,12 +172,6 @@ class scoped_ptr {
   template <typename U>
   scoped_ptr& operator=(scoped_ptr<U> rhs) {
     reset(rhs.release());
-    return *this;
-  }
-
-  // operator=.  Move operator= for C++03 move emulation of this type.
-  scoped_ptr& operator=(RValue& rhs) {
-    swap(rhs);
     return *this;
   }
 
@@ -270,9 +265,19 @@ bool operator!=(C* p1, const scoped_ptr<C>& p2) {
 // Size: sizeof(scoped_array<C>) == sizeof(C*)
 template <class C>
 class scoped_array {
-  MOVE_ONLY_TYPE_FOR_CPP_03(scoped_array, RValue)
-
  public:
+   // move constructor.
+   template <typename U>
+   scoped_array(scoped_array<U>&& sa) {
+     this->ptr_ = sa.release();
+   }
+
+   // move operator=
+   template <typename U>
+   scoped_array& operator=(scoped_array<U>&& sa) {
+     this->reset(sa.release());
+     return *this;
+   }
 
   // The element type
   typedef C element_type;
@@ -282,25 +287,11 @@ class scoped_array {
   // The input parameter must be allocated with new [].
   explicit scoped_array(C* p = NULL) : array_(p) { }
 
-  // Constructor.  Move constructor for C++03 move emulation of this type.
-  scoped_array(RValue& other)
-      // The type of the underlying object is scoped_array; we have to
-      // reinterpret_cast back to the original type for the call to release to
-      // be valid. (See C++11 5.2.10.7)
-      : array_(reinterpret_cast<scoped_array&>(other).release()) {
-  }
-
   // Destructor.  If there is a C object, delete it.
   // We don't need to test ptr_ == NULL because C++ does that for us.
   ~scoped_array() {
     enum { type_must_be_complete = sizeof(C) };
     delete[] array_;
-  }
-
-  // operator=.  Move operator= for C++03 move emulation of this type.
-  scoped_array& operator=(RValue& rhs) {
-    swap(rhs);
-    return *this;
   }
 
   // Reset.  Deletes the current owned object, if any.
@@ -390,9 +381,19 @@ class ScopedPtrMallocFree {
 
 template<class C, class FreeProc = ScopedPtrMallocFree>
 class scoped_ptr_malloc {
-  MOVE_ONLY_TYPE_FOR_CPP_03(scoped_ptr_malloc, RValue)
-
  public:
+  // move constructor.
+  template <typename U>
+  scoped_ptr_malloc(scoped_ptr_malloc<U>&& spm) {
+    this->ptr_ = spm.release();
+  }
+
+   // move operator=
+  template <typename U>
+  scoped_ptr_malloc& operator=(scoped_ptr_malloc<U>&& spm) {
+     this->reset(spm.release());
+     return *this;
+  }
 
   // The element type
   typedef C element_type;
@@ -404,23 +405,9 @@ class scoped_ptr_malloc {
   // realloc.
   explicit scoped_ptr_malloc(C* p = NULL): ptr_(p) {}
 
-  // Constructor.  Move constructor for C++03 move emulation of this type.
-  scoped_ptr_malloc(RValue& other)
-      // The type of the underlying object is scoped_ptr_malloc; we have to
-      // reinterpret_cast back to the original type for the call to release to
-      // be valid. (See C++11 5.2.10.7)
-      : ptr_(reinterpret_cast<scoped_ptr_malloc&>(other).release()) {
-  }
-
   // Destructor.  If there is a C object, call the Free functor.
   ~scoped_ptr_malloc() {
     reset();
-  }
-
-  // operator=.  Move operator= for C++03 move emulation of this type.
-  scoped_ptr_malloc& operator=(RValue& rhs) {
-    swap(rhs);
-    return *this;
   }
 
   // Reset.  Calls the Free functor on the current owned object, if any.

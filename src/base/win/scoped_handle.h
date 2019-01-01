@@ -1,4 +1,4 @@
-// Copyright (c) 2012 The Chromium Authors. All rights reserved.
+﻿// Copyright (c) 2012 The Chromium Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
@@ -11,7 +11,6 @@
 #include "base/basictypes.h"
 #include "base/location.h"
 #include "base/logging.h"
-#include "base/move.h"
 
 namespace base {
 namespace win {
@@ -37,9 +36,19 @@ extern "C" {
 //     takes a raw handle pointer only.
 template <class Traits, class Verifier>
 class GenericScopedHandle {
-  MOVE_ONLY_TYPE_FOR_CPP_03(GenericScopedHandle, RValue)
-
  public:
+  template <typename U, typename V>
+  GenericScopedHandle(GenericScopedHandle<U, V>&& gsh) {
+    Set(gsh.Take());
+  }
+
+  template <typename U, typename V>
+  GenericScopedHandle& operator=(GenericScopedHandle<U, V>&& gsh) {
+    Set(gsh.Take());
+
+    return *this;
+  }
+
   typedef typename Traits::Handle Handle;
 
   GenericScopedHandle() : handle_(Traits::NullHandle()) {}
@@ -48,25 +57,12 @@ class GenericScopedHandle {
     Set(handle);
   }
 
-  // Move constructor for C++03 move emulation of this type.
-  GenericScopedHandle(RValue& other) : handle_(Traits::NullHandle()) {
-    Set(other.Take());
-  }
-
   ~GenericScopedHandle() {
     Close();
   }
 
   bool IsValid() const {
     return Traits::IsHandleValid(handle_);
-  }
-
-  // Move operator= for C++03 move emulation of this type.
-  GenericScopedHandle& operator=(RValue& other) {
-    if (this != &other) {
-      Set(other.Take());
-    }
-    return *this;
   }
 
   void Set(Handle handle) {

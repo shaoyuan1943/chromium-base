@@ -437,9 +437,8 @@ bool MessagePumpForUI::ProcessPumpReplacementMessage() {
   return ProcessMessageHelper(msg);
 }
 
-void MessagePumpForUI::SetMessageFilter(
-    scoped_ptr<MessageFilter> message_filter) {
-  message_filter_ = message_filter.Pass();
+void MessagePumpForUI::SetMessageFilter(scoped_ptr<MessageFilter> message_filter) {
+  message_filter_ = std::move(message_filter);
 }
 
 //-----------------------------------------------------------------------------
