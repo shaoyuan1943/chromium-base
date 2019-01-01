@@ -1,4 +1,4 @@
-// Copyright (c) 2011 The Chromium Authors. All rights reserved.
+﻿// Copyright (c) 2011 The Chromium Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
@@ -152,6 +152,8 @@
 #include "base/memory/weak_ptr.h"
 #include "base/template_util.h"
 
+#include <type_traits>
+
 namespace base {
 namespace internal {
 
@@ -224,73 +226,19 @@ namespace internal {
 //
 // TODO(ajwong): Make this check for Release() as well.
 // See http://crbug.com/82038.
-template <typename T>
-class SupportsAddRefAndRelease {
-  typedef char Yes[1];
-  typedef char No[2];
 
-  struct BaseMixin {
-    void AddRef();
-  };
-
-// MSVC warns when you try to use Base if T has a private destructor, the
-// common pattern for refcounted types. It does this even though no attempt to
-// instantiate Base is made.  We disable the warning for this definition.
-#if defined(OS_WIN)
-#pragma warning(disable:4624)
-#endif
-  struct Base : public T, public BaseMixin {
-  };
-#if defined(OS_WIN)
-#pragma warning(default:4624)
-#endif
-
-  template <void(BaseMixin::*)(void)> struct Helper {};
-
-  template <typename C>
-  static No& Check(Helper<&C::AddRef>*);
-
-  template <typename >
-  static Yes& Check(...);
-
- public:
-  static const bool value = sizeof(Check<Base>(0)) == sizeof(Yes);
-};
-
-// Helpers to assert that arguments of a recounted type are bound with a
-// scoped_refptr.
-template <bool IsClasstype, typename T>
-struct UnsafeBindtoRefCountedArgHelper : false_type {
-};
+template <typename T, typename = void>
+class SupportsAddRefAndRelease : public std::false_type {};
 
 template <typename T>
-struct UnsafeBindtoRefCountedArgHelper<true, T>
-    : integral_constant<bool, SupportsAddRefAndRelease<T>::value> {
-};
+class SupportsAddRefAndRelease<T, \
+  std::void_t<typename decltype(&T::AddRef)>> : public std::true_type {};
+
+template <typename T, typename = void>
+class HasIsMethodTag : public std::false_type {};
 
 template <typename T>
-struct UnsafeBindtoRefCountedArg : false_type {
-};
-
-template <typename T>
-struct UnsafeBindtoRefCountedArg<T*>
-    : UnsafeBindtoRefCountedArgHelper<is_class<T>::value, T> {
-};
-
-template <typename T>
-class HasIsMethodTag {
-  typedef char Yes[1];
-  typedef char No[2];
-
-  template <typename U>
-  static Yes& Check(typename U::IsMethod*);
-
-  template <typename U>
-  static No& Check(...);
-
- public:
-  static const bool value = sizeof(Check<T>(0)) == sizeof(Yes);
-};
+class HasIsMethodTag<T, std::void_t<typename decltype(&T::IsMethod)>> : public std::true_type {};
 
 template <typename T>
 class UnretainedWrapper {
@@ -486,13 +434,13 @@ struct MaybeRefcount<true, const T*> {
 //
 // P1 should be the type of the object that will be received of the method.
 template <bool IsMethod, typename P1>
-struct IsWeakMethod : public false_type {};
+struct IsWeakMethod : public std::false_type {};
 
 template <typename T>
-struct IsWeakMethod<true, WeakPtr<T> > : public true_type {};
+struct IsWeakMethod<true, WeakPtr<T> > : public std::true_type {};
 
 template <typename T>
-struct IsWeakMethod<true, ConstRefWrapper<WeakPtr<T> > > : public true_type {};
+struct IsWeakMethod<true, ConstRefWrapper<WeakPtr<T> > > : public std::true_type {};
 
 }  // namespace internal
 

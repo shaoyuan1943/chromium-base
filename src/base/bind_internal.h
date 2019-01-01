@@ -2590,8 +2590,9 @@ struct BindState<Runnable, RunType, void(P1, P2)> : public BindStateBase {
     MaybeRefcount<HasIsMethodTag<Runnable>::value, P1>::AddRef(p1_);
   }
 
-  virtual ~BindState() {    MaybeRefcount<HasIsMethodTag<Runnable>::value,
-      P1>::Release(p1_);  }
+  virtual ~BindState() {
+    MaybeRefcount<HasIsMethodTag<Runnable>::value, P1>::Release(p1_);
+  }
 
   RunnableType runnable_;
   P1 p1_;
