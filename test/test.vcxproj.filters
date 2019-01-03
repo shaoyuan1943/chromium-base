@@ -1,0 +1,128 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="资源文件">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="pre-complie">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="src">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="src\gtest">
+      <UniqueIdentifier>{7555ece9-d575-47d8-af23-dbd85f5eb528}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\gtest\internal">
+      <UniqueIdentifier>{52655e56-2c51-416b-93df-1b45fe3ed30d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\gtest\internal\custom">
+      <UniqueIdentifier>{1bb7ad82-cae9-4ae0-ae56-143880b2582f}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="pch.h">
+      <Filter>pre-complie</Filter>
+    </ClInclude>
+    <ClInclude Include="third_party\gtest\include\gtest\gtest.h">
+      <Filter>src\gtest</Filter>
+    </ClInclude>
+    <ClInclude Include="third_party\gtest\include\gtest\gtest_pred_impl.h">
+      <Filter>src\gtest</Filter>
+    </ClInclude>
+    <ClInclude Include="third_party\gtest\include\gtest\gtest_prod.h">
+      <Filter>src\gtest</Filter>
+    </ClInclude>
+    <ClInclude Include="third_party\gtest\include\gtest\gtest-death-test.h">
+      <Filter>src\gtest</Filter>
+    </ClInclude>
+    <ClInclude Include="third_party\gtest\include\gtest\gtest-matchers.h">
+      <Filter>src\gtest</Filter>
+    </ClInclude>
+    <ClInclude Include="third_party\gtest\include\gtest\gtest-message.h">
+      <Filter>src\gtest</Filter>
+    </ClInclude>
+    <ClInclude Include="third_party\gtest\include\gtest\gtest-param-test.h">
+      <Filter>src\gtest</Filter>
+    </ClInclude>
+    <ClInclude Include="third_party\gtest\include\gtest\gtest-printers.h">
+      <Filter>src\gtest</Filter>
+    </ClInclude>
+    <ClInclude Include="third_party\gtest\include\gtest\gtest-spi.h">
+      <Filter>src\gtest</Filter>
+    </ClInclude>
+    <ClInclude Include="third_party\gtest\include\gtest\gtest-test-part.h">
+      <Filter>src\gtest</Filter>
+    </ClInclude>
+    <ClInclude Include="third_party\gtest\include\gtest\gtest-typed-test.h">
+      <Filter>src\gtest</Filter>
+    </ClInclude>
+    <ClInclude Include="third_party\gtest\include\gtest\internal\gtest-death-test-internal.h">
+      <Filter>src\gtest\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="third_party\gtest\include\gtest\internal\gtest-filepath.h">
+      <Filter>src\gtest\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="third_party\gtest\include\gtest\internal\gtest-internal.h">
+      <Filter>src\gtest\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="third_party\gtest\include\gtest\internal\gtest-param-util.h">
+      <Filter>src\gtest\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="third_party\gtest\include\gtest\internal\gtest-param-util-generated.h">
+      <Filter>src\gtest\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="third_party\gtest\include\gtest\internal\gtest-port.h">
+      <Filter>src\gtest\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="third_party\gtest\include\gtest\internal\gtest-port-arch.h">
+      <Filter>src\gtest\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="third_party\gtest\include\gtest\internal\gtest-string.h">
+      <Filter>src\gtest\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="third_party\gtest\include\gtest\internal\gtest-type-util.h">
+      <Filter>src\gtest\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="third_party\gtest\include\gtest\internal\custom\gtest.h">
+      <Filter>src\gtest\internal\custom</Filter>
+    </ClInclude>
+    <ClInclude Include="third_party\gtest\include\gtest\internal\custom\gtest-port.h">
+      <Filter>src\gtest\internal\custom</Filter>
+    </ClInclude>
+    <ClInclude Include="third_party\gtest\include\gtest\internal\custom\gtest-printers.h">
+      <Filter>src\gtest\internal\custom</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="test.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="pch.cpp">
+      <Filter>pre-complie</Filter>
+    </ClCompile>
+    <ClCompile Include="at_exit_unittest.cc">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="base64_unittest.cc">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="bind_helpers_unittest.cc">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="bits_unittest.cc">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="build_time_unittest.cc">
+      <Filter>src</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="third_party\gtest\include\gtest\gtest-param-test.h.pump">
+      <Filter>src\gtest</Filter>
+    </None>
+  </ItemGroup>
+</Project>

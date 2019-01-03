@@ -15,9 +15,9 @@
 *.pdb
 
 # Compiled Dynamic libraries
-*.so
-*.dylib
-*.dll
+#*.so
+#*.dylib
+#*.dll
 *.exp
 *.ilk
 
@@ -28,8 +28,8 @@
 # Compiled Static libraries
 *.lai
 *.la
-*.a
-*.lib
+#*.a
+#*.lib
 
 # Executables
 *.exe
