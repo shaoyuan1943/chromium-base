@@ -1,4 +1,4 @@
-// Copyright (c) 2012 The Chromium Authors. All rights reserved.
+﻿// Copyright (c) 2012 The Chromium Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
@@ -13,6 +13,8 @@
 #include "base/file_path.h"
 #include "base/memory/ref_counted.h"
 #include "base/message_loop_proxy.h"
+
+#include <functional>
 
 namespace base {
 namespace files {
@@ -31,7 +33,7 @@ class BASE_EXPORT FilePathWatcher {
   // Callback type for Watch(). |path| points to the file that was updated,
   // and |error| is true if the platform specific code detected an error. In
   // that case, the callback won't be invoked again.
-  typedef base::Callback<void(const FilePath& path, bool error)> Callback;
+  using WatcherCallback = std::function<void(const FilePath&, bool)>;
 
   // Declares the callback client code implements to receive notifications. Note
   // that implementations of this interface should not keep a reference to the
@@ -121,7 +123,7 @@ class BASE_EXPORT FilePathWatcher {
   // Invokes |callback| whenever updates to |path| are detected. This should be
   // called at most once, and from a MessageLoop of TYPE_IO. The callback will
   // be invoked on the same loop. Returns true on success.
-  bool Watch(const FilePath& path, const Callback& callback);
+  bool Watch(const FilePath& path, const WatcherCallback& callback);
 
  private:
   scoped_refptr<PlatformDelegate> impl_;

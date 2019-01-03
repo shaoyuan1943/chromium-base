@@ -1,4 +1,4 @@
-// Copyright (c) 2011 The Chromium Authors. All rights reserved.
+﻿// Copyright (c) 2011 The Chromium Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
@@ -18,22 +18,26 @@ namespace {
 // A delegate implementation for the callback interface.
 class FilePathWatcherDelegate : public base::files::FilePathWatcher::Delegate {
  public:
-  explicit FilePathWatcherDelegate(const FilePathWatcher::Callback& callback)
+  explicit FilePathWatcherDelegate(const FilePathWatcher::WatcherCallback& callback)
       : callback_(callback) {}
 
   // FilePathWatcher::Delegate implementation.
   virtual void OnFilePathChanged(const FilePath& path) OVERRIDE {
-    callback_.Run(path, false);
+    if (callback_ != nullptr) {
+      callback_(path, false);
+    }
   }
 
   virtual void OnFilePathError(const FilePath& path) OVERRIDE {
-    callback_.Run(path, true);
+    if (callback_ != nullptr) {
+      callback_(path, true);
+    }
   }
 
  private:
   virtual ~FilePathWatcherDelegate() {}
 
-  FilePathWatcher::Callback callback_;
+  FilePathWatcher::WatcherCallback callback_;
 
   DISALLOW_COPY_AND_ASSIGN(FilePathWatcherDelegate);
 };
@@ -62,7 +66,7 @@ FilePathWatcher::PlatformDelegate::~PlatformDelegate() {
   DCHECK(is_cancelled());
 }
 
-bool FilePathWatcher::Watch(const FilePath& path, const Callback& callback) {
+bool FilePathWatcher::Watch(const FilePath& path, const WatcherCallback& callback) {
   return Watch(path, new FilePathWatcherDelegate(callback));
 }
 
