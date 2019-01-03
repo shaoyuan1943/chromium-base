@@ -28,7 +28,7 @@ bool Base64Encode(const StringPiece& input, char* output, size_t* encodeLength) 
   return true;
 }
 
-bool Base64Decode(const StringPiece& input, std::string* output, size_t* decodeLength) {
+bool Base64Decode(const StringPiece& input, char* output, size_t* decodeLength) {
   DCHECK(output != nullptr);
   std::string temp;
   temp.resize(modp_b64_decode_len(input.size()));

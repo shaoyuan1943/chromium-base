@@ -188,6 +188,7 @@
   <ItemGroup>
     <ClCompile Include="at_exit_unittest.cc" />
     <ClCompile Include="base64_unittest.cc" />
+    <ClCompile Include="base_time_unittest.cc" />
     <ClCompile Include="bind_helpers_unittest.cc" />
     <ClCompile Include="bits_unittest.cc" />
     <ClCompile Include="build_time_unittest.cc" />

@@ -22,10 +22,9 @@ TEST(Base64Test, Basic) {
    EXPECT_EQ(kBase64Text, std::string(encode, encodeLength));
 
    decode = new char[base::Base64DecodeLength(std::string(encode, encodeLength))];
-   ok = base::Base64Decode(std::string(encode, encodeLength), decode, decodeLength);
-//   ok = Base64Decode(encoded, &decoded);
-//   //EXPECT_TRUE(ok);
-//   //EXPECT_EQ(kText, decoded);
+   ok = base::Base64Decode(std::string(encode, encodeLength), decode, &decodeLength);
+   EXPECT_TRUE(ok);
+   EXPECT_EQ(kText, std::string(decode, decodeLength));
 }
 
 }  // namespace base

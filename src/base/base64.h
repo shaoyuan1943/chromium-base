@@ -18,7 +18,7 @@ BASE_EXPORT bool Base64Encode(const StringPiece& input, char* output, size_t* en
 
 // Decodes the base64 input string.  Returns true if successful and false
 // otherwise.  The output string is only modified if successful.
-BASE_EXPORT bool Base64Decode(const StringPiece& input, std::string* output, size_t* decodeLength);
+BASE_EXPORT bool Base64Decode(const StringPiece& input, char* output, size_t* decodeLength);
 
 // Return encode/decode string length, In case finally length is more than [modp_b64_encode_len] 10b.
 BASE_EXPORT size_t Base64EncodeLength(const StringPiece& input);
