@@ -12,14 +12,17 @@ TEST(Base64Test, Basic) {
   const std::string kText = "hello world";
   const std::string kBase64Text = "aGVsbG8gd29ybGQ=";
 
-  std::string encoded;
-  std::string decoded;
-  bool ok;
+  char* encode = new char[base::Base64EncodeLength(kText)];
+  char* decode = nullptr;
+  bool ok = false;;
+  size_t encodeLength = 0, decodeLength = 0;
 
-   ok = base::Base64Encode(kText, &encoded);
+   ok = base::Base64Encode(kText, encode, &encodeLength);
    EXPECT_TRUE(ok);
-//   EXPECT_EQ(kBase64Text, encoded);
-//
+   EXPECT_EQ(kBase64Text, std::string(encode, encodeLength));
+
+   decode = new char[base::Base64DecodeLength(std::string(encode, encodeLength))];
+   ok = base::Base64Decode(std::string(encode, encodeLength), decode, decodeLength);
 //   ok = Base64Decode(encoded, &decoded);
 //   //EXPECT_TRUE(ok);
 //   //EXPECT_EQ(kText, decoded);

@@ -1,14 +1,15 @@
-// Copyright (c) 2012 The Chromium Authors. All rights reserved.
+﻿// Copyright (c) 2012 The Chromium Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
 #include "base/base64.h"
-
+#include "base/logging.h"
 #include "third_party/modp_b64/modp_b64.h"
 
 namespace base {
 
-bool Base64Encode(const StringPiece& input, std::string* output) {
+bool Base64Encode(const StringPiece& input, char* output, size_t* encodeLength) {
+  DCHECK(output != nullptr);
   std::string temp;
   temp.resize(modp_b64_encode_len(input.size()));  // makes room for null byte
 
@@ -21,11 +22,14 @@ bool Base64Encode(const StringPiece& input, std::string* output) {
     return false;
 
   temp.resize(output_size);  // strips off null byte
-  output->swap(temp);
+
+  memcpy(output, temp.data(), temp.size());
+  *encodeLength = temp.size();
   return true;
 }
 
-bool Base64Decode(const StringPiece& input, std::string* output) {
+bool Base64Decode(const StringPiece& input, std::string* output, size_t* decodeLength) {
+  DCHECK(output != nullptr);
   std::string temp;
   temp.resize(modp_b64_decode_len(input.size()));
 
@@ -36,8 +40,18 @@ bool Base64Decode(const StringPiece& input, std::string* output) {
     return false;
 
   temp.resize(output_size);
-  output->swap(temp);
+
+  memcpy(output, temp.data(), temp.size());
+  *decodeLength = temp.size();
   return true;
+}
+
+size_t Base64EncodeLength(const StringPiece& input) {
+  return modp_b64_encode_len(input.size()) + 10;
+}
+
+size_t Base64DecodeLength(const StringPiece& input) {
+  return modp_b64_decode_len(input.size() + 10);
 }
 
 }  // namespace base
