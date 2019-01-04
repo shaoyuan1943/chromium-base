@@ -122,6 +122,12 @@
     <ClCompile Include="base_time_unittest.cc">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="callback_unittest.cc">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="cancelable_callback_unittest.cc">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="third_party\gtest\include\gtest\gtest-param-test.h.pump">

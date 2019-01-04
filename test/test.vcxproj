@@ -192,6 +192,8 @@
     <ClCompile Include="bind_helpers_unittest.cc" />
     <ClCompile Include="bits_unittest.cc" />
     <ClCompile Include="build_time_unittest.cc" />
+    <ClCompile Include="callback_unittest.cc" />
+    <ClCompile Include="cancelable_callback_unittest.cc" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
