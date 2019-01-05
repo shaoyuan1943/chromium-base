@@ -42,3 +42,5 @@
 *.ipch
 *.tlog
 *.log
+*.db-shm
+*.db-wal
