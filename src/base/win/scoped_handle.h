@@ -39,12 +39,15 @@ class GenericScopedHandle {
  public:
   template <typename U, typename V>
   GenericScopedHandle(GenericScopedHandle<U, V>&& gsh) {
+    handle_ = Traits::NullHandle();
     Set(gsh.Take());
   }
 
   template <typename U, typename V>
   GenericScopedHandle& operator=(GenericScopedHandle<U, V>&& gsh) {
-    Set(gsh.Take());
+    if (this != &gsh) {
+      Set(gsh.Take());
+    }
 
     return *this;
   }
