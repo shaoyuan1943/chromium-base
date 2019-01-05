@@ -44,7 +44,7 @@ class AtExitTest : public testing::Test {
  private:
   // Don't test the global AtExitManager, because asking it to process its
   // AtExit callbacks can ruin the global state that other tests may depend on.
-  base::AtExitManager exit_manager_;
+  base::ShadowingAtExitManager exit_manager_;
 };
 
 TEST_F(AtExitTest, Basic) {

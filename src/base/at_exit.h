@@ -1,4 +1,4 @@
-// Copyright (c) 2011 The Chromium Authors. All rights reserved.
+﻿// Copyright (c) 2011 The Chromium Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
@@ -64,12 +64,10 @@ class BASE_EXPORT AtExitManager {
   DISALLOW_COPY_AND_ASSIGN(AtExitManager);
 };
 
-#if defined(UNIT_TEST)
-class ShadowingAtExitManager : public AtExitManager {
+class BASE_EXPORT ShadowingAtExitManager : public AtExitManager {
  public:
   ShadowingAtExitManager() : AtExitManager(true) {}
 };
-#endif  // defined(UNIT_TEST)
 
 }  // namespace base
 

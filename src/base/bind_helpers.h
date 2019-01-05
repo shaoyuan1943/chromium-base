@@ -238,7 +238,7 @@ template <typename T, typename = void>
 class HasIsMethodTag : public std::false_type {};
 
 template <typename T>
-class HasIsMethodTag<T, std::void_t<typename decltype(&T::IsMethod)>> : public std::true_type {};
+class HasIsMethodTag<T, std::void_t<typename T::IsMethod>> : public std::true_type {};
 
 template <typename T>
 class UnretainedWrapper {

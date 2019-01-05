@@ -143,7 +143,10 @@ class scoped_ptr {
    // move operator=
    template <typename U>
    scoped_ptr& operator=(scoped_ptr<U>&& sp) {
-     this->reset(sp.release());
+     if (this != &sp) {
+       reset(sp.release());
+     }
+
      return *this;
    }
 
@@ -275,7 +278,10 @@ class scoped_array {
    // move operator=
    template <typename U>
    scoped_array& operator=(scoped_array<U>&& sa) {
-     this->reset(sa.release());
+     if (this != &sa) {
+       this->reset(sa.release());
+     }
+
      return *this;
    }
 
