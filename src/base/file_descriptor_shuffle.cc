@@ -4,7 +4,8 @@
 
 #include "base/file_descriptor_shuffle.h"
 
-#include <unistd.h>
+#include <io.h>
+#include <process.h>
 #include <stddef.h>
 #include <ostream>
 

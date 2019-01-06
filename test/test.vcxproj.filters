@@ -96,6 +96,9 @@
     <ClInclude Include="third_party\gtest\include\gtest\internal\custom\gtest-printers.h">
       <Filter>src\gtest\internal\custom</Filter>
     </ClInclude>
+    <ClInclude Include="third_party\testing\platform_test.h">
+      <Filter>src</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="test.cpp">
@@ -126,6 +129,33 @@
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="cancelable_callback_unittest.cc">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="command_line_unittest.cc">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="environment_unittest.cc">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="file_descriptor_shuffle_unittest.cc">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="file_path_unittest.cc">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="file_util_proxy_unittest.cc">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="file_util_unittest.cc">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="file_version_info_unittest.cc">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="guid_unittest.cc">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="hi_res_timer_manager_unittest.cc">
       <Filter>src</Filter>
     </ClCompile>
   </ItemGroup>

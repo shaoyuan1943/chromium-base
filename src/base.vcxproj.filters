@@ -300,6 +300,7 @@
     <ClCompile Include="base\third_party\icu\icu_utf.cc">
       <Filter>third_party\icu</Filter>
     </ClCompile>
+    <ClCompile Include="base\file_descriptor_shuffle.cc" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -651,5 +652,6 @@
     <ClInclude Include="base\third_party\icu\icu_utf.h">
       <Filter>third_party\icu</Filter>
     </ClInclude>
+    <ClInclude Include="base\file_descriptor_shuffle.h" />
   </ItemGroup>
 </Project>

@@ -109,6 +109,7 @@
       <AdditionalIncludeDirectories>.;./;./base;./build;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <AdditionalOptions>/Zc:strictStrings- %(AdditionalOptions)</AdditionalOptions>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -190,6 +191,7 @@
     <ClInclude Include="base\event_types.h" />
     <ClInclude Include="base\files\dir_reader_fallback.h" />
     <ClInclude Include="base\files\file_path_watcher.h" />
+    <ClInclude Include="base\file_descriptor_shuffle.h" />
     <ClInclude Include="base\file_path.h" />
     <ClInclude Include="base\file_util.h" />
     <ClInclude Include="base\file_util_proxy.h" />
@@ -364,6 +366,7 @@
     <ClCompile Include="base\event_recorder_win.cc" />
     <ClCompile Include="base\files\file_path_watcher.cc" />
     <ClCompile Include="base\files\file_path_watcher_win.cc" />
+    <ClCompile Include="base\file_descriptor_shuffle.cc" />
     <ClCompile Include="base\file_path.cc" />
     <ClCompile Include="base\file_util.cc" />
     <ClCompile Include="base\file_util_proxy.cc" />

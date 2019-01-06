@@ -93,14 +93,14 @@
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>./;./third_party;../src/;.;./third_party/gtest/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <AdditionalIncludeDirectories>./;./third_party/testing;./third_party;../src/;.;./third_party/testing/gtest/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>gtest_maind.lib;gtestd.lib;base.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>./third_party/gtest/libs/x64;../bin/base/x64/Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>./third_party/testing/gtest/libs/x64;../bin/base/x64/Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
       <Command>xcopy /r /y ..\bin\base\x64\Debug\base.dll ..\bin\test\x64\Debug\</Command>
@@ -184,6 +184,7 @@
     <ClInclude Include="third_party\gtest\include\gtest\internal\gtest-port.h" />
     <ClInclude Include="third_party\gtest\include\gtest\internal\gtest-string.h" />
     <ClInclude Include="third_party\gtest\include\gtest\internal\gtest-type-util.h" />
+    <ClInclude Include="third_party\testing\platform_test.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="at_exit_unittest.cc" />
@@ -194,6 +195,15 @@
     <ClCompile Include="build_time_unittest.cc" />
     <ClCompile Include="callback_unittest.cc" />
     <ClCompile Include="cancelable_callback_unittest.cc" />
+    <ClCompile Include="command_line_unittest.cc" />
+    <ClCompile Include="environment_unittest.cc" />
+    <ClCompile Include="file_descriptor_shuffle_unittest.cc" />
+    <ClCompile Include="file_path_unittest.cc" />
+    <ClCompile Include="file_util_proxy_unittest.cc" />
+    <ClCompile Include="file_util_unittest.cc" />
+    <ClCompile Include="file_version_info_unittest.cc" />
+    <ClCompile Include="guid_unittest.cc" />
+    <ClCompile Include="hi_res_timer_manager_unittest.cc" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

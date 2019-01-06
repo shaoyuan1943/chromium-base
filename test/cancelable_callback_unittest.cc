@@ -8,6 +8,7 @@
 #include "base/bind_helpers.h"
 #include "base/memory/ref_counted.h"
 #include "base/message_loop.h"
+#include "base/run_loop.h"
 #include "gtest/include/gtest/gtest.h"
 
 namespace base {
@@ -158,27 +159,28 @@ TEST(CancelableCallbackTest, IsNull) {
 // CancelableCallback posted to a MessageLoop with PostTask.
 //  - Callbacks posted to a MessageLoop can be cancelled.
 TEST(CancelableCallbackTest, PostTask) {
-  //MessageLoop loop(MessageLoop::TYPE_DEFAULT);
-
+  MessageLoop loop(MessageLoop::TYPE_DEFAULT);
+  RunLoop rl;
   int count = 0;
-//   CancelableClosure cancelable(base::Bind(&Increment,
-//                                            base::Unretained(&count)));
+  CancelableClosure cancelable(base::Bind(&Increment,
+                                           base::Unretained(&count)));
 
-  //MessageLoop::current()->PostTask(FROM_HERE, cancelable.callback());
-//   MessageLoop::current()->PostTask(FROM_HERE, MessageLoop::QuitClosure());
-//   MessageLoop::current()->Run();
-//
-//   EXPECT_EQ(1, count);
-//
-//   MessageLoop::current()->PostTask(FROM_HERE, cancelable.callback());
-//   MessageLoop::current()->PostTask(FROM_HERE, MessageLoop::QuitClosure());
-//
-//   // Cancel before running the message loop.
-//   cancelable.Cancel();
-//   MessageLoop::current()->Run();
-//
-//   // Callback never ran due to cancellation; count is the same.
-//   EXPECT_EQ(1, count);
+  MessageLoop::current()->PostTask(FROM_HERE, cancelable.callback());
+  MessageLoop::current()->PostTask(FROM_HERE, MessageLoop::QuitClosure());
+  MessageLoop::current()->Run();
+
+  EXPECT_EQ(1, count);
+
+  MessageLoop::current()->PostTask(FROM_HERE, cancelable.callback());
+  MessageLoop::current()->PostTask(FROM_HERE, MessageLoop::QuitClosure());
+
+  // Cancel before running the message loop.
+  cancelable.Cancel();
+  rl.Run();
+  //MessageLoop::current()->Run();
+
+  // Callback never ran due to cancellation; count is the same.
+  EXPECT_EQ(1, count);
 }
 
 }  // namespace
