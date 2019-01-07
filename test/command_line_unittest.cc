@@ -9,7 +9,7 @@
 #include "base/command_line.h"
 #include "base/file_path.h"
 #include "base/utf_string_conversions.h"
-#include "gtest/include/gtest/gtest.h"
+#include "testing/gtest/include/gtest/gtest.h"
 
 // To test Windows quoting behavior, we use a string that has some backslashes
 // and quotes.

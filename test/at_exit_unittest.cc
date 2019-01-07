@@ -2,6 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+
 #include "base/at_exit.h"
 #include "base/bind.h"
 
@@ -48,6 +49,7 @@ class AtExitTest : public testing::Test {
 };
 
 TEST_F(AtExitTest, Basic) {
+  DCHECK(1);
   ZeroTestCounters();
   base::AtExitManager::RegisterCallback(&IncrementTestCounter1, NULL);
   base::AtExitManager::RegisterCallback(&IncrementTestCounter2, NULL);

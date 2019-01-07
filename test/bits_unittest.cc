@@ -4,45 +4,44 @@
 
 // This file contains the unit tests for the bit utilities.
 
+#include <io.h>
+#include <iostream>
+
 #include "base/bits.h"
 #include "gtest/include/gtest/gtest.h"
 
-namespace base {
-namespace bits {
+using namespace testing;
 
 TEST(BitsTest, Log2Floor) {
-  EXPECT_EQ(-1, Log2Floor(0));
-  EXPECT_EQ(0, Log2Floor(1));
-  EXPECT_EQ(1, Log2Floor(2));
-  EXPECT_EQ(1, Log2Floor(3));
-  EXPECT_EQ(2, Log2Floor(4));
+  EXPECT_EQ(-1, base::bits::Log2Floor(0));
+  EXPECT_EQ(0, base::bits::Log2Floor(1));
+  EXPECT_EQ(1, base::bits::Log2Floor(2));
+  EXPECT_EQ(1, base::bits::Log2Floor(3));
+  EXPECT_EQ(2, base::bits::Log2Floor(4));
   for (int i = 3; i < 31; ++i) {
     unsigned int value = 1U << i;
-    EXPECT_EQ(i, Log2Floor(value));
-    EXPECT_EQ(i, Log2Floor(value + 1));
-    EXPECT_EQ(i, Log2Floor(value + 2));
-    EXPECT_EQ(i - 1, Log2Floor(value - 1));
-    EXPECT_EQ(i - 1, Log2Floor(value - 2));
+    EXPECT_EQ(i, base::bits::Log2Floor(value));
+    EXPECT_EQ(i, base::bits::Log2Floor(value + 1));
+    EXPECT_EQ(i, base::bits::Log2Floor(value + 2));
+    EXPECT_EQ(i - 1, base::bits::Log2Floor(value - 1));
+    EXPECT_EQ(i - 1, base::bits::Log2Floor(value - 2));
   }
-  EXPECT_EQ(31, Log2Floor(0xffffffffU));
+  EXPECT_EQ(31, base::bits::Log2Floor(0xffffffffU));
 }
 
 TEST(BitsTest, Log2Ceiling) {
-  EXPECT_EQ(-1, Log2Ceiling(0));
-  EXPECT_EQ(0, Log2Ceiling(1));
-  EXPECT_EQ(1, Log2Ceiling(2));
-  EXPECT_EQ(2, Log2Ceiling(3));
-  EXPECT_EQ(2, Log2Ceiling(4));
+  EXPECT_EQ(-1, base::bits::Log2Ceiling(0));
+  EXPECT_EQ(0, base::bits::Log2Ceiling(1));
+  EXPECT_EQ(1, base::bits::Log2Ceiling(2));
+  EXPECT_EQ(2, base::bits::Log2Ceiling(3));
+  EXPECT_EQ(2, base::bits::Log2Ceiling(4));
   for (int i = 3; i < 31; ++i) {
     unsigned int value = 1U << i;
-    EXPECT_EQ(i, Log2Ceiling(value));
-    EXPECT_EQ(i + 1, Log2Ceiling(value + 1));
-    EXPECT_EQ(i + 1, Log2Ceiling(value + 2));
-    EXPECT_EQ(i, Log2Ceiling(value - 1));
-    EXPECT_EQ(i, Log2Ceiling(value - 2));
+    EXPECT_EQ(i, base::bits::Log2Ceiling(value));
+    EXPECT_EQ(i + 1, base::bits::Log2Ceiling(value + 1));
+    EXPECT_EQ(i + 1, base::bits::Log2Ceiling(value + 2));
+    EXPECT_EQ(i, base::bits::Log2Ceiling(value - 1));
+    EXPECT_EQ(i, base::bits::Log2Ceiling(value - 2));
   }
-  EXPECT_EQ(32, Log2Ceiling(0xffffffffU));
+  EXPECT_EQ(32, base::bits::Log2Ceiling(0xffffffffU));
 }
-
-}  // namespace bits
-}  // namespace base

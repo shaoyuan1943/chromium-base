@@ -1,6 +1,22 @@
-// Copyright (c) 2012 The Chromium Authors. All rights reserved.
+﻿// Copyright (c) 2012 The Chromium Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
+
+#include <algorithm>
+#include <fstream>
+#include <set>
+
+#include "base/base_time.h"
+#include "base/base_paths.h"
+#include "base/file_path.h"
+#include "base/file_util.h"
+#include "base/path_service.h"
+
+#include "base/scoped_temp_dir.h"
+#include "base/threading/platform_thread.h"
+#include "base/utf_string_conversions.h"
+#include "testing/gtest/include/gtest/gtest.h"
+#include "testing/platform_test.h"
 
 #include "build/build_config.h"
 
@@ -10,22 +26,6 @@
 #include <shlobj.h>
 #include <tchar.h>
 #include <winioctl.h>
-#endif
-
-#include <algorithm>
-#include <fstream>
-#include <set>
-
-#include "base/base_paths.h"
-#include "base/file_path.h"
-#include "base/file_util.h"
-#include "base/path_service.h"
-#include "base/scoped_temp_dir.h"
-#include "base/threading/platform_thread.h"
-#include "base/utf_string_conversions.h"
-#include "gtest/include/gtest/gtest.h"
-
-#if defined(OS_WIN)
 #include "base/win/scoped_handle.h"
 #endif
 
@@ -134,10 +134,10 @@ const int FILES_AND_DIRECTORIES =
 
 // file_util winds up using autoreleased objects on the Mac, so this needs
 // to be a PlatformTest
-class FileUtilTest : public testing::Test {
+class FileUtilTest : public PlatformTest {
  protected:
   virtual void SetUp() OVERRIDE {
-    testing::Test::SetUp();
+    PlatformTest::SetUp();
     ASSERT_TRUE(temp_dir_.CreateUniqueTempDir());
   }
 
@@ -1488,7 +1488,7 @@ TEST_F(FileUtilTest, GetFileCreationLocalTime) {
 
 // file_util winds up using autoreleased objects on the Mac, so this needs
 // to be a PlatformTest.
-typedef testing::Test ReadOnlyFileUtilTest;
+typedef PlatformTest ReadOnlyFileUtilTest;
 
 TEST_F(ReadOnlyFileUtilTest, ContentsEqual) {
   FilePath data_dir;
@@ -1744,7 +1744,7 @@ TEST_F(FileUtilTest, CreateDirectoryTest) {
   // 1. The current directory always exists.
   // 2. The root directory always exists.
   ASSERT_TRUE(file_util::DirectoryExists(
-      FilePath(FilePath::kCurrentDirectory)));
+      FilePath(FilePath::CurrentDirectory())));
   FilePath top_level = test_root;
   while (top_level != top_level.DirName()) {
     top_level = top_level.DirName();
@@ -1754,7 +1754,7 @@ TEST_F(FileUtilTest, CreateDirectoryTest) {
   // Given these assumptions hold, it should be safe to
   // test that "creating" these directories succeeds.
   EXPECT_TRUE(file_util::CreateDirectory(
-      FilePath(FilePath::kCurrentDirectory)));
+      FilePath(FilePath::CurrentDirectory())));
   EXPECT_TRUE(file_util::CreateDirectory(top_level));
 
 #if defined(OS_WIN)
@@ -1817,7 +1817,7 @@ TEST_F(FileUtilTest, FileEnumeratorTest) {
   FilePath file1 = temp_dir_.path().Append(FILE_PATH_LITERAL("file1.txt"));
   CreateTextFile(file1, L"");
   FilePath file2_rel =
-      dir2.Append(FilePath::kParentDirectory)
+      dir2.Append(FilePath::ParentDirectory())
           .Append(FILE_PATH_LITERAL("file2.txt"));
   CreateTextFile(file2_rel, L"");
   FilePath file2_abs = temp_dir_.path().Append(FILE_PATH_LITERAL("file2.txt"));
