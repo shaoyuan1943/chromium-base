@@ -1166,7 +1166,7 @@ struct Invoker<1, StorageType, R(X1)> {
 
     typename Bound1UnwrapTraits::ForwardType x1 =
         Bound1UnwrapTraits::Unwrap(storage->p1_);
-    bool isWeakCall = StorageType::IsWeakCall::value;
+
     return InvokeHelper<StorageType::IsWeakCall::value, R,
            typename StorageType::RunnableType,
            void(typename Bound1UnwrapTraits::ForwardType)>
@@ -2564,7 +2564,6 @@ struct BindState<Runnable, RunType, void(P1)> : public BindStateBase {
       : runnable_(runnable),
         p1_(p1) {
 
-    bool isMethodTag = HasIsMethodTag<Runnable>::value;
     MaybeRefcount<HasIsMethodTag<Runnable>::value, P1>::AddRef(p1_);
   }
 

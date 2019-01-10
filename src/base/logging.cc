@@ -38,11 +38,9 @@ typedef FILE* FileHandle;
 typedef pthread_mutex_t* MutexHandle;
 #endif
 
-#include <stdio.h>
 #include <algorithm>
 #include <cstring>
 #include <ctime>
-#include <time.h>
 #include <iomanip>
 #include <ostream>
 
@@ -704,6 +702,9 @@ void LogMessage::Init(const char* file, int line) {
   message_start_ = stream_.tellp();
 }
 
+// std::ostream& LogMessage::stream() {
+//   return stream_;
+// }
 #if defined(OS_WIN)
 // This has already been defined in the header, but defining it again as DWORD
 // ensures that the type used in the header is equivalent to DWORD. If not,
@@ -782,6 +783,11 @@ Win32ErrorLogMessage::~Win32ErrorLogMessage() {
   DWORD last_error = err_;
   base::debug::Alias(&last_error);
 }
+
+std::ostream& Win32ErrorLogMessage::stream() {
+  return log_message_.stream();
+}
+
 #elif defined(OS_POSIX)
 ErrnoLogMessage::ErrnoLogMessage(const char* file,
                                  int line,
@@ -793,6 +799,10 @@ ErrnoLogMessage::ErrnoLogMessage(const char* file,
 
 ErrnoLogMessage::~ErrnoLogMessage() {
   stream() << ": " << safe_strerror(err_);
+}
+
+std::ostream& ErrnoLogMessage::stream() {
+  return log_message_.stream();
 }
 #endif  // OS_WIN
 

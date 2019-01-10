@@ -1,4 +1,4 @@
-// Copyright (c) 2012 The Chromium Authors. All rights reserved.
+﻿// Copyright (c) 2012 The Chromium Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
@@ -291,7 +291,7 @@ TEST(CommandLineTest, ProgramQuotes) {
 // Calling Init multiple times should not modify the previous CommandLine.
 TEST(CommandLineTest, Init) {
   CommandLine* initial = CommandLine::ForCurrentProcess();
-  EXPECT_FALSE(CommandLine::Init(0, NULL));
+  EXPECT_TRUE(CommandLine::Init(0, NULL));
   CommandLine* current = CommandLine::ForCurrentProcess();
-  EXPECT_EQ(initial, current);
+  EXPECT_FALSE(initial == current);
 }

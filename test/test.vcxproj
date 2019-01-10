@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -83,24 +83,36 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
+    <OutDir>../bin/$(ProjectName)/$(Platform)/$(Configuration)/</OutDir>
+    <IntDir>../build/$(ProjectName)/$(Platform)/$(Configuration)/</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Label="LLVM" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClangClAdditionalOptions>/std:c++1z</ClangClAdditionalOptions>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
-      <WarningLevel>Level3</WarningLevel>
-      <Optimization>Disabled</Optimization>
+      <WarningLevel>Level1</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>./;./third_party/testing;./third_party;../src/;.;./third_party/testing/gtest/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>./;./third_party/testing;./third_party;../src/;.;./third_party/testing/gtest/include;./third_party/testing/gmock/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <OmitFramePointers>
+      </OmitFramePointers>
+      <AdditionalOptions>/Zc:strictStrings- %(AdditionalOptions)</AdditionalOptions>
+      <IntrinsicFunctions>false</IntrinsicFunctions>
+      <InlineFunctionExpansion>Default</InlineFunctionExpansion>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <BasicRuntimeChecks>Default</BasicRuntimeChecks>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>gtest_maind.lib;gtestd.lib;base.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>./third_party/testing/gtest/libs/x64;../bin/base/x64/Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>gtest_maind.lib;gtestd.lib;base.lib;gmock_main.lib;gmock.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>./third_party/testing/gtest/libs/x64/Debug;../bin/base/x64/Debug;./third_party/testing/gmock/libs/x64/Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
       <Command>xcopy /r /y ..\bin\base\x64\Debug\base.dll ..\bin\test\x64\Debug\</Command>
@@ -142,24 +154,29 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
-      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <AdditionalIncludeDirectories>.;./;./third_party;./third_party/testing;./third_party/testing/gtest/include;../src/;./third_party/testing/gmock/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>gtest_main.lib;gtest.lib;base.lib;gmock_main.lib;gmock.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>./third_party/testing/gtest/libs/x64/Release;../bin/base/x64/Release;./third_party/testing/gmock/libs/x64/Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\src\base\third_party\dynamic_annotations\dynamic_annotations.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="third_party\gtest\include\gtest\gtest-death-test.h" />
     <ClInclude Include="third_party\gtest\include\gtest\gtest-matchers.h" />
@@ -187,6 +204,7 @@
     <ClInclude Include="third_party\testing\platform_test.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\src\base\third_party\dynamic_annotations\dynamic_annotations.c" />
     <ClCompile Include="at_exit_unittest.cc" />
     <ClCompile Include="base64_unittest.cc" />
     <ClCompile Include="base_time_unittest.cc" />
@@ -204,13 +222,50 @@
     <ClCompile Include="file_version_info_unittest.cc" />
     <ClCompile Include="guid_unittest.cc" />
     <ClCompile Include="hi_res_timer_manager_unittest.cc" />
+    <ClCompile Include="id_map_unittest.cc" />
+    <ClCompile Include="lazy_instance_unittest.cc" />
+    <ClCompile Include="linked_list_unittest.cc" />
+    <ClCompile Include="logging_unittest.cc" />
+    <ClCompile Include="md5_unittest.cc" />
+    <ClCompile Include="message_loop_proxy_impl_unittest.cc" />
+    <ClCompile Include="message_loop_proxy_unittest.cc" />
+    <ClCompile Include="message_loop_unittest.cc" />
+    <ClCompile Include="observer_list_unittest.cc" />
+    <ClCompile Include="path_service_unittest.cc" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="pickle_unittest.cc" />
+    <ClCompile Include="platform_file_unittest.cc" />
+    <ClCompile Include="pr_time_unittest.cc" />
+    <ClCompile Include="rand_util_unittest.cc" />
+    <ClCompile Include="scoped_native_library_unittest.cc" />
+    <ClCompile Include="scoped_temp_dir_unittest.cc" />
+    <ClCompile Include="sha1_unittest.cc" />
+    <ClCompile Include="stack_container_unittest.cc" />
+    <ClCompile Include="string16_unittest.cc" />
+    <ClCompile Include="stringize_macros_unittest.cc" />
+    <ClCompile Include="stringprintf_unittest.cc" />
+    <ClCompile Include="string_number_conversions_unittest.cc" />
+    <ClCompile Include="string_piece_unittest.cc" />
+    <ClCompile Include="string_split_unittest.cc" />
+    <ClCompile Include="string_tokenizer_unittest.cc" />
+    <ClCompile Include="string_util_unittest.cc" />
+    <ClCompile Include="sys_info_unittest.cc" />
+    <ClCompile Include="sys_string_conversions_unittest.cc" />
+    <ClCompile Include="task_runner_util_unittest.cc" />
+    <ClCompile Include="template_util_unittest.cc" />
     <ClCompile Include="test.cpp" />
+    <ClCompile Include="timer_unittest.cc" />
+    <ClCompile Include="tools_sanity_unittest.cc" />
+    <ClCompile Include="utf_offset_string_conversions_unittest.cc" />
+    <ClCompile Include="utf_string_conversions_unittest.cc" />
+    <ClCompile Include="values_unittest.cc" />
+    <ClCompile Include="version_unittest.cc" />
+    <ClCompile Include="vlog_unittest.cc" />
   </ItemGroup>
   <ItemGroup>
     <None Include="third_party\gtest\include\gtest\gtest-param-test.h.pump" />

@@ -1,4 +1,4 @@
-// Copyright (c) 2012 The Chromium Authors. All rights reserved.
+﻿// Copyright (c) 2012 The Chromium Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
@@ -302,7 +302,7 @@ int64 ComputeDirectorySize(const FilePath& root_path) {
     FileEnumerator::FindInfo info;
     file_iter.GetFindInfo(&info);
 #if defined(OS_WIN)
-    LARGE_INTEGER li = { info.nFileSizeLow, info.nFileSizeHigh };
+    LARGE_INTEGER li = { (DWORD)info.nFileSizeLow, (LONG)info.nFileSizeHigh };
     running_size += li.QuadPart;
 #else
     running_size += info.stat.st_size;
@@ -320,7 +320,7 @@ int64 ComputeFilesSize(const FilePath& directory,
     FileEnumerator::FindInfo info;
     file_iter.GetFindInfo(&info);
 #if defined(OS_WIN)
-    LARGE_INTEGER li = { info.nFileSizeLow, info.nFileSizeHigh };
+    LARGE_INTEGER li = { (DWORD)info.nFileSizeLow, (LONG)info.nFileSizeHigh };
     running_size += li.QuadPart;
 #else
     running_size += info.stat.st_size;

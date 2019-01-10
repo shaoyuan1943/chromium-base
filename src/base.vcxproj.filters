@@ -301,6 +301,7 @@
       <Filter>third_party\icu</Filter>
     </ClCompile>
     <ClCompile Include="base\file_descriptor_shuffle.cc" />
+    <ClCompile Include="base\sha1_portable.cc" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -422,7 +423,6 @@
     <ClInclude Include="base\template_util.h" />
     <ClInclude Include="base\thread_task_runner_handle.h" />
     <ClInclude Include="base\timer.h" />
-    <ClInclude Include="base\tuple.h" />
     <ClInclude Include="base\utf_offset_string_conversions.h" />
     <ClInclude Include="base\value_conversions.h" />
     <ClInclude Include="base\values.h" />
@@ -653,5 +653,7 @@
       <Filter>third_party\icu</Filter>
     </ClInclude>
     <ClInclude Include="base\file_descriptor_shuffle.h" />
+    <ClInclude Include="base\sha1.h" />
+    <ClInclude Include="base\dispatchers.h" />
   </ItemGroup>
 </Project>

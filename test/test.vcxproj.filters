@@ -99,6 +99,9 @@
     <ClInclude Include="third_party\testing\platform_test.h">
       <Filter>src</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\base\third_party\dynamic_annotations\dynamic_annotations.h">
+      <Filter>src</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="test.cpp">
@@ -110,28 +113,31 @@
     <ClCompile Include="at_exit_unittest.cc">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="bits_unittest.cc">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="command_line_unittest.cc">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="file_util_unittest.cc">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="base_time_unittest.cc">
+      <Filter>src</Filter>
+    </ClCompile>
     <ClCompile Include="base64_unittest.cc">
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="bind_helpers_unittest.cc">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="bits_unittest.cc">
-      <Filter>src</Filter>
-    </ClCompile>
     <ClCompile Include="build_time_unittest.cc">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="base_time_unittest.cc">
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="callback_unittest.cc">
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="cancelable_callback_unittest.cc">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="command_line_unittest.cc">
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="environment_unittest.cc">
@@ -146,9 +152,6 @@
     <ClCompile Include="file_util_proxy_unittest.cc">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="file_util_unittest.cc">
-      <Filter>src</Filter>
-    </ClCompile>
     <ClCompile Include="file_version_info_unittest.cc">
       <Filter>src</Filter>
     </ClCompile>
@@ -156,6 +159,120 @@
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="hi_res_timer_manager_unittest.cc">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="id_map_unittest.cc">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="lazy_instance_unittest.cc">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="linked_list_unittest.cc">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="logging_unittest.cc">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="md5_unittest.cc">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="message_loop_proxy_impl_unittest.cc">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="message_loop_proxy_unittest.cc">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="message_loop_unittest.cc">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="observer_list_unittest.cc">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="path_service_unittest.cc">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="pickle_unittest.cc">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="platform_file_unittest.cc">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="pr_time_unittest.cc">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="rand_util_unittest.cc">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="scoped_native_library_unittest.cc">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="scoped_temp_dir_unittest.cc">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="sha1_unittest.cc">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="stack_container_unittest.cc">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="string_number_conversions_unittest.cc">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="string_piece_unittest.cc">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="string_split_unittest.cc">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="string_tokenizer_unittest.cc">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="string_util_unittest.cc">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="string16_unittest.cc">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="stringize_macros_unittest.cc">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="stringprintf_unittest.cc">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="sys_info_unittest.cc">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="sys_string_conversions_unittest.cc">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="task_runner_util_unittest.cc">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="template_util_unittest.cc">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="timer_unittest.cc">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="tools_sanity_unittest.cc">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="utf_offset_string_conversions_unittest.cc">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="utf_string_conversions_unittest.cc">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="values_unittest.cc">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="version_unittest.cc">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="vlog_unittest.cc">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\base\third_party\dynamic_annotations\dynamic_annotations.c">
       <Filter>src</Filter>
     </ClCompile>
   </ItemGroup>

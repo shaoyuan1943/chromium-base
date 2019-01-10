@@ -44,3 +44,6 @@
 *.log
 *.db-shm
 *.db-wal
+*.tmp
+*.iobj
+*.ipdb

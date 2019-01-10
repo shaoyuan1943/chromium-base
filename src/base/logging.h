@@ -1,4 +1,4 @@
-// Copyright (c) 2012 The Chromium Authors. All rights reserved.
+﻿// Copyright (c) 2012 The Chromium Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
@@ -794,7 +794,7 @@ class BASE_EXPORT LogMessage {
 
   ~LogMessage();
 
-  std::ostream& stream() { return stream_; }
+  std::ostream& stream() { return stream_; };
 
  private:
   void Init(const char* file, int line);
@@ -875,7 +875,7 @@ class BASE_EXPORT Win32ErrorLogMessage {
   // Appends the error message before destructing the encapsulated class.
   ~Win32ErrorLogMessage();
 
-  std::ostream& stream() { return log_message_.stream(); }
+  std::ostream& stream();
 
  private:
   SystemErrorCode err_;
@@ -897,7 +897,7 @@ class BASE_EXPORT ErrnoLogMessage {
   // Appends the error message before destructing the encapsulated class.
   ~ErrnoLogMessage();
 
-  std::ostream& stream() { return log_message_.stream(); }
+  std::ostream& stream();
 
  private:
   SystemErrorCode err_;

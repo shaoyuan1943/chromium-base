@@ -1,10 +1,10 @@
-// Copyright (c) 2012 The Chromium Authors. All rights reserved.
+﻿// Copyright (c) 2012 The Chromium Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
 #include "base/file_path.h"
 
-#include <string.h>
+#include <string>
 #include <algorithm>
 
 #include "base/basictypes.h"
@@ -37,10 +37,21 @@ const FilePath::CharType FilePath::kSeparators[] = FILE_PATH_LITERAL("/");
 
 const FilePath::CharType FilePath::kCurrentDirectory[] = FILE_PATH_LITERAL(".");
 const FilePath::CharType FilePath::kParentDirectory[] = FILE_PATH_LITERAL("..");
-
 const FilePath::CharType FilePath::kExtensionSeparator = FILE_PATH_LITERAL('.');
-
 typedef FilePath::StringType StringType;
+
+constexpr const FilePath::CharType* FilePath::Separators() {
+  return FilePath::kSeparators;
+};
+constexpr const FilePath::CharType* FilePath::CurrentDirectory() {
+  return FilePath::kCurrentDirectory;
+};
+constexpr const FilePath::CharType* FilePath::ParentDirectory() {
+  return FilePath::kParentDirectory;
+};
+constexpr const FilePath::CharType FilePath::ExtensionSeparator() {
+  return FilePath::kExtensionSeparator;
+};
 
 namespace {
 
@@ -1232,6 +1243,10 @@ FilePath FilePath::NormalizePathSeparators() const {
   return *this;
 #endif
 }
+
+// const StringType& FilePath::value() const {
+//   return path_;
+// }
 
 void PrintTo(const FilePath& path, std::ostream* out) {
   *out << path.value();

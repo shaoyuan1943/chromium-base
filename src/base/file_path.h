@@ -154,6 +154,13 @@ class BASE_EXPORT FilePath {
   // The character used to identify a file extension.
   static const CharType kExtensionSeparator;
 
+  // TODO: VS2017 15.9 在x64架构下，外部无法访问DLL中的public static const成员
+  // 暂时不知什么原因，先添加static constexpr函数解决，2019-01-07
+  static constexpr const CharType* Separators();
+  static constexpr const CharType* CurrentDirectory();
+  static constexpr const CharType* ParentDirectory();
+  static constexpr const CharType ExtensionSeparator();
+
   FilePath();
   FilePath(const FilePath& that);
   explicit FilePath(const StringType& path);
@@ -169,7 +176,7 @@ class BASE_EXPORT FilePath {
     return path_ < that.path_;
   }
 
-  const StringType& value() const { return path_; }
+  const StringType& value() const { return path_; };
 
   bool empty() const { return path_.empty(); }
 

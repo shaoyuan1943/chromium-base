@@ -1,4 +1,4 @@
-// Copyright (c) 2012 The Chromium Authors. All rights reserved.
+﻿// Copyright (c) 2012 The Chromium Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
@@ -174,18 +174,18 @@ template <typename T>
 T& CallbackForward(T& t) { return t; }
 
 template <typename T>
-scoped_ptr<T> CallbackForward(scoped_ptr<T>& p) { return p.Pass(); }
+scoped_ptr<T> CallbackForward(scoped_ptr<T>& p) { return p; }
 
 template <typename T>
-scoped_array<T> CallbackForward(scoped_array<T>& p) { return p.Pass(); }
+scoped_array<T> CallbackForward(scoped_array<T>& p) { return p; }
 
 template <typename T, typename R>
 scoped_ptr_malloc<T, R> CallbackForward(scoped_ptr_malloc<T, R>& p) {
-  return p.Pass();
+  return p;
 }
 
 template <typename T>
-ScopedVector<T> CallbackForward(ScopedVector<T>& p) { return p.Pass(); }
+ScopedVector<T> CallbackForward(ScopedVector<T>& p) { return p; }
 
 }  // namespace internal
 }  // namespace base

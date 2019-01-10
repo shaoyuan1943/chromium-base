@@ -15,8 +15,6 @@
 #include "base/base_export.h"
 #include "base/lazy_instance.h"
 #include "base/location.h"
-#include "base/profiler/alternate_timer.h"
-#include "base/profiler/tracked_time.h"
 #include "base/base_time.h"
 #include "base/synchronization/lock.h"
 #include "base/threading/thread_local_storage.h"

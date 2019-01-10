@@ -1,4 +1,4 @@
-// Copyright (c) 2011 The Chromium Authors. All rights reserved.
+﻿// Copyright (c) 2011 The Chromium Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
@@ -81,16 +81,16 @@ bool PerformInjectiveMultimap(const InjectiveMultimap& m_in,
 }
 
 bool FileDescriptorTableInjection::Duplicate(int* result, int fd) {
-  *result = HANDLE_EINTR(dup(fd));
+  *result = HANDLE_EINTR(_dup(fd));
   return *result >= 0;
 }
 
 bool FileDescriptorTableInjection::Move(int src, int dest) {
-  return HANDLE_EINTR(dup2(src, dest)) != -1;
+  return HANDLE_EINTR(_dup2(src, dest)) != -1;
 }
 
 void FileDescriptorTableInjection::Close(int fd) {
-  int ret = HANDLE_EINTR(close(fd));
+  int ret = HANDLE_EINTR(_close(fd));
   DPCHECK(ret == 0);
 }
 

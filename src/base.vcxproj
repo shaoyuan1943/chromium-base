@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -83,6 +83,16 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
+    <OutDir>../bin/$(ProjectName)/$(Platform)/$(Configuration)/</OutDir>
+    <IntDir>../build/$(ProjectName)/$(Platform)/$(Configuration)/</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Label="LLVM" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClangClAdditionalOptions>/std:c++1z</ClangClAdditionalOptions>
+    <LldLinkAdditionalOptions>
+    </LldLinkAdditionalOptions>
+  </PropertyGroup>
+  <PropertyGroup Label="LLVM" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClangClAdditionalOptions>/std:c++1z</ClangClAdditionalOptions>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -102,14 +112,19 @@
     <ClCompile>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level1</WarningLevel>
-      <Optimization>Disabled</Optimization>
+      <Optimization>MaxSpeed</Optimization>
       <SDLCheck>false</SDLCheck>
-      <PreprocessorDefinitions>WIN32;_DEBUG;BASE_IMPLEMENTATION;_WINDOWS;_CRT_SECURE_NO_WARNINGS;_CRT_RAND_S;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_DEBUG;BASE_IMPLEMENTATION;_WINDOWS;_CRT_SECURE_NO_WARNINGS;DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>.;./;./base;./build;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <AdditionalOptions>/Zc:strictStrings- %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/Zc:strictStrings- /Zc:inline %(AdditionalOptions)</AdditionalOptions>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <IntrinsicFunctions>false</IntrinsicFunctions>
+      <InlineFunctionExpansion>Default</InlineFunctionExpansion>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <RemoveUnreferencedCodeData>false</RemoveUnreferencedCodeData>
+      <BasicRuntimeChecks>Default</BasicRuntimeChecks>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -137,20 +152,24 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
-      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>NDEBUG;BASE_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <SDLCheck>false</SDLCheck>
+      <PreprocessorDefinitions>WIN32;NDEBUG;BASE_EXPORTS;_WINDOWS;_USRDLL;BASE_IMPLEMENTATION;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>./build;./base;./;.;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>/Zc:strictStrings- /Zc:inline %(AdditionalOptions)</AdditionalOptions>
+      <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>DbgHelp.lib;Mincore.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -185,6 +204,7 @@
     <ClInclude Include="base\debug\alias.h" />
     <ClInclude Include="base\debug\leak_tracker.h" />
     <ClInclude Include="base\debug\stack_trace.h" />
+    <ClInclude Include="base\dispatchers.h" />
     <ClInclude Include="base\eintr_wrapper.h" />
     <ClInclude Include="base\environment.h" />
     <ClInclude Include="base\event_recorder.h" />
@@ -256,6 +276,7 @@
     <ClInclude Include="base\scoped_temp_dir.h" />
     <ClInclude Include="base\sequenced_task_runner.h" />
     <ClInclude Include="base\sequenced_task_runner_helpers.h" />
+    <ClInclude Include="base\sha1.h" />
     <ClInclude Include="base\shared_memory.h" />
     <ClInclude Include="base\single_thread_task_runner.h" />
     <ClInclude Include="base\stack_container.h" />
@@ -311,7 +332,6 @@
     <ClInclude Include="base\thread_task_runner_handle.h" />
     <ClInclude Include="base\base_time.h" />
     <ClInclude Include="base\timer.h" />
-    <ClInclude Include="base\tuple.h" />
     <ClInclude Include="base\utf_offset_string_conversions.h" />
     <ClInclude Include="base\utf_string_conversions.h" />
     <ClInclude Include="base\utf_string_conversion_utils.h" />
@@ -418,6 +438,7 @@
     <ClCompile Include="base\scoped_native_library.cc" />
     <ClCompile Include="base\scoped_temp_dir.cc" />
     <ClCompile Include="base\sequenced_task_runner.cc" />
+    <ClCompile Include="base\sha1_portable.cc" />
     <ClCompile Include="base\shared_memory_win.cc" />
     <ClCompile Include="base\string16.cc">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>

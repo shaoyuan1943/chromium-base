@@ -1,4 +1,4 @@
-// Copyright (c) 2011 The Chromium Authors. All rights reserved.
+﻿// Copyright (c) 2011 The Chromium Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
@@ -7,7 +7,7 @@
 
 #include <limits.h>         // So we can set the bounds of our types
 #include <stddef.h>         // For size_t
-#include <string.h>         // for memcpy
+#include <string>         // for memcpy
 
 #include "base/port.h"    // Types that only need exist on certain systems
 

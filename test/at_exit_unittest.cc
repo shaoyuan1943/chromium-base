@@ -5,6 +5,7 @@
 
 #include "base/at_exit.h"
 #include "base/bind.h"
+#include "base/logging.h"
 
 #include "testing/gtest/include/gtest/gtest.h"
 

@@ -173,7 +173,7 @@ class scoped_ptr {
   // operator=.  Allows assignment from a scoped_ptr rvalue for a convertible
   // type.
   template <typename U>
-  scoped_ptr& operator=(scoped_ptr<U> rhs) {
+  scoped_ptr& operator=(const scoped_ptr<U>& rhs) {
     reset(rhs.release());
     return *this;
   }

@@ -1,4 +1,4 @@
-// Copyright (c) 2012 The Chromium Authors. All rights reserved.
+﻿// Copyright (c) 2012 The Chromium Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
@@ -153,7 +153,7 @@ class StackContainer {
   ContainerType* operator->() { return &container_; }
   const ContainerType* operator->() const { return &container_; }
 
-#ifdef UNIT_TEST
+#ifdef DEBUG
   // Retrieves the stack source so that that unit tests can verify that the
   // buffer is being used properly.
   const typename Allocator::Source& stack_data() const {

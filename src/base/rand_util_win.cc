@@ -2,6 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+#define _CRT_RAND_S
+
 #include "base/rand_util.h"
 
 #include <stdlib.h>

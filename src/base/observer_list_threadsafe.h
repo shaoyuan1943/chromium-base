@@ -1,4 +1,4 @@
-// Copyright (c) 2012 The Chromium Authors. All rights reserved.
+﻿// Copyright (c) 2012 The Chromium Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
@@ -7,6 +7,7 @@
 
 #include <algorithm>
 #include <map>
+#include <tuple>
 
 #include "base/basictypes.h"
 #include "base/bind.h"
@@ -16,6 +17,7 @@
 #include "base/message_loop.h"
 #include "base/message_loop_proxy.h"
 #include "base/observer_list.h"
+#include "base/dispatchers.h"
 #include "base/threading/platform_thread.h"
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -166,39 +168,45 @@ class ObserverListThreadSafe
   // Note, these calls are effectively asynchronous.  You cannot assume
   // that at the completion of the Notify call that all Observers have
   // been Notified.  The notification may still be pending delivery.
-  template <class Method>
+  /*template <class Method>
   void Notify(Method m) {
-    UnboundMethod<ObserverType, Method, Tuple0> method(m, MakeTuple());
-    Notify<Method, Tuple0>(method);
+    UnboundMethod<ObserverType, Method, std::tuple> method(m, std::make_tuple());
+    Notify<Method, std::tuple>(method);
   }
 
   template <class Method, class A>
   void Notify(Method m, const A& a) {
-    UnboundMethod<ObserverType, Method, Tuple1<A> > method(m, MakeTuple(a));
-    Notify<Method, Tuple1<A> >(method);
+    UnboundMethod<ObserverType, Method, std::tuple<A> > method(m, std::make_tuple(a));
+    Notify<Method, std::tuple<A> >(method);
   }
 
   template <class Method, class A, class B>
   void Notify(Method m, const A& a, const B& b) {
-    UnboundMethod<ObserverType, Method, Tuple2<A, B> > method(
-        m, MakeTuple(a, b));
-    Notify<Method, Tuple2<A, B> >(method);
+    UnboundMethod<ObserverType, Method, std::tuple<A, B> > method(
+        m, std::make_tuple(a, b));
+    Notify<Method, std::tuple<A, B> >(method);
   }
 
   template <class Method, class A, class B, class C>
   void Notify(Method m, const A& a, const B& b, const C& c) {
-    UnboundMethod<ObserverType, Method, Tuple3<A, B, C> > method(
-        m, MakeTuple(a, b, c));
-    Notify<Method, Tuple3<A, B, C> >(method);
+    UnboundMethod<ObserverType, Method, std::tuple<A, B, C> > method(
+        m, std::make_tuple(a, b, c));
+    Notify<Method, std::tuple<A, B, C> >(method);
   }
 
   template <class Method, class A, class B, class C, class D>
   void Notify(Method m, const A& a, const B& b, const C& c, const D& d) {
-    UnboundMethod<ObserverType, Method, Tuple4<A, B, C, D> > method(
-        m, MakeTuple(a, b, c, d));
-    Notify<Method, Tuple4<A, B, C, D> >(method);
-  }
+    UnboundMethod<ObserverType, Method, std::tuple<A, B, C, D> > method(
+        m, std::make_tuple(a, b, c, d));
+    Notify<Method, std::tuple<A, B, C, D> >(method);
+  }*/
 
+  template <typename Method, typename ...Types>
+  void Notify(Method m, const Types&... args) {
+    static_assert(sizeof...(Types) <= 4, "Notify params size not allow more than 4.");
+    UnboundMethod<ObserverType, Method, std::tuple<Types...>> method(m, std::make_tuple(args...));
+    Notify<Method, std::tuple<Types...>>(method);
+  }
   // TODO(mbelshe):  Add more wrappers for Notify() with more arguments.
 
  private:

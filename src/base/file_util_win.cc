@@ -824,11 +824,17 @@ bool MemoryMappedFile::MapFileToMemoryInternalEx(int flags) {
   if (!file_mapping_) {
     // According to msdn, system error codes are only reserved up to 15999.
     // http://msdn.microsoft.com/en-us/library/ms681381(v=VS.85).aspx.
+    //UMA_HISTOGRAM_ENUMERATION("MemoryMappedFile.CreateFileMapping",
+    //                          logging::GetLastSystemErrorCode(), 16000);
     return false;
   }
 
   data_ = static_cast<uint8*>(
       ::MapViewOfFile(file_mapping_, FILE_MAP_READ, 0, 0, 0));
+  if (!data_) {
+    //UMA_HISTOGRAM_ENUMERATION("MemoryMappedFile.MapViewOfFile",
+    //                          logging::GetLastSystemErrorCode(), 16000);
+  }
   return data_ != NULL;
 }
 
