@@ -21,6 +21,8 @@
 #include "base/bind_internal_win.h"
 #endif
 
+#include <type_traits>
+
 namespace base {
 namespace internal {
 
@@ -124,7 +126,7 @@ template <typename R, typename T>
 class RunnableAdapter<R(T::*)()> {
  public:
   typedef R (RunType)(T*);
-  typedef true_type IsMethod;
+  typedef std::true_type IsMethod;
 
   explicit RunnableAdapter(R(T::*method)())
       : method_(method) {
@@ -143,7 +145,7 @@ template <typename R, typename T>
 class RunnableAdapter<R(T::*)() const> {
  public:
   typedef R (RunType)(const T*);
-  typedef true_type IsMethod;
+  typedef std::true_type IsMethod;
 
   explicit RunnableAdapter(R(T::*method)() const)
       : method_(method) {
@@ -180,7 +182,7 @@ template <typename R, typename T, typename A1>
 class RunnableAdapter<R(T::*)(A1)> {
  public:
   typedef R (RunType)(T*, A1);
-  typedef true_type IsMethod;
+  typedef std::true_type IsMethod;
 
   explicit RunnableAdapter(R(T::*method)(A1))
       : method_(method) {
@@ -199,7 +201,7 @@ template <typename R, typename T, typename A1>
 class RunnableAdapter<R(T::*)(A1) const> {
  public:
   typedef R (RunType)(const T*, A1);
-  typedef true_type IsMethod;
+  typedef std::true_type IsMethod;
 
   explicit RunnableAdapter(R(T::*method)(A1) const)
       : method_(method) {
@@ -237,7 +239,7 @@ template <typename R, typename T, typename A1, typename A2>
 class RunnableAdapter<R(T::*)(A1, A2)> {
  public:
   typedef R (RunType)(T*, A1, A2);
-  typedef true_type IsMethod;
+  typedef std::true_type IsMethod;
 
   explicit RunnableAdapter(R(T::*method)(A1, A2))
       : method_(method) {
@@ -257,7 +259,7 @@ template <typename R, typename T, typename A1, typename A2>
 class RunnableAdapter<R(T::*)(A1, A2) const> {
  public:
   typedef R (RunType)(const T*, A1, A2);
-  typedef true_type IsMethod;
+  typedef std::true_type IsMethod;
 
   explicit RunnableAdapter(R(T::*method)(A1, A2) const)
       : method_(method) {
@@ -298,7 +300,7 @@ template <typename R, typename T, typename A1, typename A2, typename A3>
 class RunnableAdapter<R(T::*)(A1, A2, A3)> {
  public:
   typedef R (RunType)(T*, A1, A2, A3);
-  typedef true_type IsMethod;
+  typedef std::true_type IsMethod;
 
   explicit RunnableAdapter(R(T::*method)(A1, A2, A3))
       : method_(method) {
@@ -320,7 +322,7 @@ template <typename R, typename T, typename A1, typename A2, typename A3>
 class RunnableAdapter<R(T::*)(A1, A2, A3) const> {
  public:
   typedef R (RunType)(const T*, A1, A2, A3);
-  typedef true_type IsMethod;
+  typedef std::true_type IsMethod;
 
   explicit RunnableAdapter(R(T::*method)(A1, A2, A3) const)
       : method_(method) {
@@ -365,7 +367,7 @@ template <typename R, typename T, typename A1, typename A2, typename A3,
 class RunnableAdapter<R(T::*)(A1, A2, A3, A4)> {
  public:
   typedef R (RunType)(T*, A1, A2, A3, A4);
-  typedef true_type IsMethod;
+  typedef std::true_type IsMethod;
 
   explicit RunnableAdapter(R(T::*method)(A1, A2, A3, A4))
       : method_(method) {
@@ -389,7 +391,7 @@ template <typename R, typename T, typename A1, typename A2, typename A3,
 class RunnableAdapter<R(T::*)(A1, A2, A3, A4) const> {
  public:
   typedef R (RunType)(const T*, A1, A2, A3, A4);
-  typedef true_type IsMethod;
+  typedef std::true_type IsMethod;
 
   explicit RunnableAdapter(R(T::*method)(A1, A2, A3, A4) const)
       : method_(method) {
@@ -437,7 +439,7 @@ template <typename R, typename T, typename A1, typename A2, typename A3,
 class RunnableAdapter<R(T::*)(A1, A2, A3, A4, A5)> {
  public:
   typedef R (RunType)(T*, A1, A2, A3, A4, A5);
-  typedef true_type IsMethod;
+  typedef std::true_type IsMethod;
 
   explicit RunnableAdapter(R(T::*method)(A1, A2, A3, A4, A5))
       : method_(method) {
@@ -462,7 +464,7 @@ template <typename R, typename T, typename A1, typename A2, typename A3,
 class RunnableAdapter<R(T::*)(A1, A2, A3, A4, A5) const> {
  public:
   typedef R (RunType)(const T*, A1, A2, A3, A4, A5);
-  typedef true_type IsMethod;
+  typedef std::true_type IsMethod;
 
   explicit RunnableAdapter(R(T::*method)(A1, A2, A3, A4, A5) const)
       : method_(method) {
@@ -513,7 +515,7 @@ template <typename R, typename T, typename A1, typename A2, typename A3,
 class RunnableAdapter<R(T::*)(A1, A2, A3, A4, A5, A6)> {
  public:
   typedef R (RunType)(T*, A1, A2, A3, A4, A5, A6);
-  typedef true_type IsMethod;
+  typedef std::true_type IsMethod;
 
   explicit RunnableAdapter(R(T::*method)(A1, A2, A3, A4, A5, A6))
       : method_(method) {
@@ -540,7 +542,7 @@ template <typename R, typename T, typename A1, typename A2, typename A3,
 class RunnableAdapter<R(T::*)(A1, A2, A3, A4, A5, A6) const> {
  public:
   typedef R (RunType)(const T*, A1, A2, A3, A4, A5, A6);
-  typedef true_type IsMethod;
+  typedef std::true_type IsMethod;
 
   explicit RunnableAdapter(R(T::*method)(A1, A2, A3, A4, A5, A6) const)
       : method_(method) {
@@ -594,7 +596,7 @@ template <typename R, typename T, typename A1, typename A2, typename A3,
 class RunnableAdapter<R(T::*)(A1, A2, A3, A4, A5, A6, A7)> {
  public:
   typedef R (RunType)(T*, A1, A2, A3, A4, A5, A6, A7);
-  typedef true_type IsMethod;
+  typedef std::true_type IsMethod;
 
   explicit RunnableAdapter(R(T::*method)(A1, A2, A3, A4, A5, A6, A7))
       : method_(method) {
@@ -622,7 +624,7 @@ template <typename R, typename T, typename A1, typename A2, typename A3,
 class RunnableAdapter<R(T::*)(A1, A2, A3, A4, A5, A6, A7) const> {
  public:
   typedef R (RunType)(const T*, A1, A2, A3, A4, A5, A6, A7);
-  typedef true_type IsMethod;
+  typedef std::true_type IsMethod;
 
   explicit RunnableAdapter(R(T::*method)(A1, A2, A3, A4, A5, A6, A7) const)
       : method_(method) {
@@ -1093,7 +1095,7 @@ struct InvokeHelper<true, ReturnType, Runnable, ArgsType> {
   // WeakCalls are only supported for functions with a void return type.
   // Otherwise, the function result would be undefined if the the WeakPtr<>
   // is invalidated.
-  COMPILE_ASSERT(is_void<ReturnType>::value,
+  COMPILE_ASSERT(std::is_void<ReturnType>::value,
                  weak_ptrs_can_only_bind_to_methods_without_return_values);
 };
 
@@ -2538,7 +2540,7 @@ struct BindState;
 template <typename Runnable, typename RunType>
 struct BindState<Runnable, RunType, void()> : public BindStateBase {
   typedef Runnable RunnableType;
-  typedef false_type IsWeakCall;
+  typedef std::false_type IsWeakCall;
   typedef Invoker<0, BindState, RunType> InvokerType;
   typedef typename InvokerType::UnboundRunType UnboundRunType;
   explicit BindState(const Runnable& runnable)

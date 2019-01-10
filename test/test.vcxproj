@@ -257,7 +257,6 @@
     <ClCompile Include="sys_info_unittest.cc" />
     <ClCompile Include="sys_string_conversions_unittest.cc" />
     <ClCompile Include="task_runner_util_unittest.cc" />
-    <ClCompile Include="template_util_unittest.cc" />
     <ClCompile Include="test.cpp" />
     <ClCompile Include="timer_unittest.cc" />
     <ClCompile Include="tools_sanity_unittest.cc" />

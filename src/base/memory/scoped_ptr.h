@@ -110,8 +110,8 @@ namespace internal {
 
 template <typename T> struct IsNotRefCounted {
   enum {
-    value = !base::is_convertible<T*, base::subtle::RefCountedBase*>::value &&
-        !base::is_convertible<T*, base::subtle::RefCountedThreadSafeBase*>::
+    value = !std::is_convertible<T*, base::subtle::RefCountedBase*>::value &&
+        !std::is_convertible<T*, base::subtle::RefCountedThreadSafeBase*>::
             value
   };
 };

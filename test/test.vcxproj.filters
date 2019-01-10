@@ -248,9 +248,6 @@
     <ClCompile Include="task_runner_util_unittest.cc">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="template_util_unittest.cc">
-      <Filter>src</Filter>
-    </ClCompile>
     <ClCompile Include="timer_unittest.cc">
       <Filter>src</Filter>
     </ClCompile>

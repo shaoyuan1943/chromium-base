@@ -1,4 +1,4 @@
-// Copyright (c) 2012 The Chromium Authors. All rights reserved.
+﻿// Copyright (c) 2012 The Chromium Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
@@ -167,7 +167,7 @@ class SupportsWeakPtrBase {
   template<typename Derived>
   static WeakPtr<Derived> StaticAsWeakPtr(Derived* t) {
     typedef
-        is_convertible<Derived, internal::SupportsWeakPtrBase&> convertible;
+        std::is_convertible<Derived, internal::SupportsWeakPtrBase&> convertible;
     COMPILE_ASSERT(convertible::value,
                    AsWeakPtr_argument_inherits_from_SupportsWeakPtr);
     return AsWeakPtrImpl<Derived>(t, *t);
