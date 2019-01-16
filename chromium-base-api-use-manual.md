@@ -202,3 +202,75 @@ API:
 | PathExists | G | 判断路径是否存在 |
 | PathIsWritable | G | 判断路径是否可写 |
 | DirectoryExists | G | 判断目录是否存在 |
+| GetFileCreationLocalTime | G | WINDOWS ONLY 获取文件创建时的本地时间 |
+| GetFileCreationLocalTimeFromHandle | G | WINDOWS ONLY 通过文件句柄获取文件创建时的本地时间 |
+| ContentsEqual | G | 判断两个文件内容是否相等，内部以memcmp实现 |
+| TextContentsEqual | G | 以文本方式判断两个文件内容是否相等 |
+| ReadFileToString | G | 以文本方式读取文件内容 |
+| ReadFromFD | G | POSIX ONLY 从文件描述符fd中读取内容 |
+| CreateSymbolicLink| G | POSIX ONLY 创建symbolic link链接 |
+| ReadSymbolicLink | G | POSIX ONLY 读取symbolic link链接|
+| GetPosixFilePermissions | G | POSIX ONLY 读取文件或目录权限 |
+| SetPosixFilePermissions | G | POSIX ONLY 设置文件或目录权限 |
+| CopyAndDeleteDirectory | G | WINDOWS ONLY 以递归方式拷贝目录之后删掉原始目录 |
+| IsDirectoryEmpty | G | 判断是否空目录 |
+| GetTempDir | G | 获取windows下临时目录 |
+| GetHomeDir | G | 获取Home目录 |
+| CreateTemporaryFile | G | 创建临时文件，操作成功返回true |
+| CreateTemporaryFileInDir | G | 在给定的目录下创建临时文件，操作成功返回true |
+| CreateAndOpenTemporaryFile | G | 创建并打开临时文件，操作成功返回true |
+| CreateAndOpenTemporaryFileInDir | G | 在给定的目录下创建并打开临时文件，操作成功返回true |
+| CreateNewTempDirectory | G | 创建临时目录，操作成功返回true |
+| CreateTemporaryDirInDir | G | 在给定的目录下创建临时目录，操作成功返回true |
+| CreateDirectory | G | 创建目录，如果某个路径不存在，会新创建，操作成功返回true |
+| GetFileSize | G | 获取文件大小 |
+| IsDot | G | 判断FilePath是否是"." |
+| IsDotDot | G | 判断FilePath是否是".."|
+| NormalizeFilePath | G | 将FilePath代表的路径以symbolic links的方式设置到另外一个FilePath上，在windows上必须是以字母驱动器开头的路径，\|path\|必须指向的是文件,如果\|path\|是目录或者不存在则返回false |
+| DevicePathToDriveLetterPath | G | WINDOWS ONLY 返回以驱动器开头的路径 如果路径不存在则会返回false |
+| NormalizeToNativeFilePath | G | WINDOWS ONLY 根据给定的路径返回基于Native NT format的路径，如果路径不存在则返回false |
+| IsLink | G | 判断给定的FilePath是否是symbolic link |
+| GetFileInfo | G | 获取文件信息，操作成功返回true |
+| TouchFile | G | 修改文件最后访问时间和修改时间，操作成功返回true |
+| SetLastModifiedTime | G | 修改文件最后修改时间，操作成功返回true |
+| GetInode | G | POSIX ONLY 获取文件索引节点号，操作成功返回true |
+| OpenFile | G | 打开文件，fopen的封装 |
+| CloseFile | G | 关闭文件 |
+| TruncateFile | G | 拼接文件 |
+| ReadFile/WriteFile | G | 读写文件|
+| WriteFileDescriptor | G | POSIX ONLY 通过fd写入文件描述符 |
+| AppendToFile | G | 追加文件内容 |
+| GetCurrentDirectory | G | 获取当前工作目录 |
+| SetCurrentDirectory | G | 设置当前工作目录 |
+| GetUniquePathNumber | G | 尝试查找可以附件到FilePath后的数字使其唯一，类似"Dir(1)","Dir(2)",如果FilPath不存在则返回0，如果找不到这样的数字则返回-1，如果后缀不为空，则也用给定的后缀去检查，适用于复制或者移动文件名或目录名冲突时的善后处理 |
+| VerifyPathControlledByUser | G | POSIX ONLY 验证给定的FilePath是否只能被给定的User或者用户组成员变更 |
+| VerifyPathControlledByAdmin | G | MACOSX ONLY 验证给定的FilePath是否能被管理员权限变更修改 |
+| ScopedFILEClose | G | 自动关闭FILE |
+| ScopedFDClose | G | POSIX ONLY 自动关闭FD |
+| HasFileBeenModifiedSince | G | 返回距离上一次修改的多长时间 |
+| GetFileSystemType | G | LINUX ONLY 返回文件的系统类型 |
+
+#### 14. base::FileEnumerator
+描述：文件枚举器，用于遍历目录
+头文件：file_util.h
+API:
+| 函数名 | 属性 | 说明 |
+| ------ | :------: | ------ |
+| Next | M | 当前枚举器所指向的下一个FilePath，最后一个是空的FilePath |
+| GetFindInfo | M | 获取FindInfo |
+| IsDirectory | M | 是否是目录 |
+| GetFilename | M | 获取文件名 |
+| GetFilesize | M | 获取文件大小 |
+| GetLastModifiedTime | M | 获取文件最后修改时间 |
+
+#### 15. base::MemoryMappedFile
+描述：内存映射文件
+头文件：file_util.h
+API:
+| 函数名 | 属性 | 说明 |
+| ------ | :------: | ------ |
+| Initialize | M | 将一个存在的文件映射到内存，如果无法打开文件或者文件不存在或者内存映射失败将会返回false |
+| InitializeAsImageSection | M | WINDOWS ONLY 打开现有文件并将其映射为图像部分，一般用来操作图像文件 |
+| data | M | 内存数据 |
+| length | M | 内存数据长度|
+| IsValid | M | 是否合法 |
