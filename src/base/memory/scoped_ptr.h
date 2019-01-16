@@ -108,7 +108,8 @@ class RefCountedThreadSafeBase;
 
 namespace internal {
 
-template <typename T> struct IsNotRefCounted {
+template <typename T>
+struct IsNotRefCounted {
   enum {
     value = !std::is_convertible<T*, base::subtle::RefCountedBase*>::value &&
         !std::is_convertible<T*, base::subtle::RefCountedThreadSafeBase*>::

@@ -18,7 +18,7 @@ Require:
 Require:
 
 ## How to use
-Include base\base_export.h and the other header file what you want to use and link base.dll, at last run it.
+Include ```base\base_export.h``` and the other header file what you want to use and link base.dll, at last run it.
 
 ## Document
-See chromium-base-api-manual.md
+See chromium-base-api-use-manual.md

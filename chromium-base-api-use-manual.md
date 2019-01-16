@@ -1,0 +1,204 @@
+#### 1. base::AtExitManager
+描述：AtExitManager类似CRT函数```atexit()```，在生命周期内接受注册多个回调函数，在对象被销毁时所有注册的回调都将被调用，用来在某个作用区域内做善后工作。AtExitManager以栈容器存放回调函数，访问和遍历由栈特性所决定。
+头文件: at_exit.h
+API:  
+| 函数名 | 属性 | 说明 |
+| ------ | :------: | ------ |
+| RegisterCallback | M | 注册一个签名为```void(void*)```的函数指针作为回调函数 |
+| RegisterTask | M | 注册一个```base::Callback```对象作为回调函数 |
+| ProcessCallbacksNow| M | 执行所有已注册的回调函数 |
+
+#### 2. base::Time::Exploded
+描述：表达已格式化之后的时间，类似Win32 ```SYSTEMTIME```结构或Unix ```struct tm```。
+头文件：base_time.h
+
+#### 3. base::Time
+描述：日期时间
+头文件：base_time.h
+API:
+| 函数名 | 属性 | 说明 |
+| ------ | :------: | ------ |
+| is_null | M | Time对象未被初始化时返回true |
+| is_max | M | Time对象到达最大时间值时返回true |
+| UnixEpoch | S | 返回从1970.1.1开始的Unix时间戳 |
+| Now | S | 返回当前时间，由于存在系统时钟更改的可能性，不保证Now返回值一直时增加的 |
+| Max | S | 返回最大时间值，这个时间应该大于我们可能比较它的任何合理时间 |
+| NowFromSystemTime | S | 返回当前时间， 与Now不同的是：该函数始终使用系统时间 |
+| FromTimeT/ToTimeT | S/M | time_t和base::Time互转 |
+| FromDoubleT/ToDoubleT | S/M | epoch(from 1970.1.1)和base::Time互转 |
+| FromTimeVal/ToTimeVal | S/M | POSIX ONLY, struct timeval和base::Time互转 |
+| FromCFAbsoluteTime/ToCFAbsoluteTime | S/M | MACOS ONLY, CFAbsoluteTime和base::Time 互转 |
+| FromFileTime/ToFileTime | S/M | WINDOWS ONLY, FILETIME和base::Time互转 |
+| EnableHighResolutionTimer | S | WINDOWS ONLY, 是否开启高精度Timer |
+| ActivateHighResolutionTimer | S | WINDOWS ONLY, 设置高精度Timer是否活跃状态，如果禁用了高精度Timer，这个操作将返回false |
+| IsHighResolutionTimerInUse | S | WINDOWS ONLY, 如果启用了高精度Timer且处于活跃状态将返回true，否则返回false |
+| FromUTCExploded/FromLocalExploded | S | 通过本地时间或者UTC时间创建base::Time  |
+| FromInternalValue/ToInternalValue | S/M | 微秒数与base::Time互转 |
+| FromString | S | 通过标准时间字符串创建base::Time |
+| UTCExplode/LocalExplode | M | 根据UTC时间或本地时间填充base::Exploded |
+| LocalMidnight | M | 返回base::Time描述的本地午夜时间 |
+
+#### 4. base::TimeTicks
+描述: 以Tick为单位表达CPU时间。
+头文件：base_time.h
+API:
+| 函数名 | 属性 | 说明 |
+| ------ | :------: | ------ |
+| Now | S | 返回当前与平台相关的Tick计数 |
+| HighResNow | S | 返回当前平台相关的高精度Tick技术，内部实现取决于硬件。调用此函数的开销高于Now |
+| NowFromSystemTraceTime | S | 如果定义了全局跟踪时钟，则返回当前系统跟踪时间，否则等价于HighResNow |
+| is_null | M | 当此对象未被初始化时将返回true  |
+| FromInternalValue/ToInternalValue | S/M | Tick计算和base::TimeTicks互转 |
+
+#### 5. base64
+描述：base64编解码
+头文件：base64.h
+API:
+| 函数名 | 属性 | 说明 |
+| ------ | :------: | ------ |
+| Base64Encode | G | base64编码，成功时返回true |
+| Base64EncodeLength | G | 返回base64编码所需的长度，比计算长度多10字节 |
+| Base64Decode | G | base64解码，成功时返回true |
+| Base64DecodeLength | G | 返回base64解码所需的长度，比计算长度多10字节 |
+
+#### 6. base::Callback/base::Bind
+描述：类似std::function/std::bind
+头文件：callback.h/bind.h
+API:
+| 函数名 | 属性 | 说明 |
+| ------ | :------: | ------ |
+| Bind | G | 将可执行对象连同参数绑定到Callback上 |
+
+#### 7. base::CancelableCallback
+描述：可取消操作的Callback
+头文件：cancelable_callback.h
+API:
+
+
+#### 8. build_time
+描述：二进制编译时间
+头文件：build_time.h
+API:
+| 函数名 | 属性 | 说明 |
+| ------ | :------: | ------ |
+| GetBuildTime | G | 返回当前二进制编译时间 |
+
+#### 8. base::CommandLine
+描述：可执行程序的命令行解析对象。
+头文件：command_line.h
+API：
+| 函数名 | 属性 | 说明 |
+| ------ | :------: | ------ |
+| Init | S | 创建当前进程CommandLine单例  |
+| Reset | S | 销毁当前进程的CommandLine对象，销毁之后如需再次使用必须重新调用Init创建新的CommandLine对象 |
+| ForCurrentProcess | S | 获取当前进程的CommandLine对象，返回的值是可修改的且非线程安全 |
+| InitFromArgv | M | 从参数容器中初始化CommandLine |
+| GetCommandLineString | M | 返回字符串形式的命令行参数 |
+| argv | M | 返回容器形式的命令行参数 |
+| GetProgram/SetProgram | M | 返回或设置当前程序路径（命令行第一个参数） |
+| SetProgram | M | 设置当前程序路径|
+| HasSwitch | M | 是否存在switch形式的命令行参数，即："--"、"="|
+| GetSwitches | M | 以map方式返回当前所有的switch命令行参数 |
+| AppendSwitch* | M | 以switch方式添加命令行参数 |
+| CopySwitchesFrom | M | 拷贝另外一个CommandLine对象的switch命令行参数 |
+| GetArgs | M | 获取命令行的其余参数|
+| AppendArg* | M | 添加一个命令行参数 |
+| PrependWrapper | M | 在当前命令的最前面插入命令 |
+| ParseFromString | M | WINDOWS ONLY， 通过给定的命令行参数字符串初始化CommandLine对象 |
+
+#### 9. base::CPU
+描述：当前CPU信息，具体参见头文件
+头文件：cpu.h
+
+#### 10. base::Environment
+描述：环境变量相关
+头文件：environment.h
+API:
+| 函数名 | 属性 | 说明 |
+| ------ | :------: | ------ |
+| Create | S | 创建Environment对象 |
+| GetVar | M | 获取环境变量的值，如果环境变量未设置则返回false |
+| HasVar | M | 检测环境变量是否存在，存在则返回true |
+| SetVar | M | 设置环境变量，操作成功则返回true |
+| UnSetVar | M | 重置环境变量，操作成功则返回true |
+
+#### 11. base::EventRecorder
+描述：用于录制和播放键盘和鼠标输入事件。当在记录或回放时，必须将相关窗口移动到恒定的大小和位置，仅考虑在有窗口的情况下。
+头文件：event_recorder.h
+API:
+| 函数名 | 属性 | 说明 |
+| ------ | :------: | ------ |
+| current | S | 返回base::EventRecorder对象，单例 |
+| StartRecording | M | 开始记录，具体结果记录在给定的FilePath文件里 |
+| StopRecording | M | 停止记录 |
+| is_recording | M | 是否记录中 |
+| StartPlayback | M | 回放事件记录到FilePath文件里 |
+| StopPlayback | M | 停止回放 |
+| is_playing | M | 是否回放中 |
+| RecordWndProc | M | WINDOWS ONLY，C风格的记录回调函数 |
+| PlaybackWndProc | M | WINDOWS ONLY|，C风格的回放回调函数
+
+#### 12. base::FilePath
+描述：表达文件路径
+头文件：file_path.h
+API：
+| 函数名 | 属性 | 说明 |
+| ------ | :------: | ------ |
+| Separators | S | 返回路径分割符，与系统相关 |
+| CurrentDirectory | S | 返回当前目录字符串，即： "." |
+| ParentDirectory | S | 返回父目录字符串，即：".."|
+| ExtensionSeparator | S | 返回扩展分割符 |
+| value | M | 以字符串形式返回当前所表达的路径 |
+| empty | M | 当前路径是否为空 |
+| clear | M | 清空当前路径 |
+| IsSeparator | S | 判断给定的字符串是否是分割符 |
+| GetComponents | M | 返回当前目录下的目录或文件，非递归深入 |
+| IsParent | M | 判断当前路径是否是给定路径的父目录 |
+| AppendRelativePath | M | 添加基于当前路径下的相对路径，给定的路径必须是当前路径的子路径 |
+| DirName | M | 返回当前对象所代表的路径的目录FilePath |
+| BaseName | M | 返回当前对象的最后一个路径组件（文件或目录）对应的FilePath |
+| Extension | M | 以字符串形式返回当前文件扩展名，如：".jpg"|
+| RemoveExtension | M | 以字符串形式返回不包括扩展名的FilePath |
+| InsertBeforeExtension | M | 在扩展名之前插入 |
+| AddExtension | M | 添加扩展名，如果扩展名为空，则返回空的FilePath，如果BaseName() == "."/".." 则返回"" |
+| ReplaceExtension | M | 替换扩展名，返回规则与AddExtension相同 |
+| MatchesExtension | M | 判断当前是否是给定的扩展名 |
+| Append | M | 通过分割符或提供的路径附加到当前路径返回新的FilePath |
+| IsAbsolute | M | 如果此FilePath包含绝对路径，则返回true |
+| StripTrailingSeparators | M | 返回当前路径的副本，但不以尾随分隔符结尾 |
+| ReferencesParent | M | 如果此FilePath企图包含任何父目录的引用（即路径组件为“..”），则返回true。 |
+| LossyDisplayName | M | 以人类可读的Unicode方式返回当前路径 |
+| MaybeAsASCII | M | 以ASCII方式返回当前路径 |
+| AsUTF8Unsafe | M | 以UTF8方式返回当前路径|
+| FromUTF8Unsafe | S | 以UTF8编码的路径字符串创建FilePath |
+| FromWStringHack | S | wstring表示的路径字符串创建FilePath |
+| WriteToPickle/ReadFromPickle | M | 写入/读取Pickle对象 |
+| NormalizePathSeparators | M | 在Windows上将所有路径分隔符规范化为反斜杠 |
+| CompareIgnoreCase | S | 以与文件系统相同的方式比较两个字符串 |
+| CompareEqualIgnoreCase | S | 以与文件系统相同的方式比较两个字符串 |
+| CompareLessIgnoreCase | S | 以与文件系统相同的方式比较两个字符串 |
+| GetHFSDecomposedForm | S | MACOS ONLY 返回以HFS定义的特殊规范分解形式的字符串 |
+| HFSFastUnicodeCompare | S | MACOS ONLY 比较以HFS定义的两个字符串 |
+
+#### 13. file_util
+描述：文件相关操作
+头文件：file_util.h
+API:
+| 函数名 | 属性 | 说明 |
+| ------ | :------: | ------ |
+| EndsWithSeparator | G | 判断给定的FilePath是否以分割符结尾 |
+| EnsureEndsWithSeparator | G | 确保给定的FilePath是以分隔符结尾的，如果FilePath存在则返回true |
+| AbsolutePath | G | 将给定的FilePath转为绝对路径，如果发生错误返回false |
+| ContainsPath | G | 判断两个FilePath是否是父子关系 |
+| CountFilesCreatedAfter | G | 返回给定的FilePath中在某个时间之后创建的文件数目 |
+| ComputeDirectorySize | G | 返回给定的FilePath下所有目录的字节数 |
+| ComputeFilesSize | G | 返回给定的FilePath下所有文件的字节数 |
+| Delete | G | 删除给定的FilePath，操作成功返回true |
+| DeleteAfterReboot | G | WINDOWS ONLY 删除给定的FilePath并重启系统，操作成功返回true |
+| Move | G | 移动给定路径，如果无法进行简单重命名，例如路径位于不同硬盘上，则会尝试复制和删除。操作成功返回true|
+| ReplaceFile | G | 重命名文件From FilePath到To FilePath，两个路径必须位于同一个硬盘上，如果目标文件不存在，将创建它。在处理临时文件时，首选此功能而不是Move。在Windows上，它保留目标文件的属性。操作成功时返回true |
+| CopyFile | G | 复制文件，操作成功返回true |
+| CopyDirectory | G | 复制目录，如果目录已存在则覆盖，操作成功返回true |
+| PathExists | G | 判断路径是否存在 |
+| PathIsWritable | G | 判断路径是否可写 |
+| DirectoryExists | G | 判断目录是否存在 |
