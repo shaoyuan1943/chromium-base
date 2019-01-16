@@ -2,11 +2,13 @@
 描述：AtExitManager类似CRT函数```atexit()```，在生命周期内接受注册多个回调函数，在对象被销毁时所有注册的回调都将被调用，用来在某个作用区域内做善后工作。AtExitManager以栈容器存放回调函数，访问和遍历由栈特性所决定。
 头文件: at_exit.h
 API:  
+
 | 函数名 | 属性 | 说明 |
 | ------ | :------: | ------ |
 | RegisterCallback | M | 注册一个签名为```void(void*)```的函数指针作为回调函数 |
 | RegisterTask | M | 注册一个```base::Callback```对象作为回调函数 |
 | ProcessCallbacksNow| M | 执行所有已注册的回调函数 |
+
 
 #### 2. base::Time::Exploded
 描述：表达已格式化之后的时间，类似Win32 ```SYSTEMTIME```结构或Unix ```struct tm```。
@@ -16,6 +18,7 @@ API:
 描述：日期时间
 头文件：base_time.h
 API:
+
 | 函数名 | 属性 | 说明 |
 | ------ | :------: | ------ |
 | is_null | M | Time对象未被初始化时返回true |
@@ -38,10 +41,12 @@ API:
 | UTCExplode/LocalExplode | M | 根据UTC时间或本地时间填充base::Exploded |
 | LocalMidnight | M | 返回base::Time描述的本地午夜时间 |
 
+
 #### 4. base::TimeTicks
 描述: 以Tick为单位表达CPU时间。
 头文件：base_time.h
 API:
+
 | 函数名 | 属性 | 说明 |
 | ------ | :------: | ------ |
 | Now | S | 返回当前与平台相关的Tick计数 |
@@ -49,6 +54,7 @@ API:
 | NowFromSystemTraceTime | S | 如果定义了全局跟踪时钟，则返回当前系统跟踪时间，否则等价于HighResNow |
 | is_null | M | 当此对象未被初始化时将返回true  |
 | FromInternalValue/ToInternalValue | S/M | Tick计算和base::TimeTicks互转 |
+
 
 #### 5. base64
 描述：base64编解码
