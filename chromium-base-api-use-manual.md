@@ -1,21 +1,24 @@
 #### 1. base::AtExitManager
 描述：AtExitManager类似CRT函数```atexit()```，在生命周期内接受注册多个回调函数，在对象被销毁时所有注册的回调都将被调用，用来在某个作用区域内做善后工作。AtExitManager以栈容器存放回调函数，访问和遍历由栈特性所决定。
-头文件: at_exit.h
+头文件: at_exit.h  
 API:  
+
 | 函数名 | 属性 | 说明 |
 | ------ | :------: | ------ |
 | RegisterCallback | M | 注册一个签名为```void(void*)```的函数指针作为回调函数 |
 | RegisterTask | M | 注册一个```base::Callback```对象作为回调函数 |
 | ProcessCallbacksNow| M | 执行所有已注册的回调函数 |
 
+
 #### 2. base::Time::Exploded
-描述：表达已格式化之后的时间，类似Win32 ```SYSTEMTIME```结构或Unix ```struct tm```。
-头文件：base_time.h
+描述：表达已格式化之后的时间，类似Win32 ```SYSTEMTIME```结构或Unix ```struct tm```。  
+头文件：base_time.h  
 
 #### 3. base::Time
-描述：日期时间
-头文件：base_time.h
+描述：日期时间  
+头文件：base_time.h  
 API:
+
 | 函数名 | 属性 | 说明 |
 | ------ | :------: | ------ |
 | is_null | M | Time对象未被初始化时返回true |
@@ -38,10 +41,12 @@ API:
 | UTCExplode/LocalExplode | M | 根据UTC时间或本地时间填充base::Exploded |
 | LocalMidnight | M | 返回base::Time描述的本地午夜时间 |
 
+
 #### 4. base::TimeTicks
-描述: 以Tick为单位表达CPU时间。
-头文件：base_time.h
+描述: 以Tick为单位表达CPU时间。  
+头文件：base_time.h  
 API:
+
 | 函数名 | 属性 | 说明 |
 | ------ | :------: | ------ |
 | Now | S | 返回当前与平台相关的Tick计数 |
@@ -50,10 +55,12 @@ API:
 | is_null | M | 当此对象未被初始化时将返回true  |
 | FromInternalValue/ToInternalValue | S/M | Tick计算和base::TimeTicks互转 |
 
+
 #### 5. base64
-描述：base64编解码
-头文件：base64.h
+描述：base64编解码  
+头文件：base64.h  
 API:
+
 | 函数名 | 属性 | 说明 |
 | ------ | :------: | ------ |
 | Base64Encode | G | base64编码，成功时返回true |
@@ -61,32 +68,40 @@ API:
 | Base64Decode | G | base64解码，成功时返回true |
 | Base64DecodeLength | G | 返回base64解码所需的长度，比计算长度多10字节 |
 
+
 #### 6. base::Callback/base::Bind
-描述：类似std::function/std::bind
-头文件：callback.h/bind.h
+描述：类似std::function/std::bind  
+头文件：callback.h/bind.h  
 API:
+
 | 函数名 | 属性 | 说明 |
 | ------ | :------: | ------ |
 | Bind | G | 将可执行对象连同参数绑定到Callback上 |
 
+
 #### 7. base::CancelableCallback
-描述：可取消操作的Callback
-头文件：cancelable_callback.h
+描述：可取消操作的Callback  
+头文件：cancelable_callback.h  
 API:
+
+
 
 
 #### 8. build_time
-描述：二进制编译时间
-头文件：build_time.h
+描述：二进制编译时间  
+头文件：build_time.h  
 API:
+
 | 函数名 | 属性 | 说明 |
 | ------ | :------: | ------ |
 | GetBuildTime | G | 返回当前二进制编译时间 |
 
+
 #### 8. base::CommandLine
-描述：可执行程序的命令行解析对象。
-头文件：command_line.h
+描述：可执行程序的命令行解析对象  
+头文件：command_line.h  
 API：
+
 | 函数名 | 属性 | 说明 |
 | ------ | :------: | ------ |
 | Init | S | 创建当前进程CommandLine单例  |
@@ -106,14 +121,16 @@ API：
 | PrependWrapper | M | 在当前命令的最前面插入命令 |
 | ParseFromString | M | WINDOWS ONLY， 通过给定的命令行参数字符串初始化CommandLine对象 |
 
+
 #### 9. base::CPU
-描述：当前CPU信息，具体参见头文件
-头文件：cpu.h
+描述：当前CPU信息，具体参见头文件  
+头文件：cpu.h  
 
 #### 10. base::Environment
-描述：环境变量相关
-头文件：environment.h
+描述：环境变量相关  
+头文件：environment.h  
 API:
+
 | 函数名 | 属性 | 说明 |
 | ------ | :------: | ------ |
 | Create | S | 创建Environment对象 |
@@ -122,10 +139,12 @@ API:
 | SetVar | M | 设置环境变量，操作成功则返回true |
 | UnSetVar | M | 重置环境变量，操作成功则返回true |
 
+
 #### 11. base::EventRecorder
-描述：用于录制和播放键盘和鼠标输入事件。当在记录或回放时，必须将相关窗口移动到恒定的大小和位置，仅考虑在有窗口的情况下。
-头文件：event_recorder.h
-API:
+描述：用于录制和播放键盘和鼠标输入事件。当在记录或回放时，必须将相关窗口移动到恒定的大小和位置，仅考虑在有窗口的情况下  
+头文件：event_recorder.h  
+API:  
+
 | 函数名 | 属性 | 说明 |
 | ------ | :------: | ------ |
 | current | S | 返回base::EventRecorder对象，单例 |
@@ -135,13 +154,15 @@ API:
 | StartPlayback | M | 回放事件记录到FilePath文件里 |
 | StopPlayback | M | 停止回放 |
 | is_playing | M | 是否回放中 |
-| RecordWndProc | M | WINDOWS ONLY，C风格的记录回调函数 |
-| PlaybackWndProc | M | WINDOWS ONLY|，C风格的回放回调函数
+| RecordWndProc | M | WINDOWS ONLY C风格的记录回调函数 |
+| PlaybackWndProc | M | WINDOWS ONLY C风格的回放回调函数 |
+
 
 #### 12. base::FilePath
-描述：表达文件路径
-头文件：file_path.h
+描述：表达文件路径    
+头文件：file_path.h    
 API：
+
 | 函数名 | 属性 | 说明 |
 | ------ | :------: | ------ |
 | Separators | S | 返回路径分割符，与系统相关 |
@@ -180,10 +201,12 @@ API：
 | GetHFSDecomposedForm | S | MACOS ONLY 返回以HFS定义的特殊规范分解形式的字符串 |
 | HFSFastUnicodeCompare | S | MACOS ONLY 比较以HFS定义的两个字符串 |
 
+
 #### 13. file_util
-描述：文件相关操作
-头文件：file_util.h
-API:
+描述：文件相关操作  
+头文件：file_util.h  
+API:  
+
 | 函数名 | 属性 | 说明 |
 | ------ | :------: | ------ |
 | EndsWithSeparator | G | 判断给定的FilePath是否以分割符结尾 |
@@ -250,10 +273,12 @@ API:
 | HasFileBeenModifiedSince | G | 返回距离上一次修改的多长时间 |
 | GetFileSystemType | G | LINUX ONLY 返回文件的系统类型 |
 
+
 #### 14. base::FileEnumerator
-描述：文件枚举器，用于遍历目录
-头文件：file_util.h
-API:
+描述：文件枚举器，用于遍历目录  
+头文件：file_util.h  
+API:  
+
 | 函数名 | 属性 | 说明 |
 | ------ | :------: | ------ |
 | Next | M | 当前枚举器所指向的下一个FilePath，最后一个是空的FilePath |
@@ -263,10 +288,12 @@ API:
 | GetFilesize | M | 获取文件大小 |
 | GetLastModifiedTime | M | 获取文件最后修改时间 |
 
+
 #### 15. base::MemoryMappedFile
-描述：内存映射文件
-头文件：file_util.h
-API:
+描述：内存映射文件  
+头文件：file_util.h  
+API:  
+
 | 函数名 | 属性 | 说明 |
 | ------ | :------: | ------ |
 | Initialize | M | 将一个存在的文件映射到内存，如果无法打开文件或者文件不存在或者内存映射失败将会返回false |
