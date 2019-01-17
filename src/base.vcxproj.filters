@@ -339,7 +339,6 @@
     <ClInclude Include="base\atomic_ref_count.h" />
     <ClInclude Include="base\atomic_sequence_num.h" />
     <ClInclude Include="base\atomicops.h" />
-    <ClInclude Include="base\atomicops_internals_atomicword_compat.h" />
     <ClInclude Include="base\atomicops_internals_x86_msvc.h" />
     <ClInclude Include="base\base_paths.h" />
     <ClInclude Include="base\base_paths_win.h" />
@@ -655,5 +654,6 @@
     <ClInclude Include="base\file_descriptor_shuffle.h" />
     <ClInclude Include="base\sha1.h" />
     <ClInclude Include="base\dispatchers.h" />
+    <ClInclude Include="base\atomicops_internals_atomicword_compat.h" />
   </ItemGroup>
 </Project>

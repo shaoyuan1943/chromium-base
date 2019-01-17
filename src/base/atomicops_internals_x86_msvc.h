@@ -1,4 +1,4 @@
-// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
+﻿// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
@@ -12,11 +12,8 @@
 namespace base {
 namespace subtle {
 
-inline Atomic32 NoBarrier_CompareAndSwap(volatile Atomic32* ptr,
-                                         Atomic32 old_value,
-                                         Atomic32 new_value) {
-  LONG result = InterlockedCompareExchange(
-      reinterpret_cast<volatile LONG*>(ptr),
+inline Atomic32 NoBarrier_CompareAndSwap(volatile Atomic32* ptr, Atomic32 old_value, Atomic32 new_value) {
+  LONG result = InterlockedCompareExchange(reinterpret_cast<volatile LONG*>(ptr),
       static_cast<LONG>(new_value),
       static_cast<LONG>(old_value));
   return static_cast<Atomic32>(result);
@@ -24,9 +21,7 @@ inline Atomic32 NoBarrier_CompareAndSwap(volatile Atomic32* ptr,
 
 inline Atomic32 NoBarrier_AtomicExchange(volatile Atomic32* ptr,
                                          Atomic32 new_value) {
-  LONG result = InterlockedExchange(
-      reinterpret_cast<volatile LONG*>(ptr),
-      static_cast<LONG>(new_value));
+  LONG result = InterlockedExchange(reinterpret_cast<volatile LONG*>(ptr), static_cast<LONG>(new_value));
   return static_cast<Atomic32>(result);
 }
 

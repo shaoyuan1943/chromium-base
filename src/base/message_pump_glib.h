@@ -1,4 +1,4 @@
-// Copyright (c) 2012 The Chromium Authors. All rights reserved.
+﻿// Copyright (c) 2012 The Chromium Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
@@ -9,7 +9,7 @@
 #include "base/memory/scoped_ptr.h"
 #include "base/message_pump.h"
 #include "base/observer_list.h"
-#include "base/time.h"
+#include "base/base_time.h"
 
 typedef struct _GMainContext GMainContext;
 typedef struct _GPollFD GPollFD;

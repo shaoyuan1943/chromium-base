@@ -1,4 +1,4 @@
-// Copyright (c) 2012 The Chromium Authors. All rights reserved.
+﻿// Copyright (c) 2012 The Chromium Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
@@ -11,7 +11,7 @@
 #include "base/message_pump.h"
 #include "base/observer_list.h"
 #include "base/threading/thread_checker.h"
-#include "base/time.h"
+#include "base/base_time.h"
 
 // Declare structs we need from libevent.h rather than including it
 struct event_base;
