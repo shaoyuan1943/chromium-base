@@ -84,7 +84,12 @@ API:
 头文件：cancelable_callback.h  
 API:
 
-
+| 函数名 | 属性 | 说明 |
+| ------ | :------: | ------ |
+| Cancel | M | 取消Callback，后续的调用无效果 |
+| IsCancelled | M | 是否已取消 |
+| Reset | M | 重设 |
+| callback | M | 返回内部的base::Callback |
 
 
 ### 8. build_time
@@ -301,3 +306,56 @@ API:
 | data | M | 内存数据 |
 | length | M | 内存数据长度|
 | IsValid | M | 是否合法 |
+
+### 17. base::FileUtilProxy
+描述：提供对文件的异步访问
+头文件：file_util_proxy.h
+API:
+
+| 函数名 | 属性 | 说明 |
+| ------ | :------: | ------ |
+| CreateOrOpen | S | 在task runner下创建或打开文件，返回值不代表文件创建或打开成功 |
+| CreateTemporary | S | 创建临时目录 |
+| Close | S | 关闭文件 |
+| GetFileInfo | S | 获取文件信息 |
+| GetFileInfoFromPlatformFile | S | 通过平台文件句柄获取文件信息 |
+| Delete | S | 删除，可能是文件也可能是目录 |
+| RecursiveDelete | S | 删除目录，会递归删除所有内容 |
+| Read | S | 读取文件 |
+| Write | S | 写入文件 |
+| Touch | S | 访问文件 |
+| Truncate | S | 将文件截断为给定长度。 如果给定长度大于文件的当前长度，则文件将以零扩展 |
+| Flush | S | 刷新文件 |
+| RelayFileTask | S | FileTask形式 |
+| RelayCreateOrOpen | S | FileTask形式，类同CreateOrOpen |
+| RelayClose | S | FileTask形式，类同Close |
+
+### 18. base::FileVersionInfo
+描述：访问文件版本信息
+头文件：file_version_info.h
+API:
+
+| 函数名 | 属性 | 说明 |
+| ------ | :------: | ------ |
+| CreateFileVersionInfo | S | WINDOWS AND MACOSX ONLY 创建文件的版本信息 |
+| CreateFileVersionInfoForModule | S | WINDOWS ONLY 创建文件的版本信息 |
+| CreateFileVersionInfoForCurrentModule | S | 给exe创建文件版本信息 |
+
+### 19. float_util
+描述：判断float是否为无限浮点数
+头文件：float_util.h
+API:
+
+| 函数名 | 属性 | 说明 |
+| ------ | :------: | ------ |
+| IsFinite | G | 判断是否为无限浮点数 |
+
+### 20. guid
+描述：生成guid
+头文件：guid.h
+API:
+
+| 函数名 | 属性 | 说明 |
+| ------ | :------: | ------ |
+| GenerateGUID | G | 生成GUID |
+| IsValidGUID | G | 是否合法GUID |
