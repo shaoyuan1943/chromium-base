@@ -331,9 +331,9 @@ API:
 | RelayClose | S | FileTask形式，类同Close |
 
 ### 18. base::FileVersionInfo
-描述：访问文件版本信息
-头文件：file_version_info.h
-API:
+描述：访问文件版本信息  
+头文件：file_version_info.h  
+API:  
 
 | 函数名 | 属性 | 说明 |
 | ------ | :------: | ------ |
@@ -342,18 +342,18 @@ API:
 | CreateFileVersionInfoForCurrentModule | S | 给exe创建文件版本信息 |
 
 ### 19. float_util
-描述：判断float是否为无限浮点数
-头文件：float_util.h
-API:
+描述：判断float是否为无限浮点数  
+头文件：float_util.h  
+API:  
 
 | 函数名 | 属性 | 说明 |
 | ------ | :------: | ------ |
 | IsFinite | G | 判断是否为无限浮点数 |
 
 ### 20. guid
-描述：生成guid
-头文件：guid.h
-API:
+描述：生成guid  
+头文件：guid.h  
+API:  
 
 | 函数名 | 属性 | 说明 |
 | ------ | :------: | ------ |
