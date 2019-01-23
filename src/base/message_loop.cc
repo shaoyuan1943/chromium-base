@@ -26,14 +26,6 @@
 #if defined(OS_POSIX)
 #include "base/message_pump_libevent.h"
 #endif
-#if defined(OS_ANDROID)
-#include "base/message_pump_android.h"
-#endif
-
-#if defined(TOOLKIT_GTK)
-#include <gdk/gdk.h>
-#include <gdk/gdkx.h>
-#endif
 
 using base::PendingTask;
 using base::TimeDelta;
@@ -71,8 +63,6 @@ const int kNumberOfDistinctMessagesDisplayed = 1100;
 // number as a bucket identifier, and proceeds to use the corresponding name
 // in the pair (i.e., the quoted string) when printing out a histogram.
 #define VALUE_TO_NUMBER_AND_NAME(name) {name, #name},
-
-MessageLoop::MessagePumpFactory* message_pump_for_ui_factory_ = NULL;
 
 // Create a process-wide unique ID to represent this task in trace events. This
 // will be mangled with a Process ID hash to reduce the likelyhood of colliding
@@ -138,31 +128,19 @@ MessageLoop::MessageLoop(Type type)
 
 // TODO(rvargas): Get rid of the OS guards.
 #if defined(OS_WIN)
-#define MESSAGE_PUMP_UI new base::MessagePumpForUI()
 #define MESSAGE_PUMP_IO new base::MessagePumpForIO()
 #elif defined(OS_MACOSX)
-#define MESSAGE_PUMP_UI base::MessagePumpMac::Create()
 #define MESSAGE_PUMP_IO new base::MessagePumpLibevent()
 #elif defined(OS_NACL)
-// Currently NaCl doesn't have a UI MessageLoop.
-// TODO(abarth): Figure out if we need this.
-#define MESSAGE_PUMP_UI NULL
-// ipc_channel_nacl.cc uses a worker thread to do socket reads currently, and
-// doesn't require extra support for watching file descriptors.
 #define MESSAGE_PUMP_IO new base::MessagePumpDefault();
 #elif defined(OS_POSIX)  // POSIX but not MACOSX.
-#define MESSAGE_PUMP_UI new base::MessagePumpForUI()
 #define MESSAGE_PUMP_IO new base::MessagePumpLibevent()
 #else
 #error Not implemented
 #endif
+  assert(type_ != TYPE_UI);
 
-  if (type_ == TYPE_UI) {
-    if (message_pump_for_ui_factory_)
-      pump_ = message_pump_for_ui_factory_();
-    else
-      pump_ = MESSAGE_PUMP_UI;
-  } else if (type_ == TYPE_IO) {
+  if (type_ == TYPE_IO) {
     pump_ = MESSAGE_PUMP_IO;
   } else {
     DCHECK_EQ(TYPE_DEFAULT, type_);
@@ -223,13 +201,6 @@ MessageLoop* MessageLoop::current() {
   // when they have no intention of using us.
   // DCHECK(loop) << "Ouch, did you forget to initialize me?";
   return lazy_tls_ptr.Pointer()->Get();
-}
-
-
-// static
-void MessageLoop::InitMessagePumpForUIFactory(MessagePumpFactory* factory) {
-  DCHECK(!message_pump_for_ui_factory_);
-  message_pump_for_ui_factory_ = factory;
 }
 
 void MessageLoop::AddDestructionObserver(
@@ -392,15 +363,6 @@ __declspec(noinline) void MessageLoop::RunInternalInSEHFrame() {
 
 void MessageLoop::RunInternal() {
   DCHECK_EQ(this, current());
-
-#if !defined(OS_MACOSX) && !defined(OS_ANDROID)
-  if (run_loop_->dispatcher_ && type() == TYPE_UI) {
-    static_cast<base::MessagePumpForUI*>(pump_.get())->
-        RunWithDispatcher(this, run_loop_->dispatcher_);
-    return;
-  }
-#endif
-
   pump_->Run(this);
 }
 
@@ -660,39 +622,6 @@ void MessageLoop::ReleaseSoonInternal(
     const void* object) {
   PostNonNestableTask(from_here, base::Bind(releaser, object));
 }
-
-//------------------------------------------------------------------------------
-// MessageLoopForUI
-
-#if defined(OS_WIN)
-void MessageLoopForUI::DidProcessMessage(const MSG& message) {
-  pump_win()->DidProcessMessage(message);
-}
-#endif  // defined(OS_WIN)
-
-#if defined(OS_ANDROID)
-void MessageLoopForUI::Start() {
-  // No Histogram support for UI message loop as it is managed by Java side
-  static_cast<base::MessagePumpForUI*>(pump_.get())->Start(this);
-}
-#endif
-
-#if defined(OS_IOS)
-void MessageLoopForUI::Attach() {
-  static_cast<base::MessagePumpUIApplication*>(pump_.get())->Attach(this);
-}
-#endif
-
-#if !defined(OS_MACOSX) && !defined(OS_NACL) && !defined(OS_ANDROID)
-void MessageLoopForUI::AddObserver(Observer* observer) {
-  pump_ui()->AddObserver(observer);
-}
-
-void MessageLoopForUI::RemoveObserver(Observer* observer) {
-  pump_ui()->RemoveObserver(observer);
-}
-
-#endif  //  !defined(OS_MACOSX) && !defined(OS_NACL) && !defined(OS_ANDROID)
 
 //------------------------------------------------------------------------------
 // MessageLoopForIO

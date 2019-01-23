@@ -417,26 +417,4 @@ BASE_EXPORT extern void PrintTo(const FilePath& path, std::ostream* out);
 #define PRFilePathLiteral L"%ls"
 #endif  // OS_WIN
 
-// Provide a hash function so that hash_sets and maps can contain FilePath
-// objects.
-namespace BASE_HASH_NAMESPACE {
-#if defined(COMPILER_GCC)
-
-template<>
-struct hash<FilePath> {
-  size_t operator()(const FilePath& f) const {
-    return hash<FilePath::StringType>()(f.value());
-  }
-};
-
-#elif defined(COMPILER_MSVC)
-
-inline size_t hash_value(const FilePath& f) {
-  return hash_value(f.value());
-}
-
-#endif  // COMPILER
-
-}  // namespace BASE_HASH_NAMESPACE
-
 #endif  // BASE_FILE_PATH_H_

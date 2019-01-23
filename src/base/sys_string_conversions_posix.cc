@@ -4,6 +4,7 @@
 
 #include "base/sys_string_conversions.h"
 
+#include <string.h>
 #include <wchar.h>
 
 #include "base/string_piece.h"

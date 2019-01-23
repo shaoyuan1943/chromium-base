@@ -22,8 +22,9 @@
  */
 
 #include "base/md5.h"
-
 #include "base/basictypes.h"
+
+#include <string.h>
 
 namespace {
 

@@ -3,6 +3,7 @@
 // found in the LICENSE file.
 // Copied from strings/stringpiece.cc with modifications
 
+#include <string.h>
 #include <algorithm>
 #include <ostream>
 

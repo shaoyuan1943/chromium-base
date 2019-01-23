@@ -5,7 +5,6 @@
 #include "base/threading/platform_thread.h"
 
 #include "base/debug/alias.h"
-#include "base/debug/profiler.h"
 #include "base/logging.h"
 #include "base/threading/thread_local.h"
 #include "base/threading/thread_restrictions.h"

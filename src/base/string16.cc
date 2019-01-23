@@ -3,6 +3,7 @@
 // found in the LICENSE file.
 
 #include "base/string16.h"
+#include <string.h>
 
 #if defined(WCHAR_T_IS_UTF16)
 

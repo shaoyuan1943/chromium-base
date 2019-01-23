@@ -54,11 +54,23 @@ message(STATUS *******************************************************)
 
 set(BASE_PLATFORM_SOURCE)
 set(BASE_PLATFORM_DEFINITIONS)
+set(BASE_LINK_PLATFORM_LIBRARIES)
+set(BASE_INCLUDE_PLATFORM_DIRECTORIES)
 if(Linux MATCHES ${BASE_BUILD_PLATFORM})
     set(BASE_BUILD_CONFIGURATION_TYPE SHARED)
 
     set(BASE_PLATFORM_DEFINITIONS 
         -DUSE_SYSTEM_LIBEVENT
+    )
+
+    set(BASE_LINK_PLATFORM_LIBRARIES    
+        glib-2.0
+        pthread
+    )
+
+    set(BASE_INCLUDE_PLATFORM_DIRECTORIES   
+        /usr/local/include/glib-2.0
+        /usr/local/lib/glib-2.0/include
     )
 
     set(BASE_PLATFORM_SOURCE  
@@ -86,7 +98,6 @@ if(Linux MATCHES ${BASE_BUILD_PLATFORM})
         base/sys_info_posix.cc
         base/sys_string_conversions_posix.cc
         base/time_posix.cc
-        base/debug/debugger_posix.cc
         base/debug/stack_trace_posix.cc
         base/files/dir_reader_posix.h
         base/synchronization/condition_variable_posix.cc
@@ -109,10 +120,7 @@ if(Linux MATCHES ${BASE_BUILD_PLATFORM})
         base/files/file_path_watcher_linux.cc
         base/third_party/nspr/prcpucfg_linux.h
         base/message_pump_libevent.h
-        base/message_pump_gtk.h
-        base/message_pump_gtk.cc
-        base/message_pump_glib.h
-        base/message_pump_glib.cc
+        base/debug/debugger_posix.cc
     )
 endif()
 
@@ -147,7 +155,6 @@ if(Android MATCHES ${BASE_BUILD_PLATFORM})
         base/sys_info_posix.cc
         base/sys_string_conversions_posix.cc
         base/time_posix.cc
-        base/debug/debugger_posix.cc
         base/debug/stack_trace_posix.cc
         base/files/dir_reader_posix.h
         base/synchronization/condition_variable_posix.cc
@@ -163,8 +170,6 @@ if(Android MATCHES ${BASE_BUILD_PLATFORM})
         base/base_paths_android.cc
         base/base_paths_android.h
         base/file_util_android.cc
-        base/message_pump_android.cc
-        base/message_pump_android.h
         base/os_compat_android.cc
         base/os_compat_android.h
         base/shared_memory_android.cc
@@ -208,7 +213,6 @@ if(macOSX MATCHES ${BASE_BUILD_PLATFORM})
         base/sys_info_posix.cc
         base/sys_string_conversions_posix.cc
         base/time_posix.cc
-        base/debug/debugger_posix.cc
         base/debug/stack_trace_posix.cc
         base/files/dir_reader_posix.h
         base/synchronization/condition_variable_posix.cc
@@ -349,6 +353,7 @@ set(BASE_SOURCE
     base/format_macros.h
     base/guid.h
     base/hash.h
+    base/hash_tables.h
     base/hi_res_timer_manager.h
     base/id_map.h
     base/json/json_file_value_serializer.h
@@ -382,7 +387,6 @@ set(BASE_SOURCE
     base/message_pump_default.h
     base/message_pump_dispatcher.h
     base/message_pump_observer.h
-    base/move.h
     base/native_library.h
     base/nullable_string16.h
     base/observer_list.h
@@ -553,6 +557,8 @@ set(BASE_SOURCE
     base/value_conversions.cc
     base/version.cc
     base/vlog.cc
+    base/debug/debugger.h
+    base/debug/debugger.cc
 )
 
 set(BASE_LINK_LIBRARIES 
@@ -561,6 +567,7 @@ set(BASE_LINK_LIBRARIES
 
 include_directories(
     ${BASE_INCLUDE_DIRECTORIES}
+    ${BASE_INCLUDE_PLATFORM_DIRECTORIES}
 )
 
 add_definitions(
@@ -578,6 +585,7 @@ add_library(${BASE_TARGET_NAME} ${BASE_BUILD_CONFIGURATION_TYPE}
 
 target_link_libraries(${BASE_TARGET_NAME}
     ${BASE_LINK_LIBRARIES}
+    ${BASE_LINK_PLATFORM_LIBRARIES}
 )
 
 set_property(TARGET ${BASE_TARGET_NAME} PROPERTY POSITION_INDEPENDENT_CODE ON)

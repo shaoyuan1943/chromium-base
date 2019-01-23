@@ -64,7 +64,7 @@ class InotifyReader {
   ~InotifyReader();
 
   // We keep track of which delegates want to be notified on which watches.
-  base::hash_map<Watch, WatcherSet> watchers_;
+  std::unordered_map<Watch, WatcherSet> watchers_;
 
   // Lock to protect watchers_.
   base::Lock lock_;

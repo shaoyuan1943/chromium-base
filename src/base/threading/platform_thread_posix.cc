@@ -13,7 +13,6 @@
 #include "base/safe_strerror_posix.h"
 #include "base/threading/thread_local.h"
 #include "base/threading/thread_restrictions.h"
-#include "base/tracked_objects.h"
 
 #if defined(OS_MACOSX)
 #include <sys/resource.h>
@@ -198,7 +197,6 @@ void PlatformThread::SetName(const char* name) {
   // have to cast away const because ThreadLocalPointer does not support const
   // void*
   current_thread_name.Pointer()->Set(const_cast<char*>(name));
-  tracked_objects::ThreadData::InitializeThreadContext(name);
 
   // On linux we can get the thread names to show up in the debugger by setting
   // the process name for the LWP.  We don't want to do this for the main
@@ -225,7 +223,6 @@ void PlatformThread::SetName(const char* name) {
   // have to cast away const because ThreadLocalPointer does not support const
   // void*
   current_thread_name.Pointer()->Set(const_cast<char*>(name));
-  tracked_objects::ThreadData::InitializeThreadContext(name);
 
   // (This should be relatively simple to implement for the BSDs; I
   // just don't have one handy to test the code on.)

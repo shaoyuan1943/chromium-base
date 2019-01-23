@@ -17,7 +17,7 @@
 #endif
 #include "base/memory/scoped_ptr.h"
 #include "base/observer_list.h"
-#include "base/time.h"
+#include "base/base_time.h"
 #if defined(USE_SYSTEM_LIBEVENT)
 #include <event.h>
 #else

@@ -20,6 +20,8 @@
 #include "base/sequenced_task_runner_helpers.h"
 #include "base/synchronization/lock.h"
 #include "base/base_time.h"
+#include "message_pump_dispatcher.h"
+#include "message_pump_observer.h"
 
 #if defined(OS_WIN)
 // We need this to declare base::MessagePumpWin::Dispatcher, which we should
@@ -27,18 +29,12 @@
 #include "base/message_pump_win.h"
 #elif defined(OS_POSIX)
 #include "base/message_pump_libevent.h"
-#if !defined(OS_MACOSX) && !defined(OS_ANDROID)
-#include "base/message_pump_gtk.h"
-#endif
 #endif
 
 namespace base {
 class Histogram;
 class RunLoop;
 class ThreadTaskRunnerHandle;
-#if defined(OS_ANDROID)
-class MessagePumpForUI;
-#endif
 }  // namespace base
 
 // A MessageLoop is used to process events for a particular thread.  There is
@@ -75,7 +71,7 @@ class MessagePumpForUI;
 class BASE_EXPORT MessageLoop : public base::MessagePump::Delegate {
  public:
 
-#if !defined(OS_MACOSX) && !defined(OS_ANDROID)
+#if defined(OS_WIN) || defined(OS_IOS)
   typedef base::MessagePumpDispatcher Dispatcher;
   typedef base::MessagePumpObserver Observer;
 #endif
@@ -107,11 +103,6 @@ class BASE_EXPORT MessageLoop : public base::MessagePump::Delegate {
 
   // Returns the MessageLoop object for the current thread, or null if none.
   static MessageLoop* current();
-
-  typedef base::MessagePump* (MessagePumpFactory)();
-  // Using the given base::MessagePumpForUIFactory to override the default
-  // MessagePump implementation for 'TYPE_UI'.
-  static void InitMessagePumpForUIFactory(MessagePumpFactory* factory);
 
   // A DestructionObserver is notified when the current MessageLoop is being
   // destroyed.  These observers are notified prior to MessageLoop::current()
@@ -510,73 +501,6 @@ class BASE_EXPORT MessageLoop : public base::MessagePump::Delegate {
 
   DISALLOW_COPY_AND_ASSIGN(MessageLoop);
 };
-
-//-----------------------------------------------------------------------------
-// MessageLoopForUI extends MessageLoop with methods that are particular to a
-// MessageLoop instantiated with TYPE_UI.
-//
-// This class is typically used like so:
-//   MessageLoopForUI::current()->...call some method...
-//
-class BASE_EXPORT MessageLoopForUI : public MessageLoop {
- public:
-#if defined(OS_WIN)
-  typedef base::MessagePumpForUI::MessageFilter MessageFilter;
-#endif
-
-  MessageLoopForUI() : MessageLoop(TYPE_UI) {
-  }
-
-  // Returns the MessageLoopForUI of the current thread.
-  static MessageLoopForUI* current() {
-    MessageLoop* loop = MessageLoop::current();
-    DCHECK(loop);
-    DCHECK_EQ(MessageLoop::TYPE_UI, loop->type());
-    return static_cast<MessageLoopForUI*>(loop);
-  }
-
-#if defined(OS_WIN)
-  void DidProcessMessage(const MSG& message);
-#endif  // defined(OS_WIN)
-
-#if defined(OS_IOS)
-  // On iOS, the main message loop cannot be Run().  Instead call Attach(),
-  // which connects this MessageLoop to the UI thread's CFRunLoop and allows
-  // PostTask() to work.
-  void Attach();
-#endif
-
-#if defined(OS_ANDROID)
-  // On Android, the UI message loop is handled by Java side. So Run() should
-  // never be called. Instead use Start(), which will forward all the native UI
-  // events to the Java message loop.
-  void Start();
-#elif !defined(OS_MACOSX)
-  // Please see message_pump_win/message_pump_glib for definitions of these
-  // methods.
-  void AddObserver(Observer* observer);
-  void RemoveObserver(Observer* observer);
-
-#if defined(OS_WIN)
-  // Plese see MessagePumpForUI for definitions of this method.
-  void SetMessageFilter(scoped_ptr<MessageFilter> message_filter) {
-    pump_ui()->SetMessageFilter(std::move(message_filter));
-  }
-#endif
-
- protected:
-  // TODO(rvargas): Make this platform independent.
-  base::MessagePumpForUI* pump_ui() {
-    return static_cast<base::MessagePumpForUI*>(pump_.get());
-  }
-#endif  // !defined(OS_MACOSX)
-};
-
-// Do not add any member variables to MessageLoopForUI!  This is important b/c
-// MessageLoopForUI is often allocated via MessageLoop(TYPE_UI).  Any extra
-// data that you need should be stored on the MessageLoop's pump_ instance.
-COMPILE_ASSERT(sizeof(MessageLoop) == sizeof(MessageLoopForUI),
-               MessageLoopForUI_should_not_have_extra_member_variables);
 
 //-----------------------------------------------------------------------------
 // MessageLoopForIO extends MessageLoop with methods that are particular to a

@@ -1,4 +1,4 @@
-// Copyright (c) 2012 The Chromium Authors. All rights reserved.
+﻿// Copyright (c) 2012 The Chromium Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
@@ -11,14 +11,6 @@
 #include "base/message_loop.h"
 
 namespace base {
-#if defined(OS_ANDROID)
-class MessagePumpForUI;
-#endif
-
-#if defined(OS_IOS)
-class MessagePumpUIApplication;
-#endif
-
 // Helper class to Run a nested MessageLoop. Please do not use nested
 // MessageLoops in production code! If you must, use this class instead of
 // calling MessageLoop::Run/Quit directly. RunLoop::Run can only be called once
@@ -27,16 +19,7 @@ class MessagePumpUIApplication;
 class BASE_EXPORT RunLoop {
  public:
   RunLoop();
-#if !defined(OS_MACOSX) && !defined(OS_ANDROID)
-  explicit RunLoop(MessageLoop::Dispatcher* dispatcher);
-#endif
   ~RunLoop();
-
-#if !defined(OS_MACOSX) && !defined(OS_ANDROID)
-  void set_dispatcher(MessageLoop::Dispatcher* dispatcher) {
-    dispatcher_ = dispatcher;
-  }
-#endif
 
   // Run the current MessageLoop. This blocks until Quit is called. Before
   // calling Run, be sure to grab an AsWeakPtr or the QuitClosure in order to
@@ -74,17 +57,6 @@ class BASE_EXPORT RunLoop {
 
  private:
   friend class ::MessageLoop;
-#if defined(OS_ANDROID)
-  // Android doesn't support the blocking MessageLoop::Run, so it calls
-  // BeforeRun and AfterRun directly.
-  friend class base::MessagePumpForUI;
-#endif
-
-#if defined(OS_IOS)
-  // iOS doesn't support the blocking MessageLoop::Run, so it calls
-  // BeforeRun directly.
-  friend class base::MessagePumpUIApplication;
-#endif
 
   // Return false to abort the Run.
   bool BeforeRun();
@@ -97,10 +69,6 @@ class BASE_EXPORT RunLoop {
 
   // Parent RunLoop or NULL if this is the top-most RunLoop.
   RunLoop* previous_run_loop_;
-
-#if !defined(OS_MACOSX) && !defined(OS_ANDROID)
-  MessageLoop::Dispatcher* dispatcher_;
-#endif
 
   // Used to count how many nested Run() invocations are on the stack.
   int run_depth_;

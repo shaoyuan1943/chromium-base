@@ -1,4 +1,4 @@
-// Copyright (c) 2012 The Chromium Authors. All rights reserved.
+﻿// Copyright (c) 2012 The Chromium Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
@@ -17,24 +17,7 @@ RunLoop::RunLoop()
       quit_called_(false),
       running_(false),
       quit_when_idle_received_(false) {
-#if !defined(OS_MACOSX) && !defined(OS_ANDROID)
-   dispatcher_ = NULL;
-#endif
 }
-
-#if !defined(OS_MACOSX) && !defined(OS_ANDROID)
-RunLoop::RunLoop(MessageLoop::Dispatcher* dispatcher)
-    : loop_(MessageLoop::current()),
-      weak_factory_(this),
-      previous_run_loop_(NULL),
-      dispatcher_(dispatcher),
-      run_depth_(0),
-      run_called_(false),
-      quit_called_(false),
-      running_(false),
-      quit_when_idle_received_(false) {
-}
-#endif
 
 RunLoop::~RunLoop() {
 }

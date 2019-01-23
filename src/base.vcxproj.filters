@@ -235,9 +235,6 @@
     <ClCompile Include="base\win\startup_information.cc">
       <Filter>win</Filter>
     </ClCompile>
-    <ClCompile Include="base\win\text_services_message_filter.cc">
-      <Filter>win</Filter>
-    </ClCompile>
     <ClCompile Include="base\win\win_util.cc">
       <Filter>win</Filter>
     </ClCompile>
@@ -302,6 +299,12 @@
     </ClCompile>
     <ClCompile Include="base\file_descriptor_shuffle.cc" />
     <ClCompile Include="base\sha1_portable.cc" />
+    <ClCompile Include="base\debug\debugger.cc">
+      <Filter>debug</Filter>
+    </ClCompile>
+    <ClCompile Include="base\debug\debugger_win.cc">
+      <Filter>debug</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -574,9 +577,6 @@
     <ClInclude Include="base\win\startup_information.h">
       <Filter>win</Filter>
     </ClInclude>
-    <ClInclude Include="base\win\text_services_message_filter.h">
-      <Filter>win</Filter>
-    </ClInclude>
     <ClInclude Include="base\win\win_util.h">
       <Filter>win</Filter>
     </ClInclude>
@@ -655,5 +655,9 @@
     <ClInclude Include="base\sha1.h" />
     <ClInclude Include="base\dispatchers.h" />
     <ClInclude Include="base\atomicops_internals_atomicword_compat.h" />
+    <ClInclude Include="base\hash_tables.h" />
+    <ClInclude Include="base\debug\debugger.h">
+      <Filter>debug</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

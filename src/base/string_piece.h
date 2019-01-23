@@ -405,46 +405,4 @@ BASE_EXPORT std::ostream& operator<<(std::ostream& o,
 
 }  // namespace base
 
-// We provide appropriate hash functions so StringPiece and StringPiece16 can
-// be used as keys in hash sets and maps.
-
-// This hash function is copied from base/hash_tables.h. We don't use the
-// ones already defined for string and string16 directly because it would
-// require the string constructors to be called, which we don't want.
-#define HASH_STRING_PIECE(StringPieceType, string_piece)                \
-  std::size_t result = 0;                                               \
-  for (StringPieceType::const_iterator i = string_piece.begin();        \
-       i != string_piece.end(); ++i)                                    \
-    result = (result * 131) + *i;                                       \
-  return result;                                                        \
-
-namespace BASE_HASH_NAMESPACE {
-#if defined(COMPILER_GCC)
-
-template<>
-struct hash<base::StringPiece> {
-  std::size_t operator()(const base::StringPiece& sp) const {
-    HASH_STRING_PIECE(base::StringPiece, sp);
-  }
-};
-template<>
-struct hash<base::StringPiece16> {
-  std::size_t operator()(const base::StringPiece16& sp16) const {
-    HASH_STRING_PIECE(base::StringPiece16, sp16);
-  }
-};
-
-#elif defined(COMPILER_MSVC)
-
-inline size_t hash_value(const base::StringPiece& sp) {
-  HASH_STRING_PIECE(base::StringPiece, sp);
-}
-inline size_t hash_value(const base::StringPiece16& sp16) {
-  HASH_STRING_PIECE(base::StringPiece16, sp16);
-}
-
-#endif  // COMPILER
-
-}  // namespace BASE_HASH_NAMESPACE
-
 #endif  // BASE_STRING_PIECE_H_

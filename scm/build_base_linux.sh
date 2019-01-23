@@ -3,7 +3,7 @@
 ARCH_PLATFORM="^x64$"
 ARCH_PLATFORM_NAME="x64"
 
-if [[ $1 -eq "x86" ]]; then
+if [[ "$1" = "x86" ]]; then
     ARCH_PLATFORM="^x86$"
     ARCH_PLATFORM_NAME="x86"
 fi 

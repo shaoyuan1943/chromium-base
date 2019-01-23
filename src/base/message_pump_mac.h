@@ -239,30 +239,7 @@ class MessagePumpNSRunLoop : public MessagePumpCFRunLoopBase {
   DISALLOW_COPY_AND_ASSIGN(MessagePumpNSRunLoop);
 };
 
-#if defined(OS_IOS)
-// This is a fake message pump.  It attaches sources to the main thread's
-// CFRunLoop, so PostTask() will work, but it is unable to drive the loop
-// directly, so calling Run() or Quit() are errors.
-class MessagePumpUIApplication : public MessagePumpCFRunLoopBase {
- public:
-  MessagePumpUIApplication();
-  virtual void DoRun(Delegate* delegate) OVERRIDE;
-  virtual void Quit() OVERRIDE;
-
-  // This message pump can not spin the main message loop directly.  Instead,
-  // call |Attach()| to set up a delegate.  It is an error to call |Run()|.
-  virtual void Attach(Delegate* delegate);
-
- protected:
-  virtual ~MessagePumpUIApplication();
-
- private:
-  base::RunLoop* run_loop_;
-
-  DISALLOW_COPY_AND_ASSIGN(MessagePumpUIApplication);
-};
-
-#else
+#if !defined(OS_IOS)
 
 class MessagePumpNSApplication : public MessagePumpCFRunLoopBase {
  public:
@@ -301,6 +278,7 @@ class MessagePumpCrApplication : public MessagePumpNSApplication {
  private:
   DISALLOW_COPY_AND_ASSIGN(MessagePumpCrApplication);
 };
+
 #endif  // !defined(OS_IOS)
 
 class MessagePumpMac {

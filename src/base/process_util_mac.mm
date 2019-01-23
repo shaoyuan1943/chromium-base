@@ -293,7 +293,7 @@ bool ProcessMetrics::GetMemoryBytes(size_t* private_bytes,
 
   // The same region can be referenced multiple times. To avoid double counting
   // we need to keep track of which regions we've already counted.
-  base::hash_set<int> seen_objects;
+  std::unordered_set<int> seen_objects;
 
   // We iterate through each VM region in the task's address map. For shared
   // memory we add up all the pages that are marked as shared. Like libtop we

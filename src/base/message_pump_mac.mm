@@ -10,7 +10,7 @@
 
 #include "base/logging.h"
 #include "base/run_loop.h"
-#include "base/time.h"
+#include "base/base_time.h"
 
 #if !defined(OS_IOS)
 #import <AppKit/AppKit.h>
@@ -527,30 +527,7 @@ void MessagePumpNSRunLoop::Quit() {
   CFRunLoopWakeUp(run_loop());
 }
 
-#if defined(OS_IOS)
-MessagePumpUIApplication::MessagePumpUIApplication()
-    : run_loop_(NULL) {
-}
-
-MessagePumpUIApplication::~MessagePumpUIApplication() {}
-
-void MessagePumpUIApplication::DoRun(Delegate* delegate) {
-  NOTREACHED();
-}
-
-void MessagePumpUIApplication::Quit() {
-  NOTREACHED();
-}
-
-void MessagePumpUIApplication::Attach(Delegate* delegate) {
-  DCHECK(!run_loop_);
-  run_loop_ = new base::RunLoop();
-  CHECK(run_loop_->BeforeRun());
-  SetDelegate(delegate);
-}
-
-#else
-
+#if !defined(OS_IOS)
 MessagePumpNSApplication::MessagePumpNSApplication()
     : keep_running_(true),
       running_own_loop_(false) {
@@ -678,7 +655,7 @@ bool MessagePumpMac::IsHandlingSendEvent() {
 MessagePump* MessagePumpMac::Create() {
   if ([NSThread isMainThread]) {
 #if defined(OS_IOS)
-    return new MessagePumpUIApplication;
+    return NULL;
 #else
     if ([NSApp conformsToProtocol:@protocol(CrAppProtocol)])
       return new MessagePumpCrApplication;

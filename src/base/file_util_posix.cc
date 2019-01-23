@@ -43,7 +43,7 @@
 #include "base/stringprintf.h"
 #include "base/sys_string_conversions.h"
 #include "base/threading/thread_restrictions.h"
-#include "base/time.h"
+#include "base/base_time.h"
 #include "base/utf_string_conversions.h"
 
 #if defined(OS_ANDROID)

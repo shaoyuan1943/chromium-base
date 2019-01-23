@@ -9,6 +9,10 @@
 #include <stddef.h>
 #include <ostream>
 
+#if defined(OS_POSIX)
+#include <unistd.h>
+#endif
+
 #include "base/eintr_wrapper.h"
 #include "base/logging.h"
 
@@ -81,17 +85,39 @@ bool PerformInjectiveMultimap(const InjectiveMultimap& m_in,
 }
 
 bool FileDescriptorTableInjection::Duplicate(int* result, int fd) {
+#if defined(OS_WIN)
   *result = HANDLE_EINTR(_dup(fd));
+#endif
+
+#if defined(OS_POSIX)
+  *result = HANDLE_EINTR(dup(fd));
+#endif
+
   return *result >= 0;
 }
 
 bool FileDescriptorTableInjection::Move(int src, int dest) {
+#if defined(OS_WIN)
   return HANDLE_EINTR(_dup2(src, dest)) != -1;
+#endif
+
+#if defined(OS_POSIX)
+  return HANDLE_EINTR(dup2(src, dest)) != -1;
+#endif
 }
 
 void FileDescriptorTableInjection::Close(int fd) {
+#if defined(OS_WIN)
   int ret = HANDLE_EINTR(_close(fd));
   DPCHECK(ret == 0);
+#endif
+
+#if defined(OS_POSIX)
+  int ret = HANDLE_EINTR(close(fd));
+  DPCHECK(ret == 0);
+#endif
+
+
 }
 
 }  // namespace base

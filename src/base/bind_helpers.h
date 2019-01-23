@@ -231,8 +231,7 @@ template <typename T, typename = void>
 class SupportsAddRefAndRelease : public std::false_type {};
 
 template <typename T>
-class SupportsAddRefAndRelease<T, \
-  std::void_t<typename decltype(&T::AddRef)>> : public std::true_type {};
+class SupportsAddRefAndRelease<T, std::void_t<decltype(&T::AddRef)>> : public std::true_type {};
 
 template <typename T, typename = void>
 class HasIsMethodTag : public std::false_type {};
