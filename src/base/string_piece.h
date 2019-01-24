@@ -34,7 +34,9 @@
 
 namespace base {
 
-template <typename STRING_TYPE> class BasicStringPiece;
+template <typename STRING_TYPE>
+class BasicStringPiece;
+
 typedef BasicStringPiece<std::string> StringPiece;
 typedef BasicStringPiece<string16> StringPiece16;
 
@@ -147,8 +149,7 @@ template <typename STRING_TYPE> class StringPieceDetail {
 
 template <typename STRING_TYPE>
 const typename StringPieceDetail<STRING_TYPE>::size_type
-StringPieceDetail<STRING_TYPE>::npos =
-    typename StringPieceDetail<STRING_TYPE>::size_type(-1);
+StringPieceDetail<STRING_TYPE>::npos = typename StringPieceDetail<STRING_TYPE>::size_type(-1);
 
 // MSVC doesn't like complex extern templates and DLLs.
 #if !defined(COMPILER_MSVC)
@@ -214,41 +215,55 @@ BASE_EXPORT StringPiece substr(const StringPiece& self,
 
 // Defines the template type that is instantiated as either StringPiece or
 // StringPiece16.
-template <typename STRING_TYPE> class BasicStringPiece :
-    public internal::StringPieceDetail<STRING_TYPE> {
+template <typename STRING_TYPE>
+class BasicStringPiece : public internal::StringPieceDetail<STRING_TYPE> {
  public:
-  typedef typename internal::StringPieceDetail<STRING_TYPE>::value_type
-      value_type;
-  typedef typename internal::StringPieceDetail<STRING_TYPE>::size_type
-      size_type;
+  typedef typename internal::StringPieceDetail<STRING_TYPE>::value_type value_type;
+  typedef typename internal::StringPieceDetail<STRING_TYPE>::size_type size_type;
 
   BasicStringPiece() {}
   BasicStringPiece(const value_type*str)
-      : internal::StringPieceDetail<STRING_TYPE>(str) {}
+    : internal::StringPieceDetail<STRING_TYPE>(str) {
+  }
+
   BasicStringPiece(const STRING_TYPE& str)
-      : internal::StringPieceDetail<STRING_TYPE>(str) {}
+    : internal::StringPieceDetail<STRING_TYPE>(str) {
+  }
+
   BasicStringPiece(const value_type* offset, size_type len)
-      : internal::StringPieceDetail<STRING_TYPE>(offset, len) {}
+    : internal::StringPieceDetail<STRING_TYPE>(offset, len) {
+  }
+
   BasicStringPiece(const typename STRING_TYPE::const_iterator& begin,
                    const typename STRING_TYPE::const_iterator& end)
-      : internal::StringPieceDetail<STRING_TYPE>(begin, end) {}
+    : internal::StringPieceDetail<STRING_TYPE>(begin, end) {
+  }
 };
 
 // Specializes BasicStringPiece for std::string to add a few operations that
 // are not needed for string16.
-template <> class BasicStringPiece<std::string> :
-    public internal::StringPieceDetail<std::string> {
+template <>
+class BasicStringPiece<std::string> : public internal::StringPieceDetail<std::string> {
  public:
-  BasicStringPiece() {}
+  BasicStringPiece() {
+  }
+
   BasicStringPiece(const char* str)
-      : internal::StringPieceDetail<std::string>(str) {}
+      : internal::StringPieceDetail<std::string>(str) {
+  }
+
   BasicStringPiece(const std::string& str)
-      : internal::StringPieceDetail<std::string>(str) {}
+      : internal::StringPieceDetail<std::string>(str) {
+  }
+
   BasicStringPiece(const char* offset, size_type len)
-      : internal::StringPieceDetail<std::string>(offset, len) {}
+      : internal::StringPieceDetail<std::string>(offset, len) {
+  }
+
   BasicStringPiece(const std::string::const_iterator& begin,
                    const std::string::const_iterator& end)
-      : internal::StringPieceDetail<std::string>(begin, end) {}
+      : internal::StringPieceDetail<std::string>(begin, end) {
+  }
 
   // Prevent the following overload of set() from hiding the definitions in the
   // base class.

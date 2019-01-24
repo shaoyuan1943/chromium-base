@@ -359,3 +359,105 @@ API:
 | ------ | :------: | ------ |
 | GenerateGUID | G | 生成GUID |
 | IsValidGUID | G | 是否合法GUID |
+
+### 21. hash
+描述：生成hash值  
+头文件：hash.h  
+API:  
+
+| 函数名 | 属性 | 说明 |
+| ------ | :------: | ------ |
+| SuperFastHash | G | 生成hash值 |
+
+### 22. HighResolutionTimerManager
+描述：高精度Timer  
+头文件：hi_res_timer_manager.h  
+API：  
+
+| 函数名 | 属性 | 说明 |
+| ------ | :------: | ------ |
+| OnPowerStateChange | M | 设置当前是否电池供电，当电源接通时候高精度时钟才会启用 |
+| hi_res_clock_available | M | 高精度时钟是否可用 |
+
+### 23. IDMap
+描述：此对象维护一个ID列表，可以快速转换为指向对象的指针,内部实现为哈希表，针对小数据进行优化。可以使用任意ID将项插入到容器中，调用者必须确保ID唯一，不要依赖生成的ID。base::IDMap没有虚析构函数，所以不要轻易继承此类。  
+头文件：base/id\_map.h  
+API:  
+
+| 函数名 | 属性 | 说明 |
+| ------ | :------: | ------ |
+| set_check_on_null_data | M | 插入数据时是否检查数据为空，如果设置此项，后续每次插入时都会检查数据项 |
+| Add | M | 添加对象指针，添加成功返回索引ID |
+| AddWithID | M | 通过自有ID添加对象指针，调用必须保证此ID是唯一且不与IDMap内部自动生成的ID重复，不推荐使用此函数 |
+| Remove | M | 通过索引ID移除对象指针 |
+| IsEmpty | M | 是否为空 |
+| Lookup | M | 查找对象指针 |
+| size | M | 内部已存对象指针数量 |
+| iterator | M | 内部实现的迭代器用于遍历，具体迭代器实现参见头文件 |
+
+### 24. LazyInstance
+描述：延迟创建，在使用时初始化对象  
+头文件：base/lazy\_instance.h  
+API:  
+
+| 函数名 | 属性 | 说明 |
+| ------ | :------: | ------ |
+| Get | M | 获取对象引用 |
+| Pointer | M | 获取对象指针 |
+
+
+### 25. LinkedList
+描述：base::LinkedList是std::list的一个轻量级实现。从base::LinkedList<T>中删除类型为T *的元素是O(1)操作，std::list<T*>的删除操作是O(n)。这是因为使用std::list<T*>，必须先获取T *元素的迭代器，然后才能调用erase（迭代器）, base::LinkedList<T>的插入操作永远不需要堆分配。元素类型必须继承自base::LinkNode    
+头文件：base/linked_list.h  
+API:  
+
+| 函数名 | 属性 | 说明 |
+| ------ | :------: | ------ |
+| Append | M | 向尾部添加元素 |
+| head | M | 第一个元素 |
+| tail | M | 最后一个有效元素 |
+| end | M | 链表最尾 |
+
+### 26. Location
+描述：用于Debug的helper，标记了调用位置（文件、行号、函数名、函数地址）  
+头文件：base/location.h  
+API:  
+
+| 函数名 | 属性 | 说明 |
+| ------ | :------: | ------ |
+| function_name | M | 函数名 |
+| file_name | M | 文件名 |
+| line_number | M | 行号 |
+| program_counter | M | 函数地址 |
+| ToString | M | 将以上信息写成特定格式字符串 |
+| Write | M | 将以上信息写成特定格式的传入字符串 |
+| WriteFunctionName | M | 以HTML方式将函数名写入传入字符串 |
+
+### 27. MD5
+描述：生成MD5值  
+头文件：base/md5.h  
+API:  
+
+| 函数名 | 属性 | 说明 |
+| ------ | :------: | ------ |
+| MD5Digest | G | MD5输出结构 |
+| MD5Context | G | 用于在MD5计算期间存储中间数据 |
+| MD5Sum | G | 使用给定长度计算给定数据缓冲区的MD5总和 |
+| MD5Init | G | 初始化MD5Context用以调用MD5Update |
+| MD5Update | G | 更新计算MD5值得上下文，可以函数多次调用，调用此函数之前必须先调用MD5Init |
+| MD5Final | G | 将MD5的结果填充到MD5Digest |
+| MD5DigestToBase16 | G | 将MD5结果转换为std::string |
+| MD5String | G | 返回十六进制的MD5字符串 |
+
+### 28. native_library
+描述：加载动态库  
+头文件：base/native_library.h  
+API:  
+
+| 函数名 | 属性 | 说明 |
+| ------ | :------: | ------ |
+| LoadNativeLibrary | G | 加载动态库，error为错误信息 |
+| UnloadNativeLibrary | G | 卸载动态库 |
+| LoadNativeLibraryDynamically | G | WINDOWS ONLY 此函数检索从kernel32.dll导出的LoadLibrary函数并调用它，而不是通过导入表直接调用LoadLibrary函数 |
+| GetFunctionPointerFromNativeLibrary | G | 从已加载的动态库中根据函数名获取函数指针 |
+| GetNativeLibraryName | G | 返回动态库名字，"mylib" returns "mylib.dll" on Windows, "libmylib.so" on Linux, "mylib.dylib" on Mac |

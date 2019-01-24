@@ -116,7 +116,7 @@ BASE_EXPORT void CompleteLazyInstance(subtle::AtomicWord* state,
 
 template <typename Type, typename Traits = DefaultLazyInstanceTraits<Type> >
 class LazyInstance {
- public:
+public:
   // Do not define a destructor, as doing so makes LazyInstance a
   // non-POD-struct. We don't want that because then a static initializer will
   // be created to register the (empty) destructor with atexit() under MSVC, for
@@ -182,7 +182,7 @@ class LazyInstance {
   // Preallocated space for the Type instance.
   base::AlignedMemory<sizeof(Type), ALIGNOF(Type)> private_buf_;
 
- private:
+private:
   Type* instance() {
     return reinterpret_cast<Type*>(subtle::NoBarrier_Load(&private_instance_));
   }

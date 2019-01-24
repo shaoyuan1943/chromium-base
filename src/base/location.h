@@ -1,4 +1,4 @@
-// Copyright (c) 2012 The Chromium Authors. All rights reserved.
+﻿// Copyright (c) 2012 The Chromium Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
@@ -36,8 +36,10 @@ class BASE_EXPORT Location {
   bool operator < (const Location& other) const {
     if (line_number_ != other.line_number_)
       return line_number_ < other.line_number_;
+
     if (file_name_ != other.file_name_)
       return file_name_ < other.file_name_;
+
     return function_name_ < other.function_name_;
   }
 

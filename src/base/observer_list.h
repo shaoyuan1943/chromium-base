@@ -61,9 +61,8 @@ template <typename ObserverType>
 class ObserverListThreadSafe;
 
 template <class ObserverType>
-class ObserverListBase
-    : public base::SupportsWeakPtr<ObserverListBase<ObserverType> > {
- public:
+class ObserverListBase : public base::SupportsWeakPtr<ObserverListBase<ObserverType> > {
+public:
   // Enumeration of which observers are notified.
   enum NotificationType {
     // Specifies that any observers added during notification are notified.
@@ -78,7 +77,7 @@ class ObserverListBase
   // An iterator class that can be used to access the list of observers.  See
   // also the FOR_EACH_OBSERVER macro defined below.
   class Iterator {
-   public:
+  public:
     Iterator(ObserverListBase<ObserverType>& list)
         : list_(list.AsWeakPtr()),
           index_(0),
@@ -104,7 +103,7 @@ class ObserverListBase
       return index_ < max_index ? observers[index_++] : NULL;
     }
 
-   private:
+  private:
     base::WeakPtr<ObserverListBase<ObserverType> > list_;
     size_t index_;
     size_t max_index_;
@@ -159,14 +158,14 @@ class ObserverListBase
 
   size_t size() const { return observers_.size(); }
 
- protected:
+protected:
   void Compact() {
     observers_.erase(
         std::remove(observers_.begin(), observers_.end(),
                     static_cast<ObserverType*>(NULL)), observers_.end());
   }
 
- private:
+private:
   friend class ObserverListThreadSafe<ObserverType>;
 
   typedef std::vector<ObserverType*> ListType;
@@ -182,9 +181,8 @@ class ObserverListBase
 
 template <class ObserverType, bool check_empty = false>
 class ObserverList : public ObserverListBase<ObserverType> {
- public:
-  typedef typename ObserverListBase<ObserverType>::NotificationType
-      NotificationType;
+public:
+  typedef typename ObserverListBase<ObserverType>::NotificationType NotificationType;
 
   ObserverList() {}
   explicit ObserverList(NotificationType type)

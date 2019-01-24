@@ -32,11 +32,11 @@ enum IDMapOwnershipSemantics {
 // ownership semantics are set to own because pointers will leak.
 template<typename T, IDMapOwnershipSemantics OS = IDMapExternalPointer>
 class IDMap : public base::NonThreadSafe {
- private:
+private:
   typedef int32 KeyType;
   typedef std::unordered_map<KeyType, T*> HashTable;
 
- public:
+public:
   IDMap() : iteration_depth_(0), next_id_(1), check_on_null_data_(false) {
     // A number of consumers of IDMap create it on one thread but always access
     // it from a different, but consitent, thread post-construction.
@@ -114,7 +114,7 @@ class IDMap : public base::NonThreadSafe {
   // will remain valid.
   template<class ReturnType>
   class Iterator {
-   public:
+  public:
     Iterator(IDMap<T, OS>* map)
         : map_(map),
           iter_(map_->data_.begin()) {
@@ -150,7 +150,7 @@ class IDMap : public base::NonThreadSafe {
       SkipRemovedEntries();
     }
 
-   private:
+  private:
     void SkipRemovedEntries() {
       while (iter_ != map_->data_.end() &&
              map_->removed_ids_.find(iter_->first) !=
@@ -166,16 +166,17 @@ class IDMap : public base::NonThreadSafe {
   typedef Iterator<T> iterator;
   typedef Iterator<const T> const_iterator;
 
- private:
-
+private:
   // The dummy parameter is there because C++ standard does not allow
   // explicitly specialized templates inside classes
-  template<IDMapOwnershipSemantics OI, int dummy> struct Releaser {
+  template<IDMapOwnershipSemantics OI, int dummy>
+  struct Releaser {
     static inline void release(T* ptr) {}
     static inline void release_all(HashTable* table) {}
   };
 
-  template<int dummy> struct Releaser<IDMapOwnPointer, dummy> {
+  template<int dummy>
+  struct Releaser<IDMapOwnPointer, dummy> {
     static inline void release(T* ptr) { delete ptr;}
     static inline void release_all(HashTable* table) {
       for (typename HashTable::iterator i = table->begin();
