@@ -79,11 +79,8 @@ public:
   class Iterator {
   public:
     Iterator(ObserverListBase<ObserverType>& list)
-        : list_(list.AsWeakPtr()),
-          index_(0),
-          max_index_(list.type_ == NOTIFY_ALL ?
-                     (std::numeric_limits<size_t>::max)() :
-                     list.observers_.size()) {
+        : list_(list.AsWeakPtr()), index_(0),
+          max_index_(list.type_ == NOTIFY_ALL ? (std::numeric_limits<size_t>::max)() : list.observers_.size()) {
       ++list_->notify_depth_;
     }
 
@@ -95,11 +92,13 @@ public:
     ObserverType* GetNext() {
       if (!list_)
         return NULL;
+
       ListType& observers = list_->observers_;
       // Advance if the current element is null
       size_t max_index = ((std::min))(max_index_, observers.size());
       while (index_ < max_index && !observers[index_])
         ++index_;
+
       return index_ < max_index ? observers[index_++] : NULL;
     }
 
@@ -109,25 +108,27 @@ public:
     size_t max_index_;
   };
 
-  ObserverListBase() : notify_depth_(0), type_(NOTIFY_ALL) {}
+  ObserverListBase() : notify_depth_(0), type_(NOTIFY_ALL) {
+  }
+
   explicit ObserverListBase(NotificationType type)
-      : notify_depth_(0), type_(type) {}
+      : notify_depth_(0), type_(type) {
+  }
 
   // Add an observer to the list.  An observer should not be added to
   // the same list more than once.
   void AddObserver(ObserverType* obs) {
-    if (std::find(observers_.begin(), observers_.end(), obs)
-        != observers_.end()) {
+    if (std::find(observers_.begin(), observers_.end(), obs) != observers_.end()) {
       NOTREACHED() << "Observers can only be added once!";
       return;
     }
+
     observers_.push_back(obs);
   }
 
   // Remove an observer from the list if it is in the list.
   void RemoveObserver(ObserverType* obs) {
-    typename ListType::iterator it =
-      std::find(observers_.begin(), observers_.end(), obs);
+    auto it = std::find(observers_.begin(), observers_.end(), obs);
     if (it != observers_.end()) {
       if (notify_depth_) {
         *it = 0;
@@ -142,13 +143,13 @@ public:
       if (observers_[i] == observer)
         return true;
     }
+
     return false;
   }
 
   void Clear() {
     if (notify_depth_) {
-      for (typename ListType::iterator it = observers_.begin();
-           it != observers_.end(); ++it) {
+      for (auto it = observers_.begin(); it != observers_.end(); ++it) {
         *it = 0;
       }
     } else {

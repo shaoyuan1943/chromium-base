@@ -15,14 +15,12 @@ namespace tracked_objects {
 // Location provides basic info where of an object was constructed, or was
 // significantly brought to life.
 class BASE_EXPORT Location {
- public:
+public:
   // Constructor should be called with a long-lived char*, such as __FILE__.
   // It assumes the provided value will persist as a global constant, and it
   // will not make a copy of it.
-  Location(const char* function_name,
-           const char* file_name,
-           int line_number,
-           const void* program_counter);
+  Location(const char* function_name, const char* file_name,
+           int line_number, const void* program_counter);
 
   // Provide a default constructor for easy of debugging.
   Location();
@@ -54,8 +52,7 @@ class BASE_EXPORT Location {
   // string with HTML characters in the function names escaped, and append that
   // string to |output|.  Inclusion of the file_name_ and function_name_ are
   // optional, and controlled by the boolean arguments.
-  void Write(bool display_filename, bool display_function_name,
-             std::string* output) const;
+  void Write(bool display_filename, bool display_function_name, std::string* output) const;
 
   // Write function_name_ in HTML with '<' and '>' properly encoded.
   void WriteFunctionName(std::string* output) const;

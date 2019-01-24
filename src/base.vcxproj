@@ -275,7 +275,6 @@
     <ClInclude Include="base\message_pump_dispatcher.h" />
     <ClInclude Include="base\message_pump_observer.h" />
     <ClInclude Include="base\message_pump_win.h" />
-    <ClInclude Include="base\move.h" />
     <ClInclude Include="base\native_library.h" />
     <ClInclude Include="base\nullable_string16.h" />
     <ClInclude Include="base\observer_list.h" />
