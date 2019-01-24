@@ -1,4 +1,4 @@
-// Copyright (c) 2011 The Chromium Authors. All rights reserved.
+﻿// Copyright (c) 2011 The Chromium Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
@@ -8,7 +8,6 @@
 #include "base/atomicops.h"
 #include "base/basictypes.h"
 #include "base/threading/platform_thread.h"
-#include "base/third_party/dynamic_annotations/dynamic_annotations.h"
 
 namespace base {
 namespace internal {
@@ -42,8 +41,6 @@ void CompleteLazyInstance(subtle::AtomicWord* state,
                           subtle::AtomicWord new_instance,
                           void* lazy_instance,
                           void (*dtor)(void*)) {
-  // See the comment to the corresponding HAPPENS_AFTER in Pointer().
-  ANNOTATE_HAPPENS_BEFORE(state);
 
   // Instance is created, go from CREATING to CREATED.
   // Releases visibility over private_buf_ to readers. Pairing Acquire_Load's

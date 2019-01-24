@@ -1,4 +1,4 @@
-// Copyright (c) 2012 The Chromium Authors. All rights reserved.
+﻿// Copyright (c) 2012 The Chromium Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
@@ -6,7 +6,6 @@
 
 #include "base/bind.h"
 #include "base/lazy_instance.h"
-#include "base/third_party/dynamic_annotations/dynamic_annotations.h"
 #include "base/threading/thread_local.h"
 #include "base/threading/thread_restrictions.h"
 #include "base/synchronization/waitable_event.h"
@@ -116,7 +115,7 @@ void Thread::StopSoon() {
 
   // Reading thread_id_ without a lock can lead to a benign data race
   // with ThreadMain, so we annotate it to stay silent under ThreadSanitizer.
-  DCHECK_NE(ANNOTATE_UNPROTECTED_READ(thread_id_), PlatformThread::CurrentId());
+  DCHECK_NE(thread_id_, PlatformThread::CurrentId());
 
   if (stopping_ || !message_loop_)
     return;
@@ -153,7 +152,7 @@ void Thread::ThreadMain() {
     // Complete the initialization of our Thread object.
     thread_id_ = PlatformThread::CurrentId();
     PlatformThread::SetName(name_.c_str());
-    ANNOTATE_THREAD_NAME(name_.c_str());  // Tell the name to race detector.
+
     message_loop.set_thread_name(name_);
     message_loop_ = &message_loop;
 

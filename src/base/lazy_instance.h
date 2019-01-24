@@ -1,4 +1,4 @@
-// Copyright (c) 2012 The Chromium Authors. All rights reserved.
+﻿// Copyright (c) 2012 The Chromium Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
@@ -42,7 +42,6 @@
 #include "base/basictypes.h"
 #include "base/logging.h"
 #include "base/memory/aligned_memory.h"
-#include "base/third_party/dynamic_annotations/dynamic_annotations.h"
 #include "base/threading/thread_restrictions.h"
 
 // LazyInstance uses its own struct initializer-list style static
@@ -161,12 +160,6 @@ class LazyInstance {
                                      Traits::kRegisterOnExit ? OnExit : NULL);
     }
 
-    // This annotation helps race detectors recognize correct lock-less
-    // synchronization between different threads calling Pointer().
-    // We suggest dynamic race detection tool that "Traits::New" above
-    // and CompleteLazyInstance(...) happens before "return instance()" below.
-    // See the corresponding HAPPENS_BEFORE in CompleteLazyInstance(...).
-    ANNOTATE_HAPPENS_AFTER(&private_instance_);
     return instance();
   }
 

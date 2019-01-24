@@ -17,7 +17,6 @@
 #include "base/memory/scoped_ptr.h"
 #include "base/path_service.h"
 #include "base/process_util.h"
-#include "base/nix/xdg_util.h"
 #include "build/build_config.h"
 
 #if defined(OS_FREEBSD)
@@ -98,16 +97,6 @@ bool PathProviderPosix(int key, FilePath* result) {
       DLOG(ERROR) << "Couldn't find your source root.  "
                   << "Try running from your chromium/src directory.";
       return false;
-    }
-    case base::DIR_USER_DESKTOP:
-      *result = base::nix::GetXDGUserDirectory("DESKTOP", "Desktop");
-      return true;
-    case base::DIR_CACHE: {
-      scoped_ptr<base::Environment> env(base::Environment::Create());
-      FilePath cache_dir(base::nix::GetXDGDirectory(env.get(), "XDG_CACHE_HOME",
-                                                    ".cache"));
-      *result = cache_dir;
-      return true;
     }
     case base::DIR_HOME:
       *result = file_util::GetHomeDir();
