@@ -281,7 +281,6 @@
     <ClInclude Include="base\observer_list_threadsafe.h" />
     <ClInclude Include="base\path_service.h" />
     <ClInclude Include="base\pending_task.h" />
-    <ClInclude Include="base\perftimer.h" />
     <ClInclude Include="base\pickle.h" />
     <ClInclude Include="base\platform_file.h" />
     <ClInclude Include="base\port.h" />
@@ -444,7 +443,6 @@
     <ClCompile Include="base\native_library_win.cc" />
     <ClCompile Include="base\path_service.cc" />
     <ClCompile Include="base\pending_task.cc" />
-    <ClCompile Include="base\perftimer.cc" />
     <ClCompile Include="base\pickle.cc" />
     <ClCompile Include="base\platform_file.cc" />
     <ClCompile Include="base\platform_file_win.cc" />

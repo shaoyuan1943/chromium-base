@@ -393,7 +393,6 @@ set(BASE_SOURCE
     base/observer_list_threadsafe.h
     base/path_service.h
     base/pending_task.h
-    base/perftimer.h
     base/pickle.h
     base/platform_file.h
     base/port.h
@@ -511,7 +510,6 @@ set(BASE_SOURCE
     base/message_pump_default.cc
     base/path_service.cc
     base/pending_task.cc
-    base/perftimer.cc
     base/pickle.cc
     base/platform_file.cc
     base/process_util.cc

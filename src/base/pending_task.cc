@@ -6,8 +6,7 @@
 
 namespace base {
 
-PendingTask::PendingTask(const tracked_objects::Location& posted_from,
-                         const base::Closure& task)
+PendingTask::PendingTask(const tracked_objects::Location& posted_from, const base::Closure& task)
   : task(task),
     posted_from(posted_from),
     sequence_num(0),
@@ -17,10 +16,8 @@ PendingTask::PendingTask(const tracked_objects::Location& posted_from,
   time_posted = TimeTicks();
 }
 
-PendingTask::PendingTask(const tracked_objects::Location& posted_from,
-                         const base::Closure& task,
-                         TimeTicks delayed_run_time,
-                         bool nestable)
+PendingTask::PendingTask(const tracked_objects::Location& posted_from, const base::Closure& task,
+                         TimeTicks delayed_run_time, bool nestable)
     : task(task),
       posted_from(posted_from),
       sequence_num(0),
