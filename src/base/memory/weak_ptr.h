@@ -79,19 +79,22 @@
 
 namespace base {
 
-template <typename T> class SupportsWeakPtr;
-template <typename T> class WeakPtr;
+template <typename T>
+class SupportsWeakPtr;
+
+template <typename T>
+class WeakPtr;
 
 namespace internal {
 // These classes are part of the WeakPtr implementation.
 // DO NOT USE THESE CLASSES DIRECTLY YOURSELF.
 
 class BASE_EXPORT WeakReference {
- public:
+public:
   // While Flag is bound to a specific thread, it may be deleted from another
   // via base::WeakPtr::~WeakPtr().
   class Flag : public RefCountedThreadSafe<Flag> {
-   public:
+  public:
     Flag();
 
     void Invalidate();
@@ -99,7 +102,7 @@ class BASE_EXPORT WeakReference {
 
     void DetachFromThread() { thread_checker_.DetachFromThread(); }
 
-   private:
+  private:
     friend class base::RefCountedThreadSafe<Flag>;
 
     ~Flag();
@@ -114,12 +117,12 @@ class BASE_EXPORT WeakReference {
 
   bool is_valid() const;
 
- private:
+private:
   scoped_refptr<const Flag> flag_;
 };
 
 class BASE_EXPORT WeakReferenceOwner {
- public:
+public:
   WeakReferenceOwner();
   ~WeakReferenceOwner();
 
@@ -136,7 +139,7 @@ class BASE_EXPORT WeakReferenceOwner {
     if (flag_) flag_->DetachFromThread();
   }
 
- private:
+private:
   mutable scoped_refptr<WeakReference::Flag> flag_;
 };
 
@@ -145,11 +148,11 @@ class BASE_EXPORT WeakReferenceOwner {
 // WeakPtr<T> cannot access the private members of WeakPtr<U>, so this
 // base class gives us a way to access ref_ in a protected fashion.
 class BASE_EXPORT WeakPtrBase {
- public:
+public:
   WeakPtrBase();
   ~WeakPtrBase();
 
- protected:
+protected:
   explicit WeakPtrBase(const WeakReference& ref);
 
   WeakReference ref_;
@@ -159,7 +162,7 @@ class BASE_EXPORT WeakPtrBase {
 // otherwise get instantiated separately for each distinct instantiation of
 // SupportsWeakPtr<>.
 class SupportsWeakPtrBase {
- public:
+public:
   // A safe static downcast of a WeakPtr<Base> to WeakPtr<Derived>. This
   // conversion will only compile if there is exists a Base which inherits
   // from SupportsWeakPtr<Base>. See base::AsWeakPtr() below for a helper
@@ -173,7 +176,7 @@ class SupportsWeakPtrBase {
     return AsWeakPtrImpl<Derived>(t, *t);
   }
 
- private:
+private:
   // This template function uses type inference to find a Base of Derived
   // which is an instance of SupportsWeakPtr<Base>. We can then safely
   // static_cast the Base* to a Derived*.
@@ -187,7 +190,8 @@ class SupportsWeakPtrBase {
 
 }  // namespace internal
 
-template <typename T> class WeakPtrFactory;
+template <typename T>
+class WeakPtrFactory;
 
 // The WeakPtr class holds a weak reference to |T*|.
 //
@@ -204,7 +208,7 @@ template <typename T> class WeakPtrFactory;
 //
 template <typename T>
 class WeakPtr : public internal::WeakPtrBase {
- public:
+public:
   WeakPtr() : ptr_(NULL) {
   }
 
