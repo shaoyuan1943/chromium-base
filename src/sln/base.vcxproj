@@ -192,7 +192,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="..\base\atomicops.h" />
-    <ClInclude Include="..\base\atomicops_internals_atomicword_compat.h" />
     <ClInclude Include="..\base\atomicops_internals_x86_msvc.h" />
     <ClInclude Include="..\base\atomic_ref_count.h" />
     <ClInclude Include="..\base\atomic_sequence_num.h" />

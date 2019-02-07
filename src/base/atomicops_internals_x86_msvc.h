@@ -63,7 +63,7 @@ inline void NoBarrier_Store(volatile Atomic32* ptr, Atomic32 value) {
 
 inline void Acquire_Store(volatile Atomic32* ptr, Atomic32 value) {
   NoBarrier_AtomicExchange(ptr, value);
-              // acts as a barrier in this implementation
+  // acts as a barrier in this implementation
 }
 
 inline void Release_Store(volatile Atomic32* ptr, Atomic32 value) {

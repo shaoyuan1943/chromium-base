@@ -641,7 +641,6 @@
     <ClInclude Include="..\base\file_descriptor_shuffle.h" />
     <ClInclude Include="..\base\sha1.h" />
     <ClInclude Include="..\base\dispatchers.h" />
-    <ClInclude Include="..\base\atomicops_internals_atomicword_compat.h" />
     <ClInclude Include="..\base\hash_tables.h" />
     <ClInclude Include="..\base\debug\debugger.h">
       <Filter>debug</Filter>

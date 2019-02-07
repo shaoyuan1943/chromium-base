@@ -340,7 +340,6 @@ set(BASE_SOURCE
     base/dispatchers.h
     base/eintr_wrapper.h
     base/environment.h
-    base/event_recorder.h
     base/event_types.h
     base/files/dir_reader_fallback.h
     base/files/file_path_watcher.h
