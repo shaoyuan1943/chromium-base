@@ -1,13 +1,20 @@
-﻿// Copyright (c) 2011 The Chromium Authors. All rights reserved.
+// Copyright (c) 2011 The Chromium Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
 #include "base/file_descriptor_shuffle.h"
 
-#include <io.h>
 #include <process.h>
 #include <stddef.h>
 #include <ostream>
+
+#if defined(OS_WIN)
+#include <io.h>
+#endif
+
+#if defined(OS_MACOSX)
+#include <sys/uio.h>
+#endif
 
 #if defined(OS_POSIX)
 #include <unistd.h>

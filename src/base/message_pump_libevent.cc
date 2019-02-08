@@ -21,7 +21,7 @@
 #if defined(USE_SYSTEM_LIBEVENT)
 #include <event.h>
 #else
-#include "third_party/libevent/event.h"
+#include <event.h>
 #endif
 
 #if defined(OS_MACOSX)

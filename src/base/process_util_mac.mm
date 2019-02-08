@@ -37,9 +37,9 @@
 #include "base/string_util.h"
 #include "base/sys_info.h"
 #include "base/threading/thread_local.h"
-#include "third_party/apple_apsl/CFBase.h"
-#include "third_party/apple_apsl/malloc.h"
-#include "third_party/mach_override/mach_override.h"
+#include "base/third_party/apple_apsl/CFBase.h"
+#include "base/third_party/apple_apsl/malloc.h"
+#include "base/third_party/mach_override/mach_override.h"
 
 namespace base {
 
@@ -67,7 +67,7 @@ ProcessIterator::ProcessIterator(const ProcessFilter* filter)
   // but trying to find where we were in a constantly changing list is basically
   // impossible.
 
-  int mib[] = { CTL_KERN, KERN_PROC, KERN_PROC_UID, geteuid() };
+  int mib[] = { CTL_KERN, KERN_PROC, KERN_PROC_UID, (int)geteuid() };
 
   // Since more processes could start between when we get the size and when
   // we get the list, we do a loop to keep trying until we get it.
