@@ -1,0 +1,3 @@
+/mnt/hgfs/Dev/Github/chromium-base/build/base/x64/Debug/CMakeFiles/edit_cache.dir
+/mnt/hgfs/Dev/Github/chromium-base/build/base/x64/Debug/CMakeFiles/rebuild_cache.dir
+/mnt/hgfs/Dev/Github/chromium-base/build/base/x64/Debug/CMakeFiles/base.dir
