@@ -18,11 +18,8 @@
 #include "base/memory/scoped_ptr.h"
 #include "base/observer_list.h"
 #include "base/base_time.h"
-#if defined(USE_SYSTEM_LIBEVENT)
+
 #include <event.h>
-#else
-#include <event.h>
-#endif
 
 #if defined(OS_MACOSX)
 #include "base/mac/scoped_nsautorelease_pool.h"
