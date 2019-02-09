@@ -168,7 +168,10 @@ class scoped_ptr {
   // We don't need to test ptr_ == NULL because C++ does that for us.
   ~scoped_ptr() {
     enum { type_must_be_complete = sizeof(C) };
-    delete ptr_;
+    if (ptr_ != NULL) {
+      delete ptr_;
+      ptr_ = NULL;
+    }
   }
 
   // operator=.  Allows assignment from a scoped_ptr rvalue for a convertible
