@@ -461,3 +461,61 @@ API:
 | LoadNativeLibraryDynamically | G | WINDOWS ONLY 此函数检索从kernel32.dll导出的LoadLibrary函数并调用它，而不是通过导入表直接调用LoadLibrary函数 |
 | GetFunctionPointerFromNativeLibrary | G | 从已加载的动态库中根据函数名获取函数指针 |
 | GetNativeLibraryName | G | 返回动态库名字，"mylib" returns "mylib.dll" on Windows, "libmylib.so" on Linux, "mylib.dylib" on Mac |
+
+### 29. base::ObserverList
+描述：观察者列表的容器。不同于std::vector和std::list，ObserverList可以在迭代期间修改此容器，而不会使迭代器失效。因此，当观察者被通知时，它安全地处理观察者从列表中移除自身或其他观察者的情况。  
+头文件：base/observer_list.h  
+API:  
+
+| 函数名 | 属性 | 说明 |
+| ------ | :------: | ------ |
+| AddObserver | M | 添加一个观察者 |
+| RemoveObserver | M | 移除一个观察者 |
+| HasObserver | M | 当前观察者列表中是否存在给定的观察者 |
+| Clear | M | 清除当前列表中的所有观察者 |
+| size | M | 返回当前列表的大小 |
+| FOR_EACH_OBSERVER | G | 遍历当前观察者列表，func是观察者需要执行的成员函数 |
+
+### 30. base::ObserverListThreadSafe
+描述：观察者列表的线程安全实现。  
+头文件：base/observer_list_threadsafe.h  
+API:  
+
+| 函数名 | 属性 | 说明 |
+| ------ | :------: | ------ |
+| AddObserver | M | 添加一个观察者，内部有锁。如果当前执行线程不存在message loop，添加操作不会成功 |
+| RemoveObserver | M | 移除一个观察者，内部有锁 |
+| Notify | M | 通知观察者，真正的执行在添加时的message loop中 |
+
+### 31. base::PathService
+描述：获取路径  
+头文件：base/path_service.h  
+API:  
+
+| 函数名 | 属性 | 说明 |
+| ------ | :------: | ------ |
+| Get | S | 获取给定的Key所代表的路径，关于key可以参考：base_paths.h，base_paths_mac.h，base_paths_win.h，base_paths_posix.h |
+| Override | S | 通过给定的路径覆写key所代表的路径，DIR_CURRENT 无法修改 |
+| OverrideAndCreateIfNeeded | S | 与Overrride类似，不同点在于可以决定是否创建在key所代表的路径不存在时 |
+| RegisterProvider | S | 注册新的provider，调用此函数之后Get调用将会执行指定的ProviderFunc |
+
+### 32. base::PendingTask
+描述：待处理任务，存储在TaskQueue和DelayedTaskQueue中，供队列和执行任务的类使用。主要的使用场景是：提前将一堆需要执行的Task存储在TaskQueue或DelayedTaskQueue中，根据时间排序执行。  
+头文件：base/pengding_task.h  
+
+### 33. base::PickleIterator
+描述：base::Pickle的读取迭代器。    
+头文件：base/pickle.h  
+API：  
+
+| 函数名 | 属性 | 说明 |
+| ------ | :------: | ------ |
+| ReadBool | M | 读取bool类型值 |
+
+### 34. base::Pickle
+描述：提供基本二进制值的序列化和反序列化。Pickle类支持将原始值（整数，字符串等）附加到pickle实例。Pickle实例动态增长其内部内存缓冲区以保存原始值序列，内部存储器缓冲区作为Pickle的“数据”公开，这个“数据”可以传递给Pickle对象以初始化它以供读取。从Pickle对象读取时，使用者必须知道要读取的值类型以及读取它们的顺序，因为Pickle不会跟踪写入其中的数据类型。Pickle的数据有一个header，其中包含Pickle有效负载的大小，它可以选择支持header中的额外空间，该空间由传递给Pickle构造函数的header_size参数控制。      
+头文件：base/pickle.h  
+API:  
+
+| 函数名 | 属性 | 说明 |
+| ------ | :------: | ------ |
