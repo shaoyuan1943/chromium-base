@@ -510,12 +510,42 @@ API：
 
 | 函数名 | 属性 | 说明 |
 | ------ | :------: | ------ |
-| ReadBool | M | 读取bool类型值 |
+| Read[TypeName] | M | 读取TypeName类型值 |
+| ReadLength | M | 读取数据长度 |
+| SkipBytes | M | 略过num_bytes |
 
 ### 34. base::Pickle
-描述：提供基本二进制值的序列化和反序列化。Pickle类支持将原始值（整数，字符串等）附加到pickle实例。Pickle实例动态增长其内部内存缓冲区以保存原始值序列，内部存储器缓冲区作为Pickle的“数据”公开，这个“数据”可以传递给Pickle对象以初始化它以供读取。从Pickle对象读取时，使用者必须知道要读取的值类型以及读取它们的顺序，因为Pickle不会跟踪写入其中的数据类型。Pickle的数据有一个header，其中包含Pickle有效负载的大小，它可以选择支持header中的额外空间，该空间由传递给Pickle构造函数的header_size参数控制。      
+描述：提供基本二进制值的打包和解包。Pickle类支持将原始值（整数，字符串等）附加到pickle实例。Pickle实例动态增长其内部内存缓冲区以保存原始值序列，内部存储器缓冲区作为Pickle的“数据”公开，这个“数据”可以传递给Pickle对象以初始化它以供读取。从Pickle对象读取时，使用者必须知道要读取的值类型以及读取它们的顺序，因为Pickle不会跟踪写入其中的数据类型。Pickle的数据有一个header，其中包含Pickle有效负载的大小，它可以选择支持header中的额外空间，该空间由传递给Pickle构造函数的header_size参数控制。      
 头文件：base/pickle.h  
 API:  
 
 | 函数名 | 属性 | 说明 |
 | ------ | :------: | ------ |
+| size | M | 返回数据长度，不包括header size |
+| data | M | 返回裸数据 |
+| Read[TypeName] | M | 读取TypeName类型值 |
+| ReadLength | M | 读取数据长度 |
+| Write[TypeName] | M | 写入数据 |
+| WriteData | M | 写入blob数据，当读取时，会得到它的长度 |
+| WriteBytes | M | 写入blob数据，调用者必须在读取和写入时指定长度，通常用于序列化已知大小的POD类型|
+| BeginWriteData | M | 与WriteData相同，但允许调用者直接写入Pickle。这样可以在缓冲区中尚未提供数据的情况下保存副本。调用者要注意不要写超过它声明的长度，失败时返回NULL。读取的时候记得使用ReadData, 返回的指针仅在此Pickle上的下一个写操作之前有效 |
+| TrimWriteData | M | 收缩内部缓冲区大小 |
+| headerT | M | 返回T类型的header，T类型必须是struct Header的继承类型 |
+| payload | M | 紧跟header之后的数据 |
+
+### 35. platform_file
+描述：文件基础操作平台化，外部接口统一，内部封装了各个平台上的差异。  
+头文件：base/platform_file.h
+
+| 函数名 | 属性 | 说明 |
+| ------ | :------: | ------ |
+| CreatePlatformFile | G | 创建文件 |
+| ClosePlatformFile | G | 关闭文件 |
+| ReadPlatformFile | G | 读取文件  |
+| ReadPlatformFileAtCurrentPos | G | 类似ReadPlatformFile，但是从头开始 |
+| ReadPlatformFileNoBestEffort | G | 从给定的偏移量开始读取给定的字节数（或直到达到EOF），但不会在所有平台上读取所有数据。返回读取的字节数，或者出错时返回-1。 |
+| WritePlatformFile | G | 写入数据 |
+| TruncatePlatformFile | G | 收缩文件大小，如果给定的size大于当前文件大小，文件将会被收缩为0，如果文件不存在，返回false |
+| FlushPlatformFile | G | 清除文件缓冲区 |
+| TouchPlatformFile | G | 修改文件的最后访问时间和修改时间 |
+| GetPlatformFileInfo | G | 获取文件基本信息 |
