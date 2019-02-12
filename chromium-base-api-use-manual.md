@@ -535,7 +535,8 @@ API:
 
 ### 35. platform_file
 描述：文件基础操作平台化，外部接口统一，内部封装了各个平台上的差异。  
-头文件：base/platform_file.h
+头文件：base/platform_file.h  
+API:  
 
 | 函数名 | 属性 | 说明 |
 | ------ | :------: | ------ |
@@ -549,3 +550,22 @@ API:
 | FlushPlatformFile | G | 清除文件缓冲区 |
 | TouchPlatformFile | G | 修改文件的最后访问时间和修改时间 |
 | GetPlatformFileInfo | G | 获取文件基本信息 |
+
+### 36. base::Process
+描述：进程相关。  
+头文件：base/process.h  
+API:  
+
+| 函数名 | 属性 | 说明 |
+| ------ | :------: | ------ |
+| Current | S | 获取当前进程信息 |
+| handle | M | 获取进程handle pid_t，如果进程不存在将返回0 |
+| set_handle | M | 设置进程handle pid_t |
+| pid | M | 进程PID |
+| is_current | M | 是否是当前进程 |
+| Close | M | 关闭进程handle，不会终止进程 |
+| Terminate | M | 终止进程 |
+| IsProcessBackgrounded | M | 如果进程在后台运行将会返回true |
+| SetProcessBackgrounded | M | 设置进程后台运行，如果传入true，则表示进程的优先级将会降低 |
+| GetPriority | M | 获取进程优先级 |
+
