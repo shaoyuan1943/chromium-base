@@ -1,4 +1,4 @@
-// Copyright (c) 2012 The Chromium Authors. All rights reserved.
+﻿// Copyright (c) 2012 The Chromium Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
@@ -226,15 +226,17 @@ class BASE_EXPORT ThreadCollisionWarner {
 
   // This stores the thread id that is inside the critical section, if the
   // value is 0 then no thread is inside.
-  volatile subtle::Atomic32 valid_thread_id_;
+  std::atomic<int32> valid_thread_id_ = 0;
 
   // Counter to trace how many time a critical section was "pinned"
   // (when allowed) in order to unpin it when counter_ reaches 0.
-  volatile subtle::Atomic32 counter_;
+  std::atomic<int32> counter_ = 0;
 
   // Here only for class unit tests purpose, during the test I need to not
   // DCHECK but notify the collision with something else.
   AsserterBase* asserter_;
+
+  static int kInvalidThreadId;
 
   DISALLOW_COPY_AND_ASSIGN(ThreadCollisionWarner);
 };

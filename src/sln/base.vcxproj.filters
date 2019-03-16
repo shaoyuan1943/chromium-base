@@ -288,12 +288,6 @@
     </ClCompile>
     <ClCompile Include="..\base\file_descriptor_shuffle.cc" />
     <ClCompile Include="..\base\sha1_portable.cc" />
-    <ClCompile Include="..\base\debug\debugger.cc">
-      <Filter>debug</Filter>
-    </ClCompile>
-    <ClCompile Include="..\base\debug\debugger_win.cc">
-      <Filter>debug</Filter>
-    </ClCompile>
     <ClCompile Include="..\base\win\dllmain.cc">
       <Filter>win</Filter>
     </ClCompile>
@@ -642,8 +636,5 @@
     <ClInclude Include="..\base\sha1.h" />
     <ClInclude Include="..\base\dispatchers.h" />
     <ClInclude Include="..\base\hash_tables.h" />
-    <ClInclude Include="..\base\debug\debugger.h">
-      <Filter>debug</Filter>
-    </ClInclude>
   </ItemGroup>
 </Project>

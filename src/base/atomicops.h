@@ -28,12 +28,18 @@
 #ifndef BASE_ATOMICOPS_H_
 #define BASE_ATOMICOPS_H_
 
+#include <atomic>
+
 #include "base/basictypes.h"
 #include "build/build_config.h"
 
 namespace base {
-namespace subtle {
+  namespace internal {
+    typedef intptr_t Word;
+  }
 
+
+namespace subtle {
 typedef int32 Atomic32;
 #ifdef ARCH_CPU_64_BITS
 // We need to be able to go between Atomic64 and AtomicWord implicitly.  This

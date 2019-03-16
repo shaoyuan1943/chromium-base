@@ -12,7 +12,6 @@
 
 #include "base/base_export.h"
 #include "base/basictypes.h"
-#include "base/debug/debugger.h"
 #include "build/build_config.h"
 
 //
@@ -445,43 +444,9 @@ const LogSeverity LOG_0 = LOG_ERROR;
 #define PLOG_IF(severity, condition) \
   LAZY_STREAM(PLOG_STREAM(severity), LOG_IS_ON(severity) && (condition))
 
-// http://crbug.com/16512 is open for a real fix for this.  For now, Windows
-// uses OFFICIAL_BUILD and other platforms use the branding flag when NDEBUG is
-// defined.
-#if ( defined(OS_WIN) && defined(OFFICIAL_BUILD)) || \
-    (!defined(OS_WIN) && defined(NDEBUG) && defined(GOOGLE_CHROME_BUILD))
-#define LOGGING_IS_OFFICIAL_BUILD 1
-#else
-#define LOGGING_IS_OFFICIAL_BUILD 0
-#endif
-
 // The actual stream used isn't important.
 #define EAT_STREAM_PARAMETERS                                           \
   true ? (void) 0 : ::logging::LogMessageVoidify() & LOG_STREAM(FATAL)
-
-// CHECK dies with a fatal error if condition is not true.  It is *not*
-// controlled by NDEBUG, so the check will be executed regardless of
-// compilation mode.
-//
-// We make sure CHECK et al. always evaluates their arguments, as
-// doing CHECK(FunctionWithSideEffect()) is a common idiom.
-
-#if LOGGING_IS_OFFICIAL_BUILD
-
-// Make all CHECK functions discard their log strings to reduce code
-// bloat for official builds.
-
-// TODO(akalin): This would be more valuable if there were some way to
-// remove BreakDebugger() from the backtrace, perhaps by turning it
-// into a macro (like __debugbreak() on Windows).
-#define CHECK(condition)                                                \
-  !(condition) ? ::base::debug::BreakDebugger() : EAT_STREAM_PARAMETERS
-
-#define PCHECK(condition) CHECK(condition)
-
-#define CHECK_OP(name, op, val1, val2) CHECK((val1) op (val2))
-
-#else
 
 #define CHECK(condition)                       \
   LAZY_STREAM(LOG_STREAM(FATAL), !(condition)) \
@@ -502,7 +467,7 @@ const LogSeverity LOG_0 = LOG_ERROR;
                                  #val1 " " #op " " #val2))      \
     logging::LogMessage(__FILE__, __LINE__, _result).stream()
 
-#endif
+
 
 // Build the error message string.  This is separate from the "Impl"
 // function template because it is not performance critical and so can
@@ -566,13 +531,7 @@ DEFINE_CHECK_OP_IMPL(GT, > )
 #define CHECK_GE(val1, val2) CHECK_OP(GE, >=, val1, val2)
 #define CHECK_GT(val1, val2) CHECK_OP(GT, > , val1, val2)
 
-#if LOGGING_IS_OFFICIAL_BUILD
-// In order to have optimized code for official builds, remove DLOGs and
-// DCHECKs.
-#define ENABLE_DLOG 0
-#define ENABLE_DCHECK 0
-
-#elif defined(NDEBUG)
+#if defined(NDEBUG)
 // Otherwise, if we're a release build, remove DLOGs but not DCHECKs
 // (since those can still be turned on via a command-line flag).
 #define ENABLE_DLOG 0
@@ -582,6 +541,7 @@ DEFINE_CHECK_OP_IMPL(GT, > )
 // Otherwise, we're a debug build so enable DLOGs and DCHECKs.
 #define ENABLE_DLOG 1
 #define ENABLE_DCHECK 1
+
 #endif
 
 // Definitions for DLOG et al.

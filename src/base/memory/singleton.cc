@@ -1,4 +1,4 @@
-// Copyright (c) 2011 The Chromium Authors. All rights reserved.
+﻿// Copyright (c) 2011 The Chromium Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
@@ -8,7 +8,7 @@
 namespace base {
 namespace internal {
 
-subtle::AtomicWord WaitForInstance(subtle::AtomicWord* instance) {
+subtle::AtomicWord WaitForInstance(std::atomic<Word>& instance) {
   // Handle the race. Another thread beat us and either:
   // - Has the object in BeingCreated state
   // - Already has the object created...
@@ -16,9 +16,9 @@ subtle::AtomicWord WaitForInstance(subtle::AtomicWord* instance) {
   // Unless your constructor can be very time consuming, it is very unlikely
   // to hit this race.  When it does, we just spin and yield the thread until
   // the object has been created.
-  subtle::AtomicWord value;
+  Word value = 0;
   while (true) {
-    value = subtle::NoBarrier_Load(instance);
+    value = instance.load();
     if (value != kBeingCreatedMarker)
       break;
     PlatformThread::YieldCurrentThread();
@@ -28,4 +28,3 @@ subtle::AtomicWord WaitForInstance(subtle::AtomicWord* instance) {
 
 }  // namespace internal
 }  // namespace base
-

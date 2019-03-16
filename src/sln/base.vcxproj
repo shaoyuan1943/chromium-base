@@ -219,7 +219,6 @@
     <ClInclude Include="..\base\cpu.h" />
     <ClInclude Include="..\base\critical_closure.h" />
     <ClInclude Include="..\base\debug\alias.h" />
-    <ClInclude Include="..\base\debug\debugger.h" />
     <ClInclude Include="..\base\debug\leak_tracker.h" />
     <ClInclude Include="..\base\debug\stack_trace.h" />
     <ClInclude Include="..\base\dispatchers.h" />
@@ -395,8 +394,6 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="..\base\debug\alias.cc" />
-    <ClCompile Include="..\base\debug\debugger.cc" />
-    <ClCompile Include="..\base\debug\debugger_win.cc" />
     <ClCompile Include="..\base\debug\stack_trace.cc" />
     <ClCompile Include="..\base\debug\stack_trace_win.cc" />
     <ClCompile Include="..\base\environment.cc" />

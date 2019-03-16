@@ -98,17 +98,17 @@ struct LeakyLazyInstanceTraits {
 
 // Our AtomicWord doubles as a spinlock, where a value of
 // kBeingCreatedMarker means the spinlock is being held for creation.
-static const subtle::AtomicWord kLazyInstanceStateCreating = 1;
+static const base::internal::Word kLazyInstanceStateCreating = 1;
 
 // Check if instance needs to be created. If so return true otherwise
 // if another thread has beat us, wait for instance to be created and
 // return false.
-BASE_EXPORT bool NeedsLazyInstance(subtle::AtomicWord* state);
+BASE_EXPORT bool NeedsLazyInstance(std::atomic<base::internal::Word>& state);
 
 // After creating an instance, call this to register the dtor to be called
 // at program exit and to update the atomic state to hold the |new_instance|
-BASE_EXPORT void CompleteLazyInstance(subtle::AtomicWord* state,
-                                      subtle::AtomicWord new_instance,
+BASE_EXPORT void CompleteLazyInstance(std::atomic<base::internal::Word>& state,
+                                      base::internal::Word& new_instance,
                                       void* lazy_instance,
                                       void (*dtor)(void*));
 
@@ -135,13 +135,13 @@ public:
   Type* Pointer() {
 #ifndef NDEBUG
     // Avoid making TLS lookup on release builds.
-    if (!Traits::kAllowedToAccessOnNonjoinableThread)
+    if (!Traits::kAllowedToAccessOnNonjoinableThread) {
       ThreadRestrictions::AssertSingletonAllowed();
+    }
 #endif
     // If any bit in the created mask is true, the instance has already been
     // fully constructed.
-    static const subtle::AtomicWord kLazyInstanceCreatedMask =
-        ~internal::kLazyInstanceStateCreating;
+    static const base::internal::Word kLazyInstanceCreatedMask = ~internal::kLazyInstanceStateCreating;
 
     // We will hopefully have fast access when the instance is already created.
     // Since a thread sees private_instance_ == 0 or kLazyInstanceStateCreating
@@ -150,23 +150,22 @@ public:
     // private_instance_ > creating needs to acquire visibility over
     // the associated data (private_buf_). Pairing Release_Store is in
     // CompleteLazyInstance().
-    subtle::AtomicWord value = subtle::Acquire_Load(&private_instance_);
-    if (!(value & kLazyInstanceCreatedMask) &&
-        internal::NeedsLazyInstance(&private_instance_)) {
+
+    base::internal::Word value = private_instance_.load(std::memory_order_acquire);
+    if (!(value & kLazyInstanceCreatedMask) && internal::NeedsLazyInstance(private_instance_)) {
       // Create the instance in the space provided by |private_buf_|.
-      value = reinterpret_cast<subtle::AtomicWord>(
-          Traits::New(private_buf_.void_data()));
-      internal::CompleteLazyInstance(&private_instance_, value, this,
-                                     Traits::kRegisterOnExit ? OnExit : NULL);
+      value = reinterpret_cast<base::internal::Word>(Traits::New(private_buf_.void_data()));
+      internal::CompleteLazyInstance(private_instance_, value, this,
+                                     Traits::kRegisterOnExit ? OnExit : nullptr);
     }
 
     return instance();
   }
 
   bool operator==(Type* p) {
-    switch (subtle::NoBarrier_Load(&private_instance_)) {
+    switch (private_instance_.load(std::memory_order_release)) {
       case 0:
-        return p == NULL;
+        return p == nullptr;
       case internal::kLazyInstanceStateCreating:
         return static_cast<void*>(p) == private_buf_.void_data();
       default:
@@ -178,23 +177,22 @@ public:
   // statically initialize it and to maintain a POD class. DO NOT USE FROM
   // OUTSIDE THIS CLASS.
 
-  subtle::AtomicWord private_instance_;
+  std::atomic<base::internal::Word> private_instance_ = 0;
   // Preallocated space for the Type instance.
   base::AlignedMemory<sizeof(Type), ALIGNOF(Type)> private_buf_;
 
 private:
   Type* instance() {
-    return reinterpret_cast<Type*>(subtle::NoBarrier_Load(&private_instance_));
+    return reinterpret_cast<Type*>(private_instance_.load(std::memory_order_release));
   }
 
   // Adapter function for use with AtExit.  This should be called single
   // threaded, so don't synchronize across threads.
   // Calling OnExit while the instance is in use by other threads is a mistake.
   static void OnExit(void* lazy_instance) {
-    LazyInstance<Type, Traits>* me =
-        reinterpret_cast<LazyInstance<Type, Traits>*>(lazy_instance);
+    LazyInstance<Type, Traits>* me = reinterpret_cast<LazyInstance<Type, Traits>*>(lazy_instance);
     Traits::Delete(me->instance());
-    subtle::NoBarrier_Store(&me->private_instance_, 0);
+    me->private_instance_.store(0, std::memory_order_acq_rel);
   }
 };
 

@@ -1,4 +1,4 @@
-// Copyright (c) 2012 The Chromium Authors. All rights reserved.
+﻿// Copyright (c) 2012 The Chromium Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
@@ -17,8 +17,7 @@ base::win::WinProcExceptionFilter s_exception_filter = NULL;
 namespace base {
 namespace win {
 
-WinProcExceptionFilter SetWinProcExceptionFilter(
-    WinProcExceptionFilter filter) {
+WinProcExceptionFilter SetWinProcExceptionFilter(WinProcExceptionFilter filter) {
   subtle::AtomicWord rv = subtle::NoBarrier_AtomicExchange(
       reinterpret_cast<subtle::AtomicWord*>(&s_exception_filter),
       reinterpret_cast<subtle::AtomicWord>(filter));
@@ -30,18 +29,10 @@ int CallExceptionFilter(EXCEPTION_POINTERS* info) {
                               EXCEPTION_CONTINUE_SEARCH;
 }
 
-BASE_EXPORT void InitializeWindowClass(
-    const char16* class_name,
-    WNDPROC window_proc,
-    UINT style,
-    int class_extra,
-    int window_extra,
-    HCURSOR cursor,
-    HBRUSH background,
-    const char16* menu_name,
-    HICON large_icon,
-    HICON small_icon,
-    WNDCLASSEX* class_out) {
+BASE_EXPORT void InitializeWindowClass(const char16* class_name, WNDPROC window_proc, UINT style,
+                                        int class_extra,int window_extra,HCURSOR cursor,
+                                        HBRUSH background,const char16* menu_name,HICON large_icon,
+                                        HICON small_icon, WNDCLASSEX* class_out) {
   class_out->cbSize = sizeof(WNDCLASSEX);
   class_out->style = style;
   class_out->lpfnWndProc = window_proc;
@@ -56,7 +47,7 @@ BASE_EXPORT void InitializeWindowClass(
   class_out->hIconSm = small_icon;
 
   // Check if |window_proc| is valid.
-  DCHECK(class_out->hInstance != NULL);
+  DCHECK(class_out->hInstance != nullptr);
 }
 
 }  // namespace win
