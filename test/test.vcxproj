@@ -204,98 +204,16 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="..\src\base\third_party\dynamic_annotations\dynamic_annotations.h" />
     <ClInclude Include="pch.h" />
-    <ClInclude Include="third_party\gtest\include\gtest\gtest-death-test.h" />
-    <ClInclude Include="third_party\gtest\include\gtest\gtest-matchers.h" />
-    <ClInclude Include="third_party\gtest\include\gtest\gtest-message.h" />
-    <ClInclude Include="third_party\gtest\include\gtest\gtest-param-test.h" />
-    <ClInclude Include="third_party\gtest\include\gtest\gtest-printers.h" />
-    <ClInclude Include="third_party\gtest\include\gtest\gtest-spi.h" />
-    <ClInclude Include="third_party\gtest\include\gtest\gtest-test-part.h" />
-    <ClInclude Include="third_party\gtest\include\gtest\gtest-typed-test.h" />
-    <ClInclude Include="third_party\gtest\include\gtest\gtest.h" />
-    <ClInclude Include="third_party\gtest\include\gtest\gtest_pred_impl.h" />
-    <ClInclude Include="third_party\gtest\include\gtest\gtest_prod.h" />
-    <ClInclude Include="third_party\gtest\include\gtest\internal\custom\gtest-port.h" />
-    <ClInclude Include="third_party\gtest\include\gtest\internal\custom\gtest-printers.h" />
-    <ClInclude Include="third_party\gtest\include\gtest\internal\custom\gtest.h" />
-    <ClInclude Include="third_party\gtest\include\gtest\internal\gtest-death-test-internal.h" />
-    <ClInclude Include="third_party\gtest\include\gtest\internal\gtest-filepath.h" />
-    <ClInclude Include="third_party\gtest\include\gtest\internal\gtest-internal.h" />
-    <ClInclude Include="third_party\gtest\include\gtest\internal\gtest-param-util-generated.h" />
-    <ClInclude Include="third_party\gtest\include\gtest\internal\gtest-param-util.h" />
-    <ClInclude Include="third_party\gtest\include\gtest\internal\gtest-port-arch.h" />
-    <ClInclude Include="third_party\gtest\include\gtest\internal\gtest-port.h" />
-    <ClInclude Include="third_party\gtest\include\gtest\internal\gtest-string.h" />
-    <ClInclude Include="third_party\gtest\include\gtest\internal\gtest-type-util.h" />
-    <ClInclude Include="third_party\testing\platform_test.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\src\base\third_party\dynamic_annotations\dynamic_annotations.c" />
-    <ClCompile Include="at_exit_unittest.cc" />
-    <ClCompile Include="base64_unittest.cc" />
-    <ClCompile Include="base_time_unittest.cc" />
-    <ClCompile Include="bind_helpers_unittest.cc" />
-    <ClCompile Include="bits_unittest.cc" />
-    <ClCompile Include="build_time_unittest.cc" />
-    <ClCompile Include="callback_unittest.cc" />
-    <ClCompile Include="cancelable_callback_unittest.cc" />
-    <ClCompile Include="command_line_unittest.cc" />
-    <ClCompile Include="environment_unittest.cc" />
-    <ClCompile Include="file_descriptor_shuffle_unittest.cc" />
-    <ClCompile Include="file_path_unittest.cc" />
-    <ClCompile Include="file_util_proxy_unittest.cc" />
-    <ClCompile Include="file_util_unittest.cc" />
-    <ClCompile Include="file_version_info_unittest.cc" />
-    <ClCompile Include="guid_unittest.cc" />
-    <ClCompile Include="hi_res_timer_manager_unittest.cc" />
-    <ClCompile Include="id_map_unittest.cc" />
-    <ClCompile Include="lazy_instance_unittest.cc" />
-    <ClCompile Include="linked_list_unittest.cc" />
-    <ClCompile Include="logging_unittest.cc" />
-    <ClCompile Include="md5_unittest.cc" />
-    <ClCompile Include="message_loop_proxy_impl_unittest.cc" />
-    <ClCompile Include="message_loop_proxy_unittest.cc" />
-    <ClCompile Include="message_loop_unittest.cc" />
-    <ClCompile Include="observer_list_unittest.cc" />
-    <ClCompile Include="path_service_unittest.cc" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="pickle_unittest.cc" />
-    <ClCompile Include="platform_file_unittest.cc" />
-    <ClCompile Include="pr_time_unittest.cc" />
-    <ClCompile Include="rand_util_unittest.cc" />
-    <ClCompile Include="scoped_native_library_unittest.cc" />
-    <ClCompile Include="scoped_temp_dir_unittest.cc" />
-    <ClCompile Include="sha1_unittest.cc" />
-    <ClCompile Include="stack_container_unittest.cc" />
-    <ClCompile Include="string16_unittest.cc" />
-    <ClCompile Include="stringize_macros_unittest.cc" />
-    <ClCompile Include="stringprintf_unittest.cc" />
-    <ClCompile Include="string_number_conversions_unittest.cc" />
-    <ClCompile Include="string_piece_unittest.cc" />
-    <ClCompile Include="string_split_unittest.cc" />
-    <ClCompile Include="string_tokenizer_unittest.cc" />
-    <ClCompile Include="string_util_unittest.cc" />
-    <ClCompile Include="sys_info_unittest.cc" />
-    <ClCompile Include="sys_string_conversions_unittest.cc" />
-    <ClCompile Include="task_runner_util_unittest.cc" />
     <ClCompile Include="test.cpp" />
-    <ClCompile Include="timer_unittest.cc" />
-    <ClCompile Include="tools_sanity_unittest.cc" />
-    <ClCompile Include="utf_offset_string_conversions_unittest.cc" />
-    <ClCompile Include="utf_string_conversions_unittest.cc" />
-    <ClCompile Include="values_unittest.cc" />
-    <ClCompile Include="version_unittest.cc" />
-    <ClCompile Include="vlog_unittest.cc" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="third_party\gtest\include\gtest\gtest-param-test.h.pump" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
