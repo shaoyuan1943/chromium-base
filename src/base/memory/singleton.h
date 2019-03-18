@@ -19,8 +19,9 @@
 #ifndef BASE_MEMORY_SINGLETON_H_
 #define BASE_MEMORY_SINGLETON_H_
 
+#include <atomic>
+
 #include "base/at_exit.h"
-#include "base/atomicops.h"
 #include "base/base_export.h"
 #include "base/memory/aligned_memory.h"
 #include "base/threading/thread_restrictions.h"
@@ -30,11 +31,11 @@ namespace internal {
 
 // Our AtomicWord doubles as a spinlock, where a value of
 // kBeingCreatedMarker means the spinlock is being held for creation.
-static const Word kBeingCreatedMarker = 1;
+static const intptr_t kBeingCreatedMarker = 1;
 
 // We pull out some of the functionality into a non-templated function, so that
 // we can implement the more complicated pieces out of line in the .cc file.
-BASE_EXPORT Word WaitForInstance(std::atomic<Word>& instance);
+BASE_EXPORT intptr_t WaitForInstance(std::atomic<intptr_t>& instance);
 
 }  // namespace internal
 }  // namespace base

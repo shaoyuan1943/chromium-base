@@ -191,9 +191,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="..\base\atomicops.h" />
-    <ClInclude Include="..\base\atomicops_internals_x86_msvc.h" />
-    <ClInclude Include="..\base\atomic_ref_count.h" />
     <ClInclude Include="..\base\atomic_sequence_num.h" />
     <ClInclude Include="..\base\at_exit.h" />
     <ClInclude Include="..\base\auto_reset.h" />
@@ -376,7 +373,6 @@
     <ClInclude Include="..\base\win\startup_information.h" />
     <ClInclude Include="..\base\win\windows_version.h" />
     <ClInclude Include="..\base\win\win_util.h" />
-    <ClInclude Include="..\base\win\wrapped_window_proc.h" />
     <ClInclude Include="..\build\build_config.h" />
   </ItemGroup>
   <ItemGroup>
@@ -523,7 +519,6 @@
     <ClCompile Include="..\base\win\startup_information.cc" />
     <ClCompile Include="..\base\win\windows_version.cc" />
     <ClCompile Include="..\base\win\win_util.cc" />
-    <ClCompile Include="..\base\win\wrapped_window_proc.cc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

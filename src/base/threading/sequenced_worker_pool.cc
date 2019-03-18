@@ -9,8 +9,8 @@
 #include <set>
 #include <utility>
 #include <vector>
+#include <atomic>
 
-#include "base/atomicops.h"
 #include "base/callback.h"
 #include "base/compiler_specific.h"
 #include "base/logging.h"
@@ -336,7 +336,7 @@ class SequencedWorkerPool::Inner {
   // The last sequence number used. Managed by GetSequenceToken, since this
   // only does threadsafe increment operations, you do not need to hold the
   // lock.
-  volatile subtle::Atomic32 last_sequence_number_;
+  std::atomic<int> last_sequence_number_ = 0;
 
   // This lock protects |everything in this class|. Do not read or modify
   // anything without holding this lock. Do not block while holding this
@@ -473,8 +473,7 @@ SequencedWorkerPool::Inner::~Inner() {
 
 SequencedWorkerPool::SequenceToken
 SequencedWorkerPool::Inner::GetSequenceToken() {
-  subtle::Atomic32 result =
-      subtle::NoBarrier_AtomicIncrement(&last_sequence_number_, 1);
+  int result = last_sequence_number_.fetch_add(1);
   return SequenceToken(static_cast<int>(result));
 }
 

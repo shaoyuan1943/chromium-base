@@ -5,6 +5,8 @@
 #ifndef BASE_ATOMIC_SEQUENCE_NUM_H_
 #define BASE_ATOMIC_SEQUENCE_NUM_H_
 
+#include <atomic>
+
 #include "base/atomicops.h"
 #include "base/basictypes.h"
 
@@ -22,18 +24,17 @@ class AtomicSequenceNumber;
 class StaticAtomicSequenceNumber {
  public:
   inline int GetNext() {
-    return static_cast<int>(
-        base::subtle::NoBarrier_AtomicIncrement(&seq_, 1) - 1);
+    return static_cast<int>(seq_.fetch_add(1)  - 1);
   }
 
  private:
   friend class AtomicSequenceNumber;
 
   inline void Reset() {
-    base::subtle::Release_Store(&seq_, 0);
+    seq_.store(0, std::memory_order_release);
   }
 
-  base::subtle::Atomic32 seq_;
+  std::atomic<int> seq_ = 0;
 };
 
 // AtomicSequenceNumber that can be stored and used safely (i.e. its fields are

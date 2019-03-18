@@ -8,7 +8,7 @@
 namespace base {
 namespace internal {
 
-subtle::AtomicWord WaitForInstance(std::atomic<Word>& instance) {
+  intptr_t WaitForInstance(std::atomic<intptr_t>& instance) {
   // Handle the race. Another thread beat us and either:
   // - Has the object in BeingCreated state
   // - Already has the object created...
@@ -16,7 +16,7 @@ subtle::AtomicWord WaitForInstance(std::atomic<Word>& instance) {
   // Unless your constructor can be very time consuming, it is very unlikely
   // to hit this race.  When it does, we just spin and yield the thread until
   // the object has been created.
-  Word value = 0;
+  intptr_t value = 0;
   while (true) {
     value = instance.load();
     if (value != kBeingCreatedMarker)

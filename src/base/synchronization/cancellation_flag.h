@@ -1,12 +1,13 @@
-// Copyright (c) 2011 The Chromium Authors. All rights reserved.
+﻿// Copyright (c) 2011 The Chromium Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
 #ifndef BASE_SYNCHRONIZATION_CANCELLATION_FLAG_H_
 #define BASE_SYNCHRONIZATION_CANCELLATION_FLAG_H_
 
+#include <atomic>
+
 #include "base/base_export.h"
-#include "base/atomicops.h"
 #include "base/threading/platform_thread.h"
 
 namespace base {
@@ -18,7 +19,7 @@ namespace base {
 // This class IS NOT intended for synchronization between threads.
 class BASE_EXPORT CancellationFlag {
  public:
-  CancellationFlag() : flag_(false) {
+  CancellationFlag() {
 #if !defined(NDEBUG)
     set_on_ = PlatformThread::CurrentId();
 #endif
@@ -30,7 +31,7 @@ class BASE_EXPORT CancellationFlag {
   bool IsSet() const;  // Returns true iff the flag was set.
 
  private:
-  base::subtle::Atomic32 flag_;
+   std::atomic<int> flag_ = 0;
 #if !defined(NDEBUG)
   PlatformThreadId set_on_;
 #endif

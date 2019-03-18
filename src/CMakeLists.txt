@@ -74,9 +74,6 @@ if(Linux MATCHES ${BASE_BUILD_PLATFORM})
     )
 
     set(BASE_PLATFORM_SOURCE  
-        base/atomicops_internals_x86_gcc.h
-        base/atomicops_internals_x86_gcc.cc
-        
         base/base_paths_posix.cc
         base/base_paths_posix.h
         base/file_descriptor_posix.h
@@ -138,8 +135,6 @@ set(BASE_DEFINITIONS
 )
 
 set(BASE_SOURCE 
-    base/atomicops.h
-    base/atomic_ref_count.h
     base/atomic_sequence_num.h
     base/at_exit.h
     base/auto_reset.h

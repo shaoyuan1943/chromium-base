@@ -1,4 +1,4 @@
-// Copyright (c) 2012 The Chromium Authors. All rights reserved.
+﻿// Copyright (c) 2012 The Chromium Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
@@ -6,8 +6,8 @@
 #define BASE_WIN_IUNKNOWN_IMPL_H_
 
 #include <unknwn.h>
+#include <atomic>
 
-#include "base/atomic_ref_count.h"
 #include "base/base_export.h"
 #include "base/compiler_specific.h"
 
@@ -29,7 +29,7 @@ class BASE_EXPORT IUnknownImpl : public IUnknown {
   virtual ~IUnknownImpl();
 
  private:
-  AtomicRefCount ref_count_;
+   std::atomic<int> ref_count_ = 0;
 };
 
 }  // namespace win

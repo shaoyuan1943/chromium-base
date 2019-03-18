@@ -569,3 +569,20 @@ API:
 | SetProcessBackgrounded | M | 设置进程后台运行，如果传入true，则表示进程的优先级将会降低 |
 | GetPriority | M | 获取进程优先级 |
 
+### 37. process_util
+描述：进程相关。  
+头文件：base/process_util.h  
+API:  
+
+| 函数名 | 属性 | 说明 |
+| ------ | :------: | ------ |
+| RouteStdioToConsole | G | WINDOWS ONLY 重定向cout,wcout,cin,wcin,cerr,wcerr,clog,wclog到控制台 |
+| GetCurrentProcId | G | 获取当前进程PID |
+| GetCurrentProcessHandle | G | 获取当前进程handle |
+| GetModuleFromAddress | G | WINDOWS ONLY 返回地址所属的模块句柄，模块的引用计数不会递增|
+| OpenProcessHandle | G | 通过PID打开某个进程，返回handle，该handle必须使用CloseProcess Handle关闭，操作成功返回true |
+| OpenPrivilegedProcessHandle | G | 与OpenProcessHandle类似 |
+| OpenProcessHandleWithAccess | G | 与OpenProcessHandle类似，调用时可传递访问权限标记 |
+| CloseProcessHandle | G | 关闭进程handle |
+| GetProcessExecutablePath | G | LINUX ONLY 通过给定的handle返回可执行文件目录 |
+| ParseProcStatCPU | G | LINUX ONLY 解析/proc/<pid>/stat 文件 |

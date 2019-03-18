@@ -25,7 +25,6 @@
 #include <time.h>
 #include <limits>
 
-#include "base/atomicops.h"
 #include "base/base_export.h"
 #include "base/basictypes.h"
 

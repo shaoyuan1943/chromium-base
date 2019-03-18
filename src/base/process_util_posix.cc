@@ -19,7 +19,6 @@
 
 #include "base/command_line.h"
 #include "base/compiler_specific.h"
-#include "base/debug/debugger.h"
 #include "base/debug/stack_trace.h"
 #include "base/eintr_wrapper.h"
 #include "base/file_util.h"
@@ -136,9 +135,6 @@ int WaitpidWithTimeout(ProcessHandle handle, int64 wait_milliseconds,
 // Android has built-in crash handling.
 #if !defined(OS_ANDROID)
 void StackDumpSignalHandler(int signal, siginfo_t* info, ucontext_t* context) {
-  if (debug::BeingDebugged())
-    debug::BreakDebugger();
-
   DLOG(ERROR) << "Received signal " << signal;
   debug::StackTrace().PrintBacktrace();
 
