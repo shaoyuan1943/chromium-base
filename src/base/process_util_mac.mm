@@ -27,7 +27,6 @@
 #include <new>
 #include <string>
 
-#include "base/debug/debugger.h"
 #include "base/eintr_wrapper.h"
 #include "base/file_util.h"
 #include "base/hash_tables.h"
@@ -679,8 +678,6 @@ void* oom_killer_malloc(struct _malloc_zone_t* zone,
                         size_t size) {
   ScopedClearErrno clear_errno;
   void* result = g_old_malloc(zone, size);
-  if (!result && size)
-    debug::BreakDebugger();
   return result;
 }
 
@@ -689,8 +686,6 @@ void* oom_killer_calloc(struct _malloc_zone_t* zone,
                         size_t size) {
   ScopedClearErrno clear_errno;
   void* result = g_old_calloc(zone, num_items, size);
-  if (!result && num_items && size)
-    debug::BreakDebugger();
   return result;
 }
 
@@ -698,8 +693,6 @@ void* oom_killer_valloc(struct _malloc_zone_t* zone,
                         size_t size) {
   ScopedClearErrno clear_errno;
   void* result = g_old_valloc(zone, size);
-  if (!result && size)
-    debug::BreakDebugger();
   return result;
 }
 
@@ -714,8 +707,6 @@ void* oom_killer_realloc(struct _malloc_zone_t* zone,
                          size_t size) {
   ScopedClearErrno clear_errno;
   void* result = g_old_realloc(zone, ptr, size);
-  if (!result && size)
-    debug::BreakDebugger();
   return result;
 }
 
@@ -724,13 +715,6 @@ void* oom_killer_memalign(struct _malloc_zone_t* zone,
                           size_t size) {
   ScopedClearErrno clear_errno;
   void* result = g_old_memalign(zone, alignment, size);
-  // Only die if posix_memalign would have returned ENOMEM, since there are
-  // other reasons why NULL might be returned (see
-  // http://opensource.apple.com/source/Libc/Libc-583/gen/malloc.c ).
-  if (!result && size && alignment >= sizeof(void*)
-      && (alignment & (alignment - 1)) == 0) {
-    debug::BreakDebugger();
-  }
   return result;
 }
 
@@ -738,8 +722,6 @@ void* oom_killer_malloc_purgeable(struct _malloc_zone_t* zone,
                                   size_t size) {
   ScopedClearErrno clear_errno;
   void* result = g_old_malloc_purgeable(zone, size);
-  if (!result && size)
-    debug::BreakDebugger();
   return result;
 }
 
@@ -748,8 +730,6 @@ void* oom_killer_calloc_purgeable(struct _malloc_zone_t* zone,
                                   size_t size) {
   ScopedClearErrno clear_errno;
   void* result = g_old_calloc_purgeable(zone, num_items, size);
-  if (!result && num_items && size)
-    debug::BreakDebugger();
   return result;
 }
 
@@ -757,8 +737,6 @@ void* oom_killer_valloc_purgeable(struct _malloc_zone_t* zone,
                                   size_t size) {
   ScopedClearErrno clear_errno;
   void* result = g_old_valloc_purgeable(zone, size);
-  if (!result && size)
-    debug::BreakDebugger();
   return result;
 }
 
@@ -773,8 +751,6 @@ void* oom_killer_realloc_purgeable(struct _malloc_zone_t* zone,
                                    size_t size) {
   ScopedClearErrno clear_errno;
   void* result = g_old_realloc_purgeable(zone, ptr, size);
-  if (!result && size)
-    debug::BreakDebugger();
   return result;
 }
 
@@ -783,20 +759,12 @@ void* oom_killer_memalign_purgeable(struct _malloc_zone_t* zone,
                                     size_t size) {
   ScopedClearErrno clear_errno;
   void* result = g_old_memalign_purgeable(zone, alignment, size);
-  // Only die if posix_memalign would have returned ENOMEM, since there are
-  // other reasons why NULL might be returned (see
-  // http://opensource.apple.com/source/Libc/Libc-583/gen/malloc.c ).
-  if (!result && size && alignment >= sizeof(void*)
-      && (alignment & (alignment - 1)) == 0) {
-    debug::BreakDebugger();
-  }
   return result;
 }
 
 // === C++ operator new ===
 
 void oom_killer_new() {
-  debug::BreakDebugger();
 }
 
 // === Core Foundation CFAllocators ===
@@ -830,8 +798,6 @@ void* oom_killer_cfallocator_system_default(CFIndex alloc_size,
                                             CFOptionFlags hint,
                                             void* info) {
   void* result = g_old_cfallocator_system_default(alloc_size, hint, info);
-  if (!result)
-    debug::BreakDebugger();
   return result;
 }
 
@@ -839,8 +805,6 @@ void* oom_killer_cfallocator_malloc(CFIndex alloc_size,
                                     CFOptionFlags hint,
                                     void* info) {
   void* result = g_old_cfallocator_malloc(alloc_size, hint, info);
-  if (!result)
-    debug::BreakDebugger();
   return result;
 }
 
@@ -848,8 +812,6 @@ void* oom_killer_cfallocator_malloc_zone(CFIndex alloc_size,
                                          CFOptionFlags hint,
                                          void* info) {
   void* result = g_old_cfallocator_malloc_zone(alloc_size, hint, info);
-  if (!result)
-    debug::BreakDebugger();
   return result;
 }
 
@@ -861,8 +823,6 @@ allocWithZone_t g_old_allocWithZone;
 id oom_killer_allocWithZone(id self, SEL _cmd, NSZone* zone)
 {
   id result = g_old_allocWithZone(self, _cmd, zone);
-  if (!result)
-    debug::BreakDebugger();
   return result;
 }
 

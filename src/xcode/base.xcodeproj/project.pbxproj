@@ -41,11 +41,8 @@
 		DF61940022002DE700265F4C /* stack_trace.h in Headers */ = {isa = PBXBuildFile; fileRef = DF6193F722002DE700265F4C /* stack_trace.h */; };
 		DF61940122002DE700265F4C /* alias.h in Headers */ = {isa = PBXBuildFile; fileRef = DF6193F822002DE700265F4C /* alias.h */; };
 		DF61940222002DE700265F4C /* alias.cc in Sources */ = {isa = PBXBuildFile; fileRef = DF6193F922002DE700265F4C /* alias.cc */; };
-		DF61940322002DE700265F4C /* debugger.h in Headers */ = {isa = PBXBuildFile; fileRef = DF6193FA22002DE700265F4C /* debugger.h */; };
 		DF61940422002DE700265F4C /* stack_trace_posix.cc in Sources */ = {isa = PBXBuildFile; fileRef = DF6193FB22002DE700265F4C /* stack_trace_posix.cc */; };
 		DF61940522002DE700265F4C /* stack_trace.cc in Sources */ = {isa = PBXBuildFile; fileRef = DF6193FC22002DE700265F4C /* stack_trace.cc */; };
-		DF61940622002DE700265F4C /* debugger.cc in Sources */ = {isa = PBXBuildFile; fileRef = DF6193FD22002DE700265F4C /* debugger.cc */; };
-		DF61940722002DE700265F4C /* debugger_posix.cc in Sources */ = {isa = PBXBuildFile; fileRef = DF6193FE22002DE700265F4C /* debugger_posix.cc */; };
 		DF61940822002DE700265F4C /* leak_tracker.h in Headers */ = {isa = PBXBuildFile; fileRef = DF6193FF22002DE700265F4C /* leak_tracker.h */; };
 		DF61940F22002E9200265F4C /* dir_reader_fallback.h in Headers */ = {isa = PBXBuildFile; fileRef = DF61940A22002E9200265F4C /* dir_reader_fallback.h */; };
 		DF61941022002E9200265F4C /* file_path_watcher.h in Headers */ = {isa = PBXBuildFile; fileRef = DF61940B22002E9200265F4C /* file_path_watcher.h */; };
@@ -136,13 +133,9 @@
 		DF6194BE22002FC300265F4C /* thread_checker_impl.h in Headers */ = {isa = PBXBuildFile; fileRef = DF61949F22002FC200265F4C /* thread_checker_impl.h */; };
 		DF6194BF22002FC300265F4C /* thread_local_storage.h in Headers */ = {isa = PBXBuildFile; fileRef = DF6194A022002FC200265F4C /* thread_local_storage.h */; };
 		DF6194C122002FDD00265F4C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF6194C022002FDD00265F4C /* Foundation.framework */; };
-		DF6194C92200301A00265F4C /* atomicops_internals_mac.h in Headers */ = {isa = PBXBuildFile; fileRef = DF6194C22200300B00265F4C /* atomicops_internals_mac.h */; };
 		DF6194CA2200301A00265F4C /* atomic_sequence_num.h in Headers */ = {isa = PBXBuildFile; fileRef = DF6194C32200300D00265F4C /* atomic_sequence_num.h */; };
-		DF6194CB2200301A00265F4C /* atomic_ref_count.h in Headers */ = {isa = PBXBuildFile; fileRef = DF6194C42200300F00265F4C /* atomic_ref_count.h */; };
-		DF6194CC2200301A00265F4C /* atomicops_internals_atomicword_compat.h in Headers */ = {isa = PBXBuildFile; fileRef = DF6194C52200301100265F4C /* atomicops_internals_atomicword_compat.h */; };
 		DF6194CD2200301A00265F4C /* at_exit.h in Headers */ = {isa = PBXBuildFile; fileRef = DF6194C62200301300265F4C /* at_exit.h */; };
 		DF6194CE2200301A00265F4C /* at_exit.cc in Sources */ = {isa = PBXBuildFile; fileRef = DF6194C72200301500265F4C /* at_exit.cc */; };
-		DF6194CF2200301A00265F4C /* atomicops.h in Headers */ = {isa = PBXBuildFile; fileRef = DF6194C82200301800265F4C /* atomicops.h */; };
 		DF6195012200312300265F4C /* callback_internal.cc in Sources */ = {isa = PBXBuildFile; fileRef = DF6194D02200306F00265F4C /* callback_internal.cc */; };
 		DF6195022200312300265F4C /* cpu.cc in Sources */ = {isa = PBXBuildFile; fileRef = DF6194D12200307100265F4C /* cpu.cc */; };
 		DF6195032200312300265F4C /* environment.cc in Sources */ = {isa = PBXBuildFile; fileRef = DF6194D22200307400265F4C /* environment.cc */; };
@@ -403,11 +396,8 @@
 		DF6193F722002DE700265F4C /* stack_trace.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = stack_trace.h; path = ../base/debug/stack_trace.h; sourceTree = "<group>"; };
 		DF6193F822002DE700265F4C /* alias.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = alias.h; path = ../base/debug/alias.h; sourceTree = "<group>"; };
 		DF6193F922002DE700265F4C /* alias.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = alias.cc; path = ../base/debug/alias.cc; sourceTree = "<group>"; };
-		DF6193FA22002DE700265F4C /* debugger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = debugger.h; path = ../base/debug/debugger.h; sourceTree = "<group>"; };
 		DF6193FB22002DE700265F4C /* stack_trace_posix.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = stack_trace_posix.cc; path = ../base/debug/stack_trace_posix.cc; sourceTree = "<group>"; };
 		DF6193FC22002DE700265F4C /* stack_trace.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = stack_trace.cc; path = ../base/debug/stack_trace.cc; sourceTree = "<group>"; };
-		DF6193FD22002DE700265F4C /* debugger.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = debugger.cc; path = ../base/debug/debugger.cc; sourceTree = "<group>"; };
-		DF6193FE22002DE700265F4C /* debugger_posix.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = debugger_posix.cc; path = ../base/debug/debugger_posix.cc; sourceTree = "<group>"; };
 		DF6193FF22002DE700265F4C /* leak_tracker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = leak_tracker.h; path = ../base/debug/leak_tracker.h; sourceTree = "<group>"; };
 		DF61940A22002E9200265F4C /* dir_reader_fallback.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = dir_reader_fallback.h; path = ../base/files/dir_reader_fallback.h; sourceTree = "<group>"; };
 		DF61940B22002E9200265F4C /* file_path_watcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = file_path_watcher.h; path = ../base/files/file_path_watcher.h; sourceTree = "<group>"; };
@@ -498,13 +488,9 @@
 		DF61949F22002FC200265F4C /* thread_checker_impl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = thread_checker_impl.h; path = ../base/threading/thread_checker_impl.h; sourceTree = "<group>"; };
 		DF6194A022002FC200265F4C /* thread_local_storage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = thread_local_storage.h; path = ../base/threading/thread_local_storage.h; sourceTree = "<group>"; };
 		DF6194C022002FDD00265F4C /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
-		DF6194C22200300B00265F4C /* atomicops_internals_mac.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = atomicops_internals_mac.h; path = ../base/atomicops_internals_mac.h; sourceTree = "<group>"; };
 		DF6194C32200300D00265F4C /* atomic_sequence_num.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = atomic_sequence_num.h; path = ../base/atomic_sequence_num.h; sourceTree = "<group>"; };
-		DF6194C42200300F00265F4C /* atomic_ref_count.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = atomic_ref_count.h; path = ../base/atomic_ref_count.h; sourceTree = "<group>"; };
-		DF6194C52200301100265F4C /* atomicops_internals_atomicword_compat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = atomicops_internals_atomicword_compat.h; path = ../base/atomicops_internals_atomicword_compat.h; sourceTree = "<group>"; };
 		DF6194C62200301300265F4C /* at_exit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = at_exit.h; path = ../base/at_exit.h; sourceTree = "<group>"; };
 		DF6194C72200301500265F4C /* at_exit.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = at_exit.cc; path = ../base/at_exit.cc; sourceTree = "<group>"; };
-		DF6194C82200301800265F4C /* atomicops.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = atomicops.h; path = ../base/atomicops.h; sourceTree = "<group>"; };
 		DF6194D02200306F00265F4C /* callback_internal.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = callback_internal.cc; path = ../base/callback_internal.cc; sourceTree = "<group>"; };
 		DF6194D12200307100265F4C /* cpu.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = cpu.cc; path = ../base/cpu.cc; sourceTree = "<group>"; };
 		DF6194D22200307400265F4C /* environment.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = environment.cc; path = ../base/environment.cc; sourceTree = "<group>"; };
@@ -840,11 +826,7 @@
 				DF6195F22200375300265F4C /* version.cc */,
 				DF6196002200379200265F4C /* vlog.cc */,
 				DF6194C62200301300265F4C /* at_exit.h */,
-				DF6194C42200300F00265F4C /* atomic_ref_count.h */,
 				DF6194C32200300D00265F4C /* atomic_sequence_num.h */,
-				DF6194C52200301100265F4C /* atomicops_internals_atomicword_compat.h */,
-				DF6194C22200300B00265F4C /* atomicops_internals_mac.h */,
-				DF6194C82200301800265F4C /* atomicops.h */,
 				DF6193D022001C6B00265F4C /* auto_reset.h */,
 				DF6193C821FF293600265F4C /* base_export.h */,
 				DF6194D62200307F00265F4C /* base_paths_mac.h */,
@@ -1051,9 +1033,6 @@
 			children = (
 				DF6193F922002DE700265F4C /* alias.cc */,
 				DF6193F822002DE700265F4C /* alias.h */,
-				DF6193FE22002DE700265F4C /* debugger_posix.cc */,
-				DF6193FD22002DE700265F4C /* debugger.cc */,
-				DF6193FA22002DE700265F4C /* debugger.h */,
 				DF6193FF22002DE700265F4C /* leak_tracker.h */,
 				DF6193FB22002DE700265F4C /* stack_trace_posix.cc */,
 				DF6193FC22002DE700265F4C /* stack_trace.cc */,
@@ -1286,7 +1265,6 @@
 				DF6196872200737B00265F4C /* scoped_nsautorelease_pool.h in Headers */,
 				DF61963A220037F400265F4C /* stl_util.h in Headers */,
 				DF6194A622002FC200265F4C /* post_task_and_reply_impl.h in Headers */,
-				DF6194CC2200301A00265F4C /* atomicops_internals_atomicword_compat.h in Headers */,
 				DF34D4B2220C4A26002FEFAA /* mach_override.h in Headers */,
 				DF61967B2200737B00265F4C /* scoped_cftyperef.h in Headers */,
 				DF619645220037F400265F4C /* values.h in Headers */,
@@ -1303,7 +1281,6 @@
 				DF6195CD2200335A00265F4C /* run_loop.h in Headers */,
 				DF6193F22200289F00265F4C /* prtypes.h in Headers */,
 				DF6193F42200289F00265F4C /* prcpucfg_mac.h in Headers */,
-				DF6194CF2200301A00265F4C /* atomicops.h in Headers */,
 				DF61945322002EF100265F4C /* scoped_policy.h in Headers */,
 				DF6194B122002FC200265F4C /* worker_pool_posix.h in Headers */,
 				DF6195302200312300265F4C /* file_descriptor_shuffle.h in Headers */,
@@ -1314,7 +1291,6 @@
 				DF6196892200737B00265F4C /* scoped_authorizationref.h in Headers */,
 				DF6194BE22002FC300265F4C /* thread_checker_impl.h in Headers */,
 				DF6195AA2200335A00265F4C /* sequenced_task_runner_helpers.h in Headers */,
-				DF61940322002DE700265F4C /* debugger.h in Headers */,
 				DF61950A2200312300265F4C /* file_descriptor_posix.h in Headers */,
 				DF61952A2200312300265F4C /* callback_helpers.h in Headers */,
 				DF6193D622001D0D00265F4C /* icu_utf.h in Headers */,
@@ -1368,7 +1344,6 @@
 				DF6195D72200335A00265F4C /* message_loop_proxy_impl.h in Headers */,
 				DF6195102200312300265F4C /* base_switches.h in Headers */,
 				DF61962E220037F400265F4C /* string_util.h in Headers */,
-				DF6194CB2200301A00265F4C /* atomic_ref_count.h in Headers */,
 				DF619639220037F400265F4C /* sync_socket.h in Headers */,
 				DF61951E2200312300265F4C /* bind_helpers.h in Headers */,
 				DF61942D22002ED900265F4C /* json_value_converter.h in Headers */,
@@ -1444,7 +1419,6 @@
 				DF6195C92200335A00265F4C /* message_pump_default.h in Headers */,
 				DF6195072200312300265F4C /* base_paths_mac.h in Headers */,
 				DF61952C2200312300265F4C /* file_util_proxy.h in Headers */,
-				DF6194C92200301A00265F4C /* atomicops_internals_mac.h in Headers */,
 				DF6195D62200335A00265F4C /* safe_strerror_posix.h in Headers */,
 				DF61964A220037F400265F4C /* utf_string_conversions.h in Headers */,
 				DF61962F220037F400265F4C /* utf_string_conversion_utils.h in Headers */,
@@ -1560,7 +1534,6 @@
 				DF61942522002ED900265F4C /* json_reader.cc in Sources */,
 				DF6193E12200284600265F4C /* g_fmt.cc in Sources */,
 				DF6194A422002FC200265F4C /* worker_pool_posix.cc in Sources */,
-				DF61940622002DE700265F4C /* debugger.cc in Sources */,
 				DF6195022200312300265F4C /* cpu.cc in Sources */,
 				DF6194A322002FC200265F4C /* thread_checker_impl.cc in Sources */,
 				DF6195A62200335A00265F4C /* message_loop.cc in Sources */,
@@ -1588,7 +1561,6 @@
 				DF6195C02200335A00265F4C /* pickle.cc in Sources */,
 				DF6195CE2200335A00265F4C /* scoped_native_library.cc in Sources */,
 				DF61940422002DE700265F4C /* stack_trace_posix.cc in Sources */,
-				DF61940722002DE700265F4C /* debugger_posix.cc in Sources */,
 				DF6195C22200335A00265F4C /* location.cc in Sources */,
 				DF6195972200335A00265F4C /* path_service.cc in Sources */,
 				DF6194AB22002FC200265F4C /* sequenced_worker_pool.cc in Sources */,
