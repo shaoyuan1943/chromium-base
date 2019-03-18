@@ -48,3 +48,4 @@
 *.iobj
 *.ipdb
 *.lib
+*.dll

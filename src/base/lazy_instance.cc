@@ -5,7 +5,6 @@
 #include "base/lazy_instance.h"
 
 #include "base/at_exit.h"
-#include "base/atomicops.h"
 #include "base/basictypes.h"
 #include "base/threading/platform_thread.h"
 
@@ -14,13 +13,13 @@ namespace internal {
 
 // TODO(joth): This function could be shared with Singleton, in place of its
 // WaitForInstance() call.
-bool NeedsLazyInstance(std::atomic<base::internal::Word>& state) {
+bool NeedsLazyInstance(std::atomic<intptr_t>& state) {
   // Try to create the instance, if we're the first, will go from 0 to
   // kLazyInstanceStateCreating, otherwise we've already been beaten here.
   // The memory access has no memory ordering as state 0 and
   // kLazyInstanceStateCreating have no associated data (memory barriers are
   // all about ordering of memory accesses to *associated* data).
-  static base::internal::Word creating = 0;
+  static intptr_t creating = 0;
   if (state.compare_exchange_strong(creating, kLazyInstanceStateCreating, std::memory_order_consume)) {
     return true;
   }
@@ -38,7 +37,7 @@ bool NeedsLazyInstance(std::atomic<base::internal::Word>& state) {
   return false;
 }
 
-void CompleteLazyInstance(std::atomic<base::internal::Word>& state, base::internal::Word& new_instance,
+void CompleteLazyInstance(std::atomic<intptr_t>& state, intptr_t& new_instance,
                           void* lazy_instance, void(*dtor)(void*)) {
   // Instance is created, go from CREATING to CREATED.
   // Releases visibility over private_buf_ to readers. Pairing Acquire_Load's

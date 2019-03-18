@@ -120,7 +120,6 @@ if(Linux MATCHES ${BASE_BUILD_PLATFORM})
         base/files/file_path_watcher_linux.cc
         base/third_party/nspr/prcpucfg_linux.h
         base/message_pump_libevent.h
-        base/debug/debugger_posix.cc
     )
 endif()
 
@@ -383,8 +382,6 @@ set(BASE_SOURCE
     base/value_conversions.cc
     base/version.cc
     base/vlog.cc
-    base/debug/debugger.h
-    base/debug/debugger.cc
 )
 
 set(BASE_LINK_LIBRARIES 

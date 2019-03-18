@@ -36,8 +36,8 @@
 #define BASE_LAZY_INSTANCE_H_
 
 #include <new>  // For placement new.
+#include <atomic>
 
-#include "base/atomicops.h"
 #include "base/base_export.h"
 #include "base/basictypes.h"
 #include "base/logging.h"
@@ -98,17 +98,17 @@ struct LeakyLazyInstanceTraits {
 
 // Our AtomicWord doubles as a spinlock, where a value of
 // kBeingCreatedMarker means the spinlock is being held for creation.
-static const base::internal::Word kLazyInstanceStateCreating = 1;
+static const intptr_t kLazyInstanceStateCreating = 1;
 
 // Check if instance needs to be created. If so return true otherwise
 // if another thread has beat us, wait for instance to be created and
 // return false.
-BASE_EXPORT bool NeedsLazyInstance(std::atomic<base::internal::Word>& state);
+BASE_EXPORT bool NeedsLazyInstance(std::atomic<intptr_t>& state);
 
 // After creating an instance, call this to register the dtor to be called
 // at program exit and to update the atomic state to hold the |new_instance|
-BASE_EXPORT void CompleteLazyInstance(std::atomic<base::internal::Word>& state,
-                                      base::internal::Word& new_instance,
+BASE_EXPORT void CompleteLazyInstance(std::atomic<intptr_t>& state,
+                                      intptr_t& new_instance,
                                       void* lazy_instance,
                                       void (*dtor)(void*));
 
@@ -141,7 +141,7 @@ public:
 #endif
     // If any bit in the created mask is true, the instance has already been
     // fully constructed.
-    static const base::internal::Word kLazyInstanceCreatedMask = ~internal::kLazyInstanceStateCreating;
+    static const intptr_t kLazyInstanceCreatedMask = ~internal::kLazyInstanceStateCreating;
 
     // We will hopefully have fast access when the instance is already created.
     // Since a thread sees private_instance_ == 0 or kLazyInstanceStateCreating
@@ -151,11 +151,11 @@ public:
     // the associated data (private_buf_). Pairing Release_Store is in
     // CompleteLazyInstance().
 
-    base::internal::Word value = private_instance_.load(std::memory_order_acquire);
-    if (!(value & kLazyInstanceCreatedMask) && internal::NeedsLazyInstance(private_instance_)) {
+    intptr_t value = private_instance_.load(std::memory_order_acquire);
+    if (!(value & kLazyInstanceCreatedMask) && base::internal::NeedsLazyInstance(private_instance_)) {
       // Create the instance in the space provided by |private_buf_|.
-      value = reinterpret_cast<base::internal::Word>(Traits::New(private_buf_.void_data()));
-      internal::CompleteLazyInstance(private_instance_, value, this,
+      value = reinterpret_cast<intptr_t>(Traits::New(private_buf_.void_data()));
+      base::internal::CompleteLazyInstance(private_instance_, value, this,
                                      Traits::kRegisterOnExit ? OnExit : nullptr);
     }
 
@@ -177,7 +177,7 @@ public:
   // statically initialize it and to maintain a POD class. DO NOT USE FROM
   // OUTSIDE THIS CLASS.
 
-  std::atomic<base::internal::Word> private_instance_ = 0;
+  std::atomic<intptr_t> private_instance_ = 0;
   // Preallocated space for the Type instance.
   base::AlignedMemory<sizeof(Type), ALIGNOF(Type)> private_buf_;
 

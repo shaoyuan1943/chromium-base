@@ -232,17 +232,17 @@ class Singleton {
       base::ThreadRestrictions::AssertSingletonAllowed();
     }
 #endif
-    base::internal::Word value = instance_.load();
+    intptr_t value = instance_.load();
     if (value != 0 && value != base::internal::kBeingCreatedMarker) {
       return reinterpret_cast<Type*>(value);
     }
 
-    static base::internal::Word kInvalid = 0;
+    static intptr_t kInvalid = 0;
     // Object isn't created yet, maybe we will get to create it, let's try...
     if (instance_.compare_exchange_strong(kInvalid, base::internal::kBeingCreatedMarker,
                                           std::memory_order_acquire)) {
       Type* newval = Traits::New();
-      instance_.store(reinterpret_cast<base::internal::Word>(newval), std::memory_order_release);
+      instance_.store(reinterpret_cast<intptr_t>(newval), std::memory_order_release);
       if (newval != nullptr && Traits::kRegisterAtExit) {
         base::AtExitManager::RegisterCallback(OnExit, nullptr);
       }
@@ -265,10 +265,10 @@ class Singleton {
     instance_.store(0);
   }
 
-  static std::atomic<base::internal::Word> instance_;
+  static std::atomic<intptr_t> instance_;
 };
 
 template <typename Type, typename Traits, typename DifferentiatingType>
-std::atomic<base::internal::Word> Singleton<Type, Traits, DifferentiatingType>::instance_ = 0;
+std::atomic<intptr_t> Singleton<Type, Traits, DifferentiatingType>::instance_ = 0;
 
 #endif  // BASE_MEMORY_SINGLETON_H_
