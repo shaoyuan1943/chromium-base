@@ -7,7 +7,6 @@
 
 #include <atomic>
 
-#include "base/atomicops.h"
 #include "base/basictypes.h"
 
 namespace base {
@@ -24,7 +23,7 @@ class AtomicSequenceNumber;
 class StaticAtomicSequenceNumber {
  public:
   inline int GetNext() {
-    return static_cast<int>(seq_.fetch_add(1)  - 1);
+    return seq_.fetch_add(1)  - 1;
   }
 
  private:
