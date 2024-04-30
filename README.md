@@ -15,7 +15,8 @@ from the Google Chromium. That code include:
 ### Linux
 要求: CMake 3.6或更高版本，GCC 7.3或更高版本。  
 1. 需要依赖glib，有些Linux发行版不带glib，需要自行安装，安装之后需要修改CMakeLists.txt中BASE\_INCLUDE\_PLATFORM\_DIRECTORIES这个变量所定义的glib头文件目录。
-2. 进入scm目录，运行build\_base\_linux.sh脚本编译即可。
+2. 需要依赖event，有些Linux发行版不带event，需要自行安装。
+3. 进入scm目录，运行build\_base\_linux.sh脚本编译即可。
 ### macOS
 要求: Xcode 10.1或更高版本  
 1. 需要依赖libevent，推荐使用这个版本:https://chromium.googlesource.com/chromium/+/trunk/third_party/libevent  
